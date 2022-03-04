@@ -15,8 +15,10 @@ router.post("/", createUser);
 
 router.get("/:id", getUser);
 
-router.delete("/:id", deleteUser);
+router.get("/:id/reset-password", getUser);
 
-router.patch("/:id", updateUser);
+router.delete("/:id/delete", deleteUser);
+
+router.patch("/:id/update", updateUser);
 
 export default router;
