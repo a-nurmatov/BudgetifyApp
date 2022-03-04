@@ -1,4 +1,11 @@
-import users from "../data/usersData.js";
+import database from "../data/usersData.js";
+const users = database.users;
+
+const setUser = (req, res, next) => {
+  const userId = req.body.id;
+  if (userId) req.user = users.find((user) => user.id == userId);
+  next();
+};
 
 const getAllUsers = (req, res) => res.send(users);
 
@@ -13,7 +20,7 @@ const createUser = (req, res) => {
 const getUser = (req, res) => {
   let { id } = req.params;
   let foundedUser = users.find((user) => user.id == id);
-  res.send(foundedUser);
+  res.render("userDashboard", foundedUser);
 };
 
 const deleteUser = (req, res) => {
@@ -41,4 +48,4 @@ const updateUser = (req, res) => {
   );
 };
 
-export { getAllUsers, createUser, getUser, deleteUser, updateUser };
+export { getAllUsers, createUser, getUser, deleteUser, updateUser, setUser };

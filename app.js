@@ -1,6 +1,9 @@
 import express from "express";
 import usersRoutes from "./routes/users.js";
 import homeRoutes from "./routes/home.js";
+import { setUser } from "./controllers/users.js";
+import authRoutes from "./routes/auth.js";
+import adminRoutes from "./routes/admin.js";
 
 const app = express();
 const PORT = 5000;
@@ -19,7 +22,9 @@ app.use(express.static("public"));
 
 // routes
 app.use("/", homeRoutes);
+app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
+app.use("/admin", adminRoutes);
 
 app.listen(PORT, () =>
   console.log(`Server runing on http://localhost:${PORT}`)

@@ -19,10 +19,11 @@ body {
   min-height: 100vh;
   overflow: hidden;
   color: #fff;
+  text-align: center;
 }
 
-nav {
-  text-align: center;
+h1 {
+  margin-top: 20px;
 }
 
 a {
@@ -55,6 +56,13 @@ li {
 
 li:hover {
   background: hsla(0, 0%, 100%, 0.1);
+}
+
+input {
+  outline: none;
+  padding: 10px;
+  display: block;
+  margin: 10px auto;
 }
 
 footer {
