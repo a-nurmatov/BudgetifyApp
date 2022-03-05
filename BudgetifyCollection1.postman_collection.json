@@ -1,0 +1,608 @@
+{
+	"info": {
+		"_postman_id": "9afed5fa-5d64-4618-b23e-ac99a698e0d4",
+		"name": "BudgetifyCollection1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Manage login and logout",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/auth",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/auth/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "manage users",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"age\": 100,\n    \"firstName\": \"Abdurahim\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/users/0/update",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"0",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/users/0/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"0",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manage account",
+			"item": [
+				{
+					"name": "get all accounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/accounts",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get specific account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/accounts/rubl",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"accounts",
+								"rubl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currency\": \"dollar\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/accounts/create-account",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"accounts",
+								"create-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update account",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currency\": \"rubl\",\n    \"amount\": 1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/accounts/rubl",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"accounts",
+								"rubl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/accounts/rubl",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"accounts",
+								"rubl"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manage income",
+			"item": [
+				{
+					"name": "create income",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"income\": 2000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/income/add-income",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"income",
+								"add-income"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read income",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/income/income-info/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"income",
+								"income-info",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update income",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"income\": 3000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/income/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"income",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete income",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/income/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"income",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manage expense",
+			"item": [
+				{
+					"name": "create expense",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addedExpense\": 5000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/expense/add-expense",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"expense",
+								"add-expense"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read expense",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update expense",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"expense\": 4000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/expense/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"expense",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete expense",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/expense/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"expense",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manage expense category",
+			"item": [
+				{
+					"name": "Create category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryName\": \"work\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/expense-category/add-category",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"expense-category",
+								"add-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/expense-category/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"expense-category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryName\": \"home\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/expense-category/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"expense-category",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/expense-category/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"expense-category",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Statistics",
+			"item": [
+				{
+					"name": "Read expense and income statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/stats/",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"stats",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get specific account statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/stats/rubl",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"stats",
+								"rubl"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin View",
+			"item": [
+				{
+					"name": "Read Admin Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/admin",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
