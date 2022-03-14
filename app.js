@@ -1,41 +1,62 @@
 import express from "express";
-import usersRoutes from "./routes/users.js";
-import homeRoutes from "./routes/home.js";
-import { setUser } from "./controllers/users.js";
-import authRoutes from "./routes/auth.js";
-import adminRoutes from "./routes/admin.js";
-import accountsRoutes from "./routes/accounts.js";
-import expenseRoutes from "./routes/expense.js";
-import expenseCategoryRoutes from "./routes/expenseCategories.js";
-import incomeRoutes from "./routes/income.js";
-import statsRoutes from "./routes/stats.js";
+import { config } from "dotenv";
+import morgan from "morgan";
+import cors from "cors";
+import passport from "passport";
 
+import userRoutes from "./api/routes/user.js";
+import accountRoutes from "./api/routes/accounts.js";
+import incomeRoutes from "./api/routes/incomes.js";
+import expenseRoutes from "./api/routes/expenses.js";
+import incomeCategoryRoutes from "./api/routes/incomeCategories.js";
+import expenseCategoryRoutes from "./api/routes/expenseCategories.js";
+import expenseLimitRoutes from "./api/routes/expenseLimit.js";
+import adminReportRoutes from "./api/routes/adminReports.js";
+import userReportRoutes from "./api/routes/userReports.js";
+import paymentRoutes from "./api/routes/payments.js";
+import { auth } from "./api/middlewares/passport.js";
+import { adminGuard } from "./api/middlewares/guards.js";
+
+config();
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-const logger = (req, res, next) => {
-  console.log("New request made:");
-  console.log(`${req.method} ${req.path}  - ${new Date().toTimeString()}`);
-  next();
-};
-
-//middleWares
-app.use(logger);
-app.use(express.json());
+// middleWares
+app.use(cors());
+app.use(morgan("dev"));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(passport.initialize());
 
 // routes
-app.use("/", homeRoutes);
-app.use("/auth", authRoutes);
-app.use("/users", usersRoutes);
-app.use("/admin", adminRoutes);
-app.use("/accounts", accountsRoutes);
-app.use("/expense", expenseRoutes);
-app.use("/expense-category", expenseCategoryRoutes);
-app.use("/income", incomeRoutes);
-app.use("/stats", statsRoutes);
+app.use("/users", userRoutes);
+app.use("/accounts", auth, accountRoutes);
+app.use("/incomes", auth, incomeRoutes);
+app.use("/expenses", auth, expenseRoutes);
+app.use("/income-categories", auth, incomeCategoryRoutes);
+app.use("/expense-categories", auth, expenseCategoryRoutes);
+app.use("/admin-reports", auth, adminGuard, adminReportRoutes);
+app.use("/user-reports", auth, userReportRoutes);
+app.use("/limits", auth, expenseLimitRoutes);
+app.use("/payments", auth, paymentRoutes);
 
-app.listen(PORT, () =>
-  console.log(`Server runing on http://localhost:${PORT}`)
-);
+// error handling
+app.use((req, res, next) => {
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
+});
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is runing on http://localhost:${PORT}`);
+});
