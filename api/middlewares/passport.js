@@ -1,7 +1,7 @@
 import { Strategy, ExtractJwt } from "passport-jwt";
 import passport from "passport";
 import { config } from "dotenv";
-import users from "../models/database.js";
+import User from "../models/user.js";
 
 config();
 
@@ -11,8 +11,8 @@ const opts = {
 };
 
 passport.use(
-  new Strategy(opts, (jwt_payload, done) => {
-    let user = users.find((user) => user.email === jwt_payload.email);
+  new Strategy(opts, async (jwt_payload, done) => {
+    let user = await User.findOne({ email: jwt_payload.email });
     if (user) {
       return done(null, user);
     }
