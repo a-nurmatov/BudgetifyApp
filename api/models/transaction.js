@@ -22,7 +22,7 @@ const transactionSchema = new Schema(
       type: String,
       required: [true, "Name required"],
     },
-    category: {
+    categoryId: {
       type: Schema.Types.ObjectId,
       ref: "Category",
     },
@@ -35,7 +35,7 @@ const transactionSchema = new Schema(
       type: Date,
       required: [true, "Date is required"],
     },
-    file: {
+    fileId: {
       type: Schema.Types.ObjectId,
       ref: "File",
     },
