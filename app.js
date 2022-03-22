@@ -3,23 +3,27 @@ import { config } from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
 import passport from "passport";
+import mongoose from "mongoose";
 
 import userRoutes from "./api/routes/user.js";
 import accountRoutes from "./api/routes/accounts.js";
-import incomeRoutes from "./api/routes/incomes.js";
-import expenseRoutes from "./api/routes/expenses.js";
-import incomeCategoryRoutes from "./api/routes/incomeCategories.js";
-import expenseCategoryRoutes from "./api/routes/expenseCategories.js";
-import expenseLimitRoutes from "./api/routes/expenseLimit.js";
 import adminReportRoutes from "./api/routes/adminReports.js";
 import userReportRoutes from "./api/routes/userReports.js";
-import paymentRoutes from "./api/routes/payments.js";
+import categoryRoutes from "./api/routes/categories.js";
+import transactionRoutes from "./api/routes/transactions.js";
+
 import { auth } from "./api/middlewares/passport.js";
 import { adminGuard } from "./api/middlewares/guards.js";
 
 config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+mongoose.connect(
+  process.env.MONGO_URI,
+  () => console.log("MongoDB connected!"),
+  (err) => console.log(err)
+);
 
 // middleWares
 app.use(cors());
@@ -33,14 +37,10 @@ app.use(passport.initialize());
 // routes
 app.use("/users", userRoutes);
 app.use("/accounts", auth, accountRoutes);
-app.use("/incomes", auth, incomeRoutes);
-app.use("/expenses", auth, expenseRoutes);
-app.use("/income-categories", auth, incomeCategoryRoutes);
-app.use("/expense-categories", auth, expenseCategoryRoutes);
+app.use("/categories", auth, categoryRoutes);
+app.use("/transactions", auth, transactionRoutes);
 app.use("/admin-reports", auth, adminGuard, adminReportRoutes);
 app.use("/user-reports", auth, userReportRoutes);
-app.use("/limits", auth, expenseLimitRoutes);
-app.use("/payments", auth, paymentRoutes);
 
 // error handling
 app.use((req, res, next) => {
@@ -60,3 +60,5 @@ app.use((error, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is runing on http://localhost:${PORT}`);
 });
+
+export default app;
