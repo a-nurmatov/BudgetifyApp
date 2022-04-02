@@ -1,0 +1,38 @@
+<div class="auth-form">
+  <h2 class="auth-form__title">Budgetify</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form__form">
+    <mat-form-field class="auth-form__row" appearance="outline">
+      <mat-label>Enter your email</mat-label>
+      <input formControlName="email" class="auth-form__input" matInput />
+      <mat-error *ngIf="loginForm.invalid">{{ getEmailError() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="auth-form__row" appearance="outline">
+      <mat-label>Enter your password</mat-label>
+      <input
+        matInput
+        class="auth-form__input"
+        [type]="hide ? 'password' : 'text'"
+        formControlName="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+        type="button"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <mat-error *ngIf="loginForm.invalid">{{ getPasswordError() }}</mat-error>
+    </mat-form-field>
+    <button
+      class="auth-form__button"
+      type="submit"
+      [disabled]="loginForm.invalid"
+      mat-stroked-button
+    >
+      Login
+    </button>
+  </form>
+</div>

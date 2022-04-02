@@ -1,0 +1,40 @@
+@use "src/variables.scss" as var;
+
+:host {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background-image: url("https://asanify.com/wp-content/uploads/2020/08/rupixen-com-pbgYcq3_Zx0-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.auth-form {
+  @include var.paper(40px 30px, rgba(255, 255, 255, 0.8));
+  box-shadow: var.$paperBoxShadow;
+  width: 90%;
+  max-width: 450px;
+  min-width: 250px;
+
+  &__title {
+    font-weight: bold;
+    font-size: 34px;
+    margin-bottom: 37px;
+  }
+
+  &__row {
+    display: block;
+    margin-bottom: 20px;
+    mat-error {
+      font-size: 12px;
+    }
+  }
+
+  &__button {
+    padding: 8px;
+    display: block;
+    width: 100%;
+    background-color: var.$infoBg;
+  }
+}

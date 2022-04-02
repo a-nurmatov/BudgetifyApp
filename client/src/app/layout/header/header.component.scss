@@ -1,0 +1,37 @@
+@mixin flex-between($gap: 0) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $gap;
+}
+
+.header {
+  @include flex-between;
+  padding: 10px 20px;
+
+  &__logo {
+    min-width: fit-content;
+  }
+
+  &__logo-link {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  &__nav {
+    @include flex-between;
+
+    width: 75%;
+  }
+
+  &__nav-list {
+    @include flex-between(35px);
+  }
+
+  &__button {
+    span {
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+}

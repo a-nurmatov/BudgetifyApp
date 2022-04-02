@@ -34,6 +34,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
+app.post("/api/health-check", (req, res) => {
+  return res.send({ message: "Health-check is ok" });
+});
+
 // routes
 app.use("/users", userRoutes);
 app.use("/accounts", auth, accountRoutes);
