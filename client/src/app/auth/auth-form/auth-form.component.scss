@@ -4,7 +4,7 @@
   display: grid;
   place-items: center;
   height: 100vh;
-  background-image: url("https://asanify.com/wp-content/uploads/2020/08/rupixen-com-pbgYcq3_Zx0-unsplash.jpg");
+  background-image: url("/assets/images/loginBg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -37,4 +37,9 @@
     width: 100%;
     background-color: var.$infoBg;
   }
+}
+
+::ng-deep .snackbar-error {
+  background-color: var.$warningBg;
+  color: var.$textColor;
 }
