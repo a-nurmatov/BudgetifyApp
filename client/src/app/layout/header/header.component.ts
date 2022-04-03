@@ -9,6 +9,7 @@ import { NavItem } from './nav-item.model';
 })
 export class HeaderComponent implements OnInit {
   navLinks: NavItem[] = navItems;
+  @Input() isLoggedIn: boolean = false;
   @Output() logOutClicked: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {}

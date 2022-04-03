@@ -37,7 +37,7 @@ export class AuthFormComponent implements OnInit {
     this.authService.login(email, password).subscribe(
       (data) => {
         console.log(data, 'DATA from backend');
-        this.router.navigateByUrl('/main');
+        this.router.navigateByUrl('/home');
       },
       (error) => {
         if (error.status === 401) {

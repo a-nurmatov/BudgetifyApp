@@ -1,4 +1,4 @@
-<header class="header">
+<header *ngIf="isLoggedIn" class="header">
   <div class="header__logo">
     <a class="header__logo-link" [routerLink]="['/']">Budgetify</a>
   </div>

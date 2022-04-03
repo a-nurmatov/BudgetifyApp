@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainComponent } from './main/main.component';
-import { LayoutModule } from '../layout/layout.module';
+import { HomeComponent } from './components/home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
-    path: 'main',
-    component: MainComponent,
+    path: 'home',
+    component: HomeComponent,
     canActivate: [AuthGuard],
   },
 ];
 
 @NgModule({
-  declarations: [MainComponent],
-  imports: [CommonModule, LayoutModule, RouterModule.forChild(routes)],
+  declarations: [HomeComponent],
+  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
 })
 export class HomeModule {}

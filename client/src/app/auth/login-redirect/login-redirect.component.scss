@@ -10,25 +10,11 @@
   background-repeat: no-repeat;
 }
 
-.auth-form {
+.modal {
   @include var.paper(40px 30px, rgba(255, 255, 255, 0.8));
   width: 90%;
   max-width: 450px;
   min-width: 250px;
-
-  &__title {
-    font-weight: bold;
-    font-size: 34px;
-    margin-bottom: 37px;
-  }
-
-  &__row {
-    display: block;
-    margin-bottom: 20px;
-    mat-error {
-      font-size: 12px;
-    }
-  }
 
   &__button {
     padding: 8px;
@@ -37,9 +23,4 @@
     background-color: var.$infoBg;
     border: none;
   }
-}
-
-::ng-deep .snackbar-error {
-  background-color: var.$warningBg;
-  color: var.$textColor;
 }
