@@ -11,7 +11,7 @@ export class LoginRedirectComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onLogin() {
+  onLogin(): void {
     this.router.navigate(['/login']);
   }
 }

@@ -9,20 +9,15 @@ import { AuthService } from './auth/services/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Budgetify';
   constructor(
     private authService: AuthService,
     private router: Router,
     private location: Location
   ) {
-    window.addEventListener('click', (event) => {
-      if (localStorage.getItem('expiresIn') && localStorage.getItem('token')) {
-        localStorage.setItem('expiresIn', String(Date.now() + 3600000));
-      }
-    });
+    this.watchUserInteraction();
   }
 
-  get isLoggedIn() {
+  get isLoggedIn(): boolean {
     return (
       this.authService.isLoggedIn() &&
       this.location.path() !== '/login' &&
@@ -30,8 +25,16 @@ export class AppComponent {
     );
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/login');
+  }
+
+  watchUserInteraction(): void {
+    window.addEventListener('click', (event) => {
+      if (localStorage.getItem('expiresIn') && localStorage.getItem('token')) {
+        localStorage.setItem('expiresIn', String(Date.now() + 3600000));
+      }
+    });
   }
 }

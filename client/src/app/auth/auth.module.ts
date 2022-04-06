@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginRedirectComponent } from './login-redirect/login-redirect.component';
-import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +14,6 @@ const routes: Routes = [
   {
     path: 'login-redirect',
     component: LoginRedirectComponent,
-    canActivate: [AuthGuard],
   },
 ];
 

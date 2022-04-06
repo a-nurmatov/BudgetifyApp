@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { UserData } from '../types/userData.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,13 +9,13 @@ import { tap } from 'rxjs';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<UserData> {
     return this.http
       .post('http://localhost:5000/users/login', { email, password })
       .pipe(tap((res: any) => this.setSession(res)));
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     const expiresIn = localStorage.getItem('expiresIn');
     if (expiresIn) {
       return Date.now() < Number(expiresIn);
@@ -22,19 +23,18 @@ export class AuthService {
     return false;
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('expiresIn');
   }
 
-  healthCheck() {
-    console.log('hello health check');
+  healthCheck(): Observable<any> {
     return this.http.post('http://localhost:5000/api/health-check', {
       test: 'test',
     });
   }
 
-  private setSession(res: any) {
+  private setSession(res: UserData): void {
     const expiresIn = Date.now() + Number(res.user.expiresIn);
     localStorage.setItem('token', res.user.token);
     localStorage.setItem('expiresIn', expiresIn.toString());

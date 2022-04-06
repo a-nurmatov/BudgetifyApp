@@ -11,15 +11,3 @@ $textSuccess: #00a859;
 $paperPadding: 20px;
 $paperBoxShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 $borderRadius: 10px;
-
-@mixin paper(
-  $padding: $paperPadding,
-  $bg: $paperBg,
-  $borderRadius: $borderRadius,
-  $boxShadow: $paperBoxShadow
-) {
-  padding: $padding;
-  background-color: $bg;
-  border-radius: $borderRadius;
-  box-shadow: $boxShadow;
-}

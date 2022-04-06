@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AuthFormComponent implements OnInit {
   hide: boolean = false;
+
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -30,13 +31,11 @@ export class AuthFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {
-    console.log(this.loginForm.value);
+  onSubmit(): void {
     this.authService.healthCheck().subscribe((data) => console.log(data));
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe(
       (data) => {
-        console.log(data, 'DATA from backend');
         this.router.navigateByUrl('/home');
       },
       (error) => {
@@ -47,7 +46,7 @@ export class AuthFormComponent implements OnInit {
     );
   }
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 3000,
       verticalPosition: 'top',
@@ -55,7 +54,7 @@ export class AuthFormComponent implements OnInit {
     });
   }
 
-  getEmailError() {
+  getEmailError(): string {
     return this.loginForm.get('email')!.errors?.['required']
       ? 'Required field is empty'
       : this.loginForm.get('email')!.errors?.['pattern']
@@ -63,7 +62,7 @@ export class AuthFormComponent implements OnInit {
       : '';
   }
 
-  getPasswordError() {
+  getPasswordError(): string {
     return this.loginForm.get('password')!.errors?.['required']
       ? 'Required field is empty'
       : this.loginForm.get('password')!.errors?.['minlength']

@@ -1,4 +1,5 @@
-@use "src/variables.scss" as var;
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
 
 :host {
   display: grid;
@@ -11,7 +12,7 @@
 }
 
 .auth-form {
-  @include var.paper(40px 30px, rgba(255, 255, 255, 0.8));
+  @include mixin.paper(40px 30px, rgba(255, 255, 255, 0.8));
   width: 90%;
   max-width: 450px;
   min-width: 250px;

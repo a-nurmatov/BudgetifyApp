@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onClick() {
+  onClick(): boolean {
     this.logOutClicked.emit();
     return false;
   }

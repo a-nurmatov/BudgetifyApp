@@ -1,12 +1,8 @@
-@mixin flex-between($gap: 0) {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: $gap;
-}
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
 
 .header {
-  @include flex-between;
+  @include mixin.flex-between;
   padding: 10px 20px;
 
   &__logo {
@@ -19,13 +15,13 @@
   }
 
   &__nav {
-    @include flex-between;
+    @include mixin.flex-between;
 
     width: 75%;
   }
 
   &__nav-list {
-    @include flex-between(35px);
+    @include mixin.flex-between(35px);
   }
 
   &__button {
