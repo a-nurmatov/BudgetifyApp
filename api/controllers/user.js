@@ -44,6 +44,7 @@ export const loginUser = async (req, res) => {
         id: user.id,
         email: user.email,
         token: `Bearer ${token}`,
+        expiresIn: 1000 * 60 * 60,
       },
     });
   } else {

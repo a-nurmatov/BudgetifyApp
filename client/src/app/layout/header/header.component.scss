@@ -1,0 +1,33 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+.header {
+  @include mixin.flex-between;
+  padding: 10px 20px;
+
+  &__logo {
+    min-width: fit-content;
+  }
+
+  &__logo-link {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  &__nav {
+    @include mixin.flex-between;
+
+    width: 75%;
+  }
+
+  &__nav-list {
+    @include mixin.flex-between(35px);
+  }
+
+  &__button {
+    span {
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+}

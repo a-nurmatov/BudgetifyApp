@@ -1,0 +1,27 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+:host {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background-image: url("/assets/images/loginBg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.modal {
+  @include mixin.paper(40px 30px, rgba(255, 255, 255, 0.8));
+  width: 90%;
+  max-width: 450px;
+  min-width: 250px;
+
+  &__button {
+    padding: 8px;
+    display: block;
+    width: 100%;
+    background-color: var.$infoBg;
+    border: none;
+  }
+}

@@ -1,0 +1,27 @@
+@use "variables.scss" as var;
+
+@mixin paper(
+  $padding: var.$paperPadding,
+  $bg: var.$paperBg,
+  $borderRadius: var.$borderRadius,
+  $boxShadow: var.$paperBoxShadow
+) {
+  padding: $padding;
+  background-color: $bg;
+  border-radius: $borderRadius;
+  box-shadow: $boxShadow;
+}
+
+@mixin flex-between($gap: 0) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-center($gap: 0) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $gap;
+}

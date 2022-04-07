@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+@use "src/sass/variables.scss" as var;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap");
+
+html,
+body {
+  height: 100%;
+  background-color: var.$bgColor;
+  margin: 0;
+  padding: 0;
+  color: var.$textColor;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var.$textColor;
+}

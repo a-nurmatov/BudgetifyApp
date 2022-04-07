@@ -1,0 +1,19 @@
+<header *ngIf="isLoggedIn" class="header">
+  <div class="header__logo">
+    <a class="header__logo-link" [routerLink]="['/']">Budgetify</a>
+  </div>
+  <div class="header__nav">
+    <ul class="header__nav-list">
+      <li *ngFor="let linkData of navLinks">
+        <a [routerLink]="linkData.route">{{ linkData.title }}</a>
+      </li>
+    </ul>
+    <button class="header__button" mat-button [matMenuTriggerFor]="beforeMenu">
+      <mat-icon>person</mat-icon>
+      <span class="header_user-name">Abdurahim Nurmatov</span>
+    </button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button (click)="onClick()" mat-menu-item>Log out</button>
+    </mat-menu>
+  </div>
+</header>
