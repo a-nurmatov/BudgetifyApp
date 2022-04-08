@@ -9,6 +9,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LayoutModule } from './layout/layout.module';
 import { HomeModule } from './home/home.module';
+import { AccountModule } from './account/account.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { HomeModule } from './home/home.module';
     HttpClientModule,
     LayoutModule,
     HomeModule,
+    AccountModule,
   ],
   providers: [
     {

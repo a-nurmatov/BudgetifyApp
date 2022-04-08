@@ -3,7 +3,7 @@
 
 .header {
   @include mixin.flex-between;
-  padding: 10px 20px;
+  padding: 5px 20px;
 
   &__logo {
     min-width: fit-content;

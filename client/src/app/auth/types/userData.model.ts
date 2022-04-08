@@ -4,6 +4,7 @@ export interface UserData {
     email: string;
     id: string | number;
     token: string;
+    country: string;
     expiresIn: number | string;
   };
 }

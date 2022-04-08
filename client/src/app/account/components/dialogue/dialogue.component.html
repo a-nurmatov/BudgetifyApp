@@ -1,0 +1,47 @@
+<div class="dialog-header">
+  <h1 mat-dialog-title>Add new account</h1>
+  <button mat-button mat-dialog-close class="dialog_header__close-button">
+    <fa-icon [icon]="faTimes"></fa-icon>
+  </button>
+</div>
+<mat-dialog-content class="dialog-body">
+  <form id="accountForm" [formGroup]="addAccountForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Enter account title</mat-label>
+      <input formControlName="title" matInput />
+      <mat-error *ngIf="addAccountForm.invalid">{{
+        getTitleError()
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Currency</mat-label>
+      <mat-select formControlName="currency">
+        <mat-option
+          *ngFor="let country of listOfCountries"
+          [value]="getSymbol(country.currency!)"
+        >
+          {{ country.name }} ({{ getSymbol(country.currency!) }})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        formControlName="description"
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="5"
+      ></textarea>
+      <mat-error *ngIf="addAccountForm.invalid">{{
+        getDescriptionError()
+      }}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-body__actions" align="end">
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-button type="submit" form="accountForm" cdkFocusInitial>
+    Add
+  </button>
+</mat-dialog-actions>

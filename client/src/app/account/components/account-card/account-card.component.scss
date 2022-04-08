@@ -1,0 +1,44 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+.account-card {
+  @include mixin.flex-items-start;
+  background: var.$cardGradient;
+  max-width: 350px;
+  min-width: 250px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: var.$borderRadius;
+  padding: var.$paperPadding;
+  text-align: left;
+  color: var.$textLight;
+  margin-bottom: 20px;
+  box-shadow: var.$paperBoxShadow;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__body {
+    padding: 5px;
+  }
+
+  &__title {
+    font-size: 28px;
+  }
+
+  &__balance {
+    font-size: 32px;
+    margin-top: 40px;
+  }
+
+  &__currency {
+    @include mixin.flex-center;
+    font-size: 28px;
+    color: var.$textLight;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 0.5px solid var.$textLight;
+  }
+}

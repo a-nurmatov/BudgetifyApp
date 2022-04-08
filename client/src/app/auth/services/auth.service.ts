@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { UserData } from '../types/userData.model';
@@ -38,5 +38,6 @@ export class AuthService {
     const expiresIn = Date.now() + Number(res.user.expiresIn);
     localStorage.setItem('token', res.user.token);
     localStorage.setItem('expiresIn', expiresIn.toString());
+    localStorage.setItem('country', res.user.country);
   }
 }

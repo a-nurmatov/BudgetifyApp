@@ -1,12 +1,29 @@
 // colors
 $bgColor: #efefef;
-$paperBg: #f9f9f9;
+$paperBg: #fff;
 $infoBg: #b9e2e6;
 $warningBg: #f5c6cb;
 
 $textColor: #373737;
 $textDanger: #ee3f19;
 $textSuccess: #00a859;
+$textLight: #fff;
+
+$cardGradient: linear-gradient(
+  to right bottom,
+  #d963d2,
+  #e75cbf,
+  #f158ab,
+  #f75898,
+  #f95a86,
+  #f66092,
+  #f2669e,
+  #ed6ca9,
+  #d47ecc,
+  #b091e4,
+  #87a1ee,
+  #63adeb
+);
 
 $paperPadding: 20px;
 $paperBoxShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
