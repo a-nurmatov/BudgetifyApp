@@ -1,4 +1,4 @@
-<div class="account-card-list">
+<div class="account-card-list" *ngIf="userAccounts$; else spinnerBox">
   <button
     (click)="openDialogue()"
     class="account-card-list__add-button"
@@ -7,10 +7,13 @@
     <fa-icon [icon]="faPlus"></fa-icon> Add new account
   </button>
 
-  <app-account-card></app-account-card>
-  <app-account-card></app-account-card>
-  <app-account-card></app-account-card>
-  <app-account-card></app-account-card>
-  <app-account-card></app-account-card>
-  <app-account-card></app-account-card>
+  <app-account-card
+    *ngFor="let account of userAccounts$ | async"
+    [title]="account.title"
+    [balance]="account.balance"
+    [currency]="account.currency"
+  ></app-account-card>
 </div>
+<ng-template #spinnerBox>
+  <mat-spinner></mat-spinner>
+</ng-template>

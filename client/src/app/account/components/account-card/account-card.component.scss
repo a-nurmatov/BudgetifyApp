@@ -14,6 +14,7 @@
   color: var.$textLight;
   margin-bottom: 20px;
   box-shadow: var.$paperBoxShadow;
+  opacity: 0.5;
 
   &:hover {
     cursor: pointer;
@@ -25,6 +26,11 @@
 
   &__title {
     font-size: 28px;
+    width: 190px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 5px;
   }
 
   &__balance {
@@ -34,9 +40,9 @@
 
   &__currency {
     @include mixin.flex-center;
-    font-size: 28px;
+    font-size: 18px;
     color: var.$textLight;
-    width: 50px;
+    min-width: 50px;
     height: 50px;
     border-radius: 50%;
     border: 0.5px solid var.$textLight;

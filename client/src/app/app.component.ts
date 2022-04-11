@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from './account/services/account.service';
 import { AuthService } from './auth/services/auth.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private accountService: AccountService
   ) {
     this.watchUserInteraction();
   }

@@ -3,7 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import currencies from '@doubco/countries';
 import { getCurrencySymbol } from '@angular/common';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { AccountService } from '../../services/account.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dialogue',
@@ -11,6 +12,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   styleUrls: ['./dialogue.component.scss'],
 })
 export class DialogueComponent implements OnInit {
+  submitStatus: boolean = false;
   faTimes = faTimes;
   listOfCountries = Object.values(currencies.data);
   userCountry: string | null = localStorage.getItem('country');
@@ -20,36 +22,66 @@ export class DialogueComponent implements OnInit {
     title: new FormControl('', [
       Validators.required,
       Validators.maxLength(128),
+      Validators.pattern('[a-zA-Z0-9 ]*'),
     ]),
     currency: new FormControl(this.userDefaultCurrency, [Validators.required]),
     description: new FormControl('', [Validators.maxLength(256)]),
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private accountService: AccountService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
+    this.setUserDefaultCurrency();
+  }
+
+  onSubmit() {
+    const { title, currency, description } = this.addAccountForm.value;
+    const userId = localStorage.getItem('userId');
+    this.accountService
+      .addNewAccount(userId, title, currency, description)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.submitStatus = true;
+          this.openSnackBar('Account successfully created', 'close');
+        },
+        (error) => {
+          this.openSnackBar('Account with this name already exists', 'close');
+        }
+      );
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: this.submitStatus ? 'snackbar-success' : 'snackbar-error',
+    });
+  }
+
+  setUserDefaultCurrency(): void {
     this.listOfCountries.forEach((country) => {
       if (country.name === this.userCountry) {
         this.userDefaultCurrency = country.currency;
       }
     });
-    console.log(this.userDefaultCurrency);
     this.addAccountForm.get('currency')!.setValue(this.userDefaultCurrency);
   }
 
-  onSubmit() {
-    console.log(this.addAccountForm.value);
-  }
-
-  getTitleError() {
+  getTitleError(): string {
     return this.addAccountForm.get('title')!.errors?.['required']
       ? 'Required field is empty'
       : this.addAccountForm.get('title')!.errors?.['maxlength']
       ? 'Max length is 128'
+      : this.addAccountForm.get('title')!.errors?.['pattern']
+      ? 'Only letters and numbers are allowed'
       : '';
   }
 
-  getDescriptionError() {
+  getDescriptionError(): string {
     return this.addAccountForm.get('description')!.errors?.['maxlength']
       ? 'Max length is 256'
       : '';

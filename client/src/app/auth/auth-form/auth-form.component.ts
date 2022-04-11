@@ -40,7 +40,7 @@ export class AuthFormComponent implements OnInit {
       },
       (error) => {
         if (error.status === 401) {
-          this.openSnackBar('Wrong email or password', 'Close');
+          this.openSnackBar('Wrong email or password', '&#10761;');
         }
       }
     );

@@ -41,7 +41,13 @@
 </mat-dialog-content>
 <mat-dialog-actions class="dialog-body__actions" align="end">
   <button mat-button [mat-dialog-close]="false">Cancel</button>
-  <button mat-button type="submit" form="accountForm" cdkFocusInitial>
+  <button
+    mat-button
+    type="submit"
+    [disabled]="addAccountForm.invalid"
+    form="accountForm"
+    [mat-dialog-close]="true"
+  >
     Add
   </button>
 </mat-dialog-actions>

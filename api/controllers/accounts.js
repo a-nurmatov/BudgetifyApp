@@ -1,7 +1,7 @@
 import Account from "../models/account.js";
 
 export const getUserAccounts = async (req, res) => {
-  let { userId } = req.headers;
+  let { userId } = req.params;
   let accounts = await Account.find({ userId });
   res.json({
     message: "Handling GET request to /accounts",
@@ -9,13 +9,17 @@ export const getUserAccounts = async (req, res) => {
   });
 };
 
-export const addNewAccount = async (req, res) => {
-  let newAccount = new Account(req.body);
-  await newAccount.save();
-  res.json({
-    message: "Handling POST request to /accounts",
-    newAccount,
-  });
+export const addNewAccount = async (req, res, next) => {
+  try {
+    let newAccount = new Account(req.body);
+    await newAccount.save();
+    res.json({
+      message: "Handling POST request to /accounts",
+      newAccount,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getAccount = async (req, res) => {
