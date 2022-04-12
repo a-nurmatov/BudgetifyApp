@@ -24,3 +24,15 @@
     width: 100%;
   }
 }
+
+.spinner {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+:ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #d963d2;
+}
