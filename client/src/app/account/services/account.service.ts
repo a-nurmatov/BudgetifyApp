@@ -30,6 +30,7 @@ export class AccountService {
         }
       )
       .pipe(
+        take(1),
         tap((data) => {
           this.accounts.unshift(data.newAccount);
           this.accountsUpdated.next([...this.accounts]);

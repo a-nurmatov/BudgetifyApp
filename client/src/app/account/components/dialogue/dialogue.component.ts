@@ -43,7 +43,6 @@ export class DialogueComponent implements OnInit {
     const userId = localStorage.getItem('userId');
     this.accountService
       .addNewAccount(userId, title, currency, description)
-      .pipe(take(1))
       .subscribe(
         (data) => {
           console.log(data);
