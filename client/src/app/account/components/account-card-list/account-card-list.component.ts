@@ -35,13 +35,6 @@ export class AccountCardListComponent implements OnDestroy {
     });
   }
 
-  sendRequestToAccounts(): void {
-    let userId = localStorage.getItem('userId');
-    if (userId) {
-      this.accountService.requestUserAccounts(userId);
-    }
-  }
-
   cardTrackingFn(index: number, item: AccountInterface): string {
     return item.title;
   }

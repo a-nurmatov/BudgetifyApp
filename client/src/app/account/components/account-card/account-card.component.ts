@@ -10,6 +10,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AccountService } from '../../services/account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogueComponent } from '../dialogue/dialogue.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-account-card',
@@ -77,16 +78,19 @@ export class AccountDeleteConfirmComponent {
   ) {}
 
   deleteAccount(accountId: string | undefined): void {
-    this.accountService.deleteAccount(accountId).subscribe(
-      (data) => {
-        this.submitStatus = true;
-        this.openSnackBar('Account successfully deleted', 'close');
-      },
-      (error) => {
-        this.submitStatus = false;
-        this.openSnackBar('Account deletion failed', 'close');
-      }
-    );
+    this.accountService
+      .deleteAccount(accountId)
+      .pipe(take(1))
+      .subscribe(
+        (data) => {
+          this.submitStatus = true;
+          this.openSnackBar('Account successfully deleted', 'close');
+        },
+        (error) => {
+          this.submitStatus = false;
+          this.openSnackBar('Account deletion failed', 'close');
+        }
+      );
   }
 
   openSnackBar(message: string, action: string): void {

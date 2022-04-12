@@ -54,21 +54,25 @@ export class DialogueComponent implements OnInit {
     if (this.account) {
       console.log(title, currency, description);
       this.account = { ...this.account, title, currency, description };
-      this.accountService.updateAccount(this.account).subscribe(
-        (data) => {
-          this.submitStatus = true;
-          console.log(data);
-          this.openSnackBar('Account successfully updated', 'close');
-        },
-        (error) => {
-          this.submitStatus = false;
-          this.openSnackBar('Account update failed', 'close');
-        }
-      );
+      this.accountService
+        .updateAccount(this.account)
+        .pipe(take(1))
+        .subscribe(
+          (data) => {
+            this.submitStatus = true;
+            console.log(data);
+            this.openSnackBar('Account successfully updated', 'close');
+          },
+          (error) => {
+            this.submitStatus = false;
+            this.openSnackBar('Account update failed', 'close');
+          }
+        );
     } else {
       const userId = localStorage.getItem('userId');
       this.accountService
         .addNewAccount(userId, title, currency, description)
+        .pipe(take(1))
         .subscribe(
           (data) => {
             this.submitStatus = true;

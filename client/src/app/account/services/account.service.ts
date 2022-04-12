@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, take, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { AccountInterface } from '../types/account.interface';
 
 @Injectable({
@@ -30,7 +30,6 @@ export class AccountService {
         }
       )
       .pipe(
-        take(1),
         tap((data) => {
           this.accounts.unshift(data.newAccount);
           this.accountsUpdated.next([...this.accounts]);
@@ -42,11 +41,9 @@ export class AccountService {
   requestUserAccounts(
     userId: string | null
   ): Observable<{ message: string; accounts: AccountInterface[] }> {
-    return this.http
-      .get<{ message: string; accounts: AccountInterface[] }>(
-        `http://localhost:5000/accounts/${userId}`
-      )
-      .pipe(take(1));
+    return this.http.get<{ message: string; accounts: AccountInterface[] }>(
+      `http://localhost:5000/accounts/${userId}`
+    );
   }
 
   setInitialData(accounts: AccountInterface[]): void {
@@ -69,12 +66,15 @@ export class AccountService {
 
   deleteAccount(accountId: string | undefined): Observable<any> {
     return this.http.delete(`http://localhost:5000/accounts/${accountId}`).pipe(
-      take(1),
       tap(() => {
         if (this.accounts.length > 0) {
           this.accounts.find((item, index) => {
             if (item._id === accountId) {
-              this.setActiveAccount({ ...this.accounts[index - 1] });
+              if (this.accounts[index - 1]) {
+                this.setActiveAccount({ ...this.accounts[index - 1] });
+              } else if (this.accounts[index + 1]) {
+                this.setActiveAccount({ ...this.accounts[index + 1] });
+              }
             }
           });
         }
@@ -90,7 +90,6 @@ export class AccountService {
     return this.http
       .patch(`http://localhost:5000/accounts/${account._id}`, account)
       .pipe(
-        take(1),
         tap((data) => {
           this.accounts = this.accounts.map((acc) => {
             if (acc._id === account._id) {
