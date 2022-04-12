@@ -45,7 +45,6 @@ export class DialogueComponent implements OnInit {
       .addNewAccount(userId, title, currency, description)
       .subscribe(
         (data) => {
-          console.log(data);
           this.submitStatus = true;
           this.openSnackBar('Account successfully created', 'close');
         },

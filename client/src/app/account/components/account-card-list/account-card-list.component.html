@@ -8,7 +8,7 @@
   </button>
 
   <app-account-card
-    *ngFor="let account of userAccounts$ | async"
+    *ngFor="let account of userAccounts$ | async; trackBy: cardTrackingFn"
     [account]="account"
     [activeAccount]="activeAccount._id === account._id"
     (click)="onClick(account)"
