@@ -5,6 +5,7 @@ import currencies from '@doubco/countries';
 import { getCurrencySymbol } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-dialogue',
@@ -37,11 +38,12 @@ export class DialogueComponent implements OnInit {
     this.setUserDefaultCurrency();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const { title, currency, description } = this.addAccountForm.value;
     const userId = localStorage.getItem('userId');
     this.accountService
       .addNewAccount(userId, title, currency, description)
+      .pipe(take(1))
       .subscribe(
         (data) => {
           console.log(data);
@@ -87,7 +89,7 @@ export class DialogueComponent implements OnInit {
       : '';
   }
 
-  getSymbol(currency: string) {
+  getSymbol(currency: string): string {
     return getCurrencySymbol(currency, 'wide');
   }
 }

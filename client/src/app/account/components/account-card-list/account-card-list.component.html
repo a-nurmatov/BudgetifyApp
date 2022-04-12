@@ -9,9 +9,9 @@
 
   <app-account-card
     *ngFor="let account of userAccounts$ | async"
-    [title]="account.title"
-    [balance]="account.balance"
-    [currency]="account.currency"
+    [account]="account"
+    [activeAccount]="activeAccount._id === account._id"
+    (click)="onClick(account)"
   ></app-account-card>
 </div>
 <ng-template #spinnerBox>
