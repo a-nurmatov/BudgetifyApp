@@ -1,5 +1,7 @@
 <div class="dialog-header">
-  <h1 mat-dialog-title>Add new account</h1>
+  <h1 mat-dialog-title>
+    {{ this.account ? "Edit account" : "Add new account" }}
+  </h1>
   <button mat-button mat-dialog-close class="dialog_header__close-button">
     <fa-icon [icon]="faTimes"></fa-icon>
   </button>
@@ -48,6 +50,6 @@
     form="accountForm"
     [mat-dialog-close]="true"
   >
-    Add
+    {{ this.account ? "Save" : "Add" }}
   </button>
 </mat-dialog-actions>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import currencies from '@doubco/countries';
@@ -6,6 +6,8 @@ import { getCurrencySymbol } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { take } from 'rxjs';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AccountInterface } from '../../types/account.interface';
 
 @Component({
   selector: 'app-dialogue',
@@ -30,9 +32,18 @@ export class DialogueComponent implements OnInit {
   });
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public account: AccountInterface,
     private accountService: AccountService,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    if (this.account) {
+      this.addAccountForm.get('title')!.setValue(this.account.title);
+      this.addAccountForm
+        .get('description')!
+        .setValue(this.account.description);
+      this.addAccountForm.get('currency')!.setValue(this.account.currency);
+    }
+  }
 
   ngOnInit(): void {
     this.setUserDefaultCurrency();
@@ -40,18 +51,35 @@ export class DialogueComponent implements OnInit {
 
   onSubmit(): void {
     const { title, currency, description } = this.addAccountForm.value;
-    const userId = localStorage.getItem('userId');
-    this.accountService
-      .addNewAccount(userId, title, currency, description)
-      .subscribe(
+    if (this.account) {
+      console.log(title, currency, description);
+      this.account = { ...this.account, title, currency, description };
+      this.accountService.updateAccount(this.account).subscribe(
         (data) => {
           this.submitStatus = true;
-          this.openSnackBar('Account successfully created', 'close');
+          console.log(data);
+          this.openSnackBar('Account successfully updated', 'close');
         },
         (error) => {
-          this.openSnackBar('Account with this name already exists', 'close');
+          this.submitStatus = false;
+          this.openSnackBar('Account update failed', 'close');
         }
       );
+    } else {
+      const userId = localStorage.getItem('userId');
+      this.accountService
+        .addNewAccount(userId, title, currency, description)
+        .subscribe(
+          (data) => {
+            this.submitStatus = true;
+            this.openSnackBar('Account successfully created', 'close');
+          },
+          (error) => {
+            this.submitStatus = false;
+            this.openSnackBar('Account with this name already exists', 'close');
+          }
+        );
+    }
   }
 
   openSnackBar(message: string, action: string): void {

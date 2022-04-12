@@ -8,4 +8,9 @@
     <p class="account-card__balance">{{ account.balance }}</p>
   </div>
   <div class="account-card__currency">{{ account.currency }}</div>
+  <fa-icon
+    (click)="viewDetails()"
+    class="account-card__details"
+    [icon]="faEye"
+  ></fa-icon>
 </div>

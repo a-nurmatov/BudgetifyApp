@@ -66,4 +66,33 @@ export class AccountService {
   getUserAccounts(): Observable<AccountInterface[]> {
     return this.accountsUpdated.asObservable();
   }
+
+  deleteAccount(accountId: string | undefined): Observable<any> {
+    return this.http.delete(`http://localhost:5000/accounts/${accountId}`).pipe(
+      take(1),
+      tap(() => {
+        this.accounts = this.accounts.filter(
+          (account) => account._id !== accountId
+        );
+        this.accountsUpdated.next([...this.accounts]);
+      })
+    );
+  }
+
+  updateAccount(account: AccountInterface): Observable<any> {
+    return this.http
+      .patch(`http://localhost:5000/accounts/${account._id}`, account)
+      .pipe(
+        take(1),
+        tap((data) => {
+          this.accounts = this.accounts.map((acc) => {
+            if (acc._id === account._id) {
+              return { ...account };
+            }
+            return acc;
+          });
+          this.accountsUpdated.next([...this.accounts]);
+        })
+      );
+  }
 }
