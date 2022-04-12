@@ -71,6 +71,13 @@ export class AccountService {
     return this.http.delete(`http://localhost:5000/accounts/${accountId}`).pipe(
       take(1),
       tap(() => {
+        if (this.accounts.length > 0) {
+          this.accounts.find((item, index) => {
+            if (item._id === accountId) {
+              this.setActiveAccount({ ...this.accounts[index - 1] });
+            }
+          });
+        }
         this.accounts = this.accounts.filter(
           (account) => account._id !== accountId
         );
