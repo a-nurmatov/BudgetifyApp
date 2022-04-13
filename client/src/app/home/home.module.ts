@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 import { SharedModule } from '../shared/shared.module';
+import { TransactionModule } from '../transaction/transaction.module';
 
 const routes: Routes = [
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    TransactionModule,
+  ],
 })
 export class HomeModule {}

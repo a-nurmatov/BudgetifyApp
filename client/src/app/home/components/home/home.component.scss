@@ -1,4 +1,84 @@
-app-button {
-  margin: 20px 0;
-  display: block;
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+.home {
+  display: flex;
+  gap: 20px;
+  padding-top: 10px;
+  height: 92vh;
+
+  main {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+
+  aside {
+    min-width: 25.5%;
+    padding-right: 20px;
+    height: 100%;
+  }
+
+  &__actions {
+    background-color: var.$bgColor;
+    position: sticky;
+    top: 0;
+  }
+
+  &__search {
+    @include mixin.flex-between();
+    background-color: var.$paperBg;
+    padding: 11.5px 20px;
+    border-radius: var.$borderRadius;
+    mat-icon {
+      min-width: fit-content;
+      color: gray;
+    }
+
+    input {
+      width: 100%;
+      outline: none;
+      border: none;
+      padding: 2px 10px;
+    }
+  }
+
+  &__filter {
+    @include mixin.flex-between();
+    padding: 10px 20px;
+  }
+
+  &__income-button {
+    background-color: var.$paperBg;
+    border-radius: var.$borderRadius;
+    fa-icon {
+      color: var.$textSuccess;
+    }
+  }
+  &__expense-button {
+    background-color: var.$paperBg;
+    border-radius: var.$borderRadius;
+    margin-left: 10px;
+    fa-icon {
+      color: var.$textDanger;
+    }
+  }
+
+  &__add-transaction {
+    background-color: var.$infoBg;
+    width: 100%;
+    padding: 8px 0;
+    border-radius: var.$borderRadius;
+
+    fa-icon {
+      color: var.$textLight;
+    }
+  }
+
+  fa-icon {
+    margin-right: 6px;
+  }
 }

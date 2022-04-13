@@ -11,8 +11,11 @@ export class HeaderComponent {
   navLinks: NavItem[] = navItems;
   @Input() isLoggedIn: boolean = false;
   @Output() logOutClicked: EventEmitter<void> = new EventEmitter<void>();
+  userFullName!: string | null;
 
-  constructor() {}
+  constructor() {
+    this.userFullName = localStorage.getItem('fullName');
+  }
 
   onClick(): boolean {
     this.logOutClicked.emit();

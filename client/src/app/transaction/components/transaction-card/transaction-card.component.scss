@@ -1,0 +1,30 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+.transaction {
+  @include mixin.paper(10px 20px);
+  @include mixin.flex-between(20px);
+  margin-bottom: 20px;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__content {
+    width: 100%;
+  }
+
+  &__category {
+    @include mixin.flex-center();
+    align-self: stretch;
+    min-width: 20%;
+    border-radius: var.$borderRadius;
+    background-color: var.$bgColor;
+  }
+
+  &__header {
+    @include mixin.flex-between();
+  }
+
+  fa-icon {
+    margin-right: 6px;
+  }
+}

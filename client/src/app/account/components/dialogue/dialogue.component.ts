@@ -6,7 +6,7 @@ import { getCurrencySymbol } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { take } from 'rxjs';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AccountInterface } from '../../types/account.interface';
 
 @Component({
@@ -34,7 +34,8 @@ export class DialogueComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public account: AccountInterface,
     private accountService: AccountService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     if (this.account) {
       this.addAccountForm.get('title')!.setValue(this.account.title);
@@ -59,11 +60,12 @@ export class DialogueComponent implements OnInit {
         .pipe(take(1))
         .subscribe(
           (data) => {
+            this.dialog.closeAll();
             this.submitStatus = true;
-            console.log(data);
             this.openSnackBar('Account successfully updated', 'close');
           },
           (error) => {
+            this.dialog.closeAll();
             this.submitStatus = false;
             this.openSnackBar('Account update failed', 'close');
           }

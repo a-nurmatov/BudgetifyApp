@@ -74,7 +74,8 @@ export class AccountDeleteConfirmComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public accountId: string | undefined,
     private snackBar: MatSnackBar,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private dialog: MatDialog
   ) {}
 
   deleteAccount(accountId: string | undefined): void {
@@ -83,10 +84,12 @@ export class AccountDeleteConfirmComponent {
       .pipe(take(1))
       .subscribe(
         (data) => {
+          this.dialog.closeAll();
           this.submitStatus = true;
           this.openSnackBar('Account successfully deleted', 'close');
         },
         (error) => {
+          this.dialog.closeAll();
           this.submitStatus = false;
           this.openSnackBar('Account deletion failed', 'close');
         }

@@ -6,5 +6,6 @@ export interface UserDataInterface {
     token: string;
     country: string;
     expiresIn: number | string;
+    fullName: string;
   };
 }

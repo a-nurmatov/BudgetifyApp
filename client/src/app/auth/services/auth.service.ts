@@ -26,6 +26,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('expiresIn');
+    localStorage.removeItem('country');
+    localStorage.removeItem('userId');
   }
 
   healthCheck(): Observable<any> {
@@ -40,5 +42,6 @@ export class AuthService {
     localStorage.setItem('expiresIn', expiresIn.toString());
     localStorage.setItem('country', res.user.country);
     localStorage.setItem('userId', res.user.id);
+    localStorage.setItem('fullName', res.user.fullName);
   }
 }

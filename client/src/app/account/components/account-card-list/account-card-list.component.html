@@ -3,8 +3,17 @@
     (click)="openDialogue()"
     class="account-card-list__add-button"
     mat-stroked-button
+    *ngIf="(userAccounts$ | async)?.length === 0"
   >
     <fa-icon [icon]="faPlus"></fa-icon> Add new account
+  </button>
+  <button
+    (click)="openDialogue()"
+    class="account-card-list__add-button-bottom"
+    mat-stroked-button
+    *ngIf="(userAccounts$ | async)?.length !== 0"
+  >
+    <fa-icon [icon]="faPlus"></fa-icon>
   </button>
 
   <app-account-card

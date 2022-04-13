@@ -10,7 +10,7 @@
     </ul>
     <button class="header__button" mat-button [matMenuTriggerFor]="beforeMenu">
       <mat-icon>person</mat-icon>
-      <span class="header_user-name">Abdurahim Nurmatov</span>
+      <span class="header_user-name">{{ userFullName }}</span>
     </button>
     <mat-menu #beforeMenu="matMenu" xPosition="before">
       <button (click)="onClick()" mat-menu-item>Log out</button>

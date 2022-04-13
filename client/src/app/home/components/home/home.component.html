@@ -1,1 +1,31 @@
-<p>home works!</p>
+<div class="home">
+  <main>
+    <div class="home__actions">
+      <div class="home__search">
+        <mat-icon>search</mat-icon>
+        <input type="text" placeholder="Search" />
+      </div>
+      <div class="home__filter">
+        <div>
+          <fa-icon [icon]="faArrowDownWideShort"></fa-icon> Transaction date
+        </div>
+        <div>
+          <button mat-button class="home__income-button">
+            <fa-icon [icon]="faCircleArrowDown"></fa-icon>
+            Incomes
+          </button>
+          <button mat-button class="home__expense-button">
+            <fa-icon [icon]="faCircleArrowUp"></fa-icon>
+            Expenses
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-transaction-card-list></app-transaction-card-list>
+  </main>
+  <aside>
+    <button mat-button class="home__add-transaction">
+      <fa-icon size="lg" [icon]="faCirclePlus"></fa-icon> Add transaction
+    </button>
+  </aside>
+</div>
