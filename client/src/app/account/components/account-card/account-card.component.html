@@ -1,0 +1,16 @@
+<div
+  [title]="account.title"
+  class="account-card"
+  [ngStyle]="activeAccount ? { opacity: '1' } : {}"
+>
+  <div class="account-card__body">
+    <p class="account-card__title">{{ account.title }}</p>
+    <p class="account-card__balance">{{ account.balance }}</p>
+  </div>
+  <div class="account-card__currency">{{ account.currency }}</div>
+  <fa-icon
+    (click)="viewDetails()"
+    class="account-card__details"
+    [icon]="faEye"
+  ></fa-icon>
+</div>

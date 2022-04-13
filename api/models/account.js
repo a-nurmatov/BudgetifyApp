@@ -12,18 +12,16 @@ const accountSchema = new Schema(
       ref: "User",
       required: [true, "Link to user required"],
     },
-    name: {
+    title: {
       type: String,
-      required: [true, "Name is required"],
+      required: [true, "Title is required"],
       maxlength: [128, "Maximum number of characters 128"],
-      lowercase: true,
       trim: true,
       unique: true,
     },
-    amount: {
+    balance: {
       type: Number,
-      min: 1,
-      required: [true, "Amount is required"],
+      default: 0,
     },
     currency: {
       type: String,

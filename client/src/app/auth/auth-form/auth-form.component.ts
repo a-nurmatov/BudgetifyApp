@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './auth-form.component.html',
   styleUrls: ['./auth-form.component.scss'],
 })
-export class AuthFormComponent implements OnInit {
+export class AuthFormComponent {
   hide: boolean = false;
 
   loginForm: FormGroup = new FormGroup({
@@ -29,10 +29,7 @@ export class AuthFormComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {}
-
   onSubmit(): void {
-    this.authService.healthCheck().subscribe((data) => console.log(data));
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe(
       (data) => {
@@ -40,7 +37,7 @@ export class AuthFormComponent implements OnInit {
       },
       (error) => {
         if (error.status === 401) {
-          this.openSnackBar('Wrong email or password', 'Close');
+          this.openSnackBar('Wrong email or password', '&#10761;');
         }
       }
     );

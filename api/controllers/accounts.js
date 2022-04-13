@@ -1,7 +1,7 @@
 import Account from "../models/account.js";
 
 export const getUserAccounts = async (req, res) => {
-  let { userId } = req.headers;
+  let { userId } = req.params;
   let accounts = await Account.find({ userId });
   res.json({
     message: "Handling GET request to /accounts",
@@ -9,13 +9,17 @@ export const getUserAccounts = async (req, res) => {
   });
 };
 
-export const addNewAccount = async (req, res) => {
-  let newAccount = new Account(req.body);
-  await newAccount.save();
-  res.json({
-    message: "Handling POST request to /accounts",
-    newAccount,
-  });
+export const addNewAccount = async (req, res, next) => {
+  try {
+    let newAccount = new Account(req.body);
+    await newAccount.save();
+    res.json({
+      message: "Handling POST request to /accounts",
+      newAccount,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getAccount = async (req, res) => {
@@ -27,27 +31,34 @@ export const getAccount = async (req, res) => {
   });
 };
 
-export const updateAccount = async (req, res) => {
-  let { accountId } = req.params;
-  let updatedAccount = await Account.findOneAndUpdate(
-    { _id: accountId },
-    req.body,
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-  res.json({
-    message: "Updated account with ID",
-    updatedAccount,
-  });
+export const updateAccount = async (req, res, next) => {
+  try {
+    let { accountId } = req.params;
+    let updatedAccount = await Account.findOneAndUpdate(
+      { _id: accountId },
+      req.body,
+      {
+        new: true,
+        runValidators: false,
+      }
+    );
+    res.json({
+      message: "Updated account with ID",
+      updatedAccount,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const deleteAccount = async (req, res) => {
-  let { accountId } = req.params;
-  let deletedAccount = await Account.findOneAndRemove({ _id: accountId });
-  res.json({
-    message: "Deleted account with ID " + accountId,
-    accounts: await Account.find(),
-  });
+export const deleteAccount = async (req, res, next) => {
+  try {
+    let { accountId } = req.params;
+    let deletedAccount = await Account.findOneAndRemove({ _id: accountId });
+    res.json({
+      message: "Deleted account with ID " + accountId,
+    });
+  } catch (error) {
+    next(error);
+  }
 };

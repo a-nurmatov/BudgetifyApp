@@ -1,7 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { UserData } from '../types/userData.model';
+import { UserDataInterface } from '../types/userData.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import { UserData } from '../types/userData.model';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<UserData> {
+  login(email: string, password: string): Observable<UserDataInterface> {
     return this.http
       .post('http://localhost:5000/users/login', { email, password })
       .pipe(tap((res: any) => this.setSession(res)));
@@ -34,9 +34,11 @@ export class AuthService {
     });
   }
 
-  private setSession(res: UserData): void {
+  private setSession(res: UserDataInterface): void {
     const expiresIn = Date.now() + Number(res.user.expiresIn);
     localStorage.setItem('token', res.user.token);
     localStorage.setItem('expiresIn', expiresIn.toString());
+    localStorage.setItem('country', res.user.country);
+    localStorage.setItem('userId', res.user.id);
   }
 }

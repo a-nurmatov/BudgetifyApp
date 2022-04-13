@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,10 +6,8 @@ import { Router } from '@angular/router';
   templateUrl: './login-redirect.component.html',
   styleUrls: ['./login-redirect.component.scss'],
 })
-export class LoginRedirectComponent implements OnInit {
+export class LoginRedirectComponent {
   constructor(private router: Router) {}
-
-  ngOnInit(): void {}
 
   onLogin(): void {
     this.router.navigate(['/login']);

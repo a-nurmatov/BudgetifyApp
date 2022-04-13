@@ -1,0 +1,19 @@
+<div class="account-card-list" *ngIf="userAccounts$; else spinnerBox">
+  <button
+    (click)="openDialogue()"
+    class="account-card-list__add-button"
+    mat-stroked-button
+  >
+    <fa-icon [icon]="faPlus"></fa-icon> Add new account
+  </button>
+
+  <app-account-card
+    *ngFor="let account of userAccounts$ | async; trackBy: cardTrackingFn"
+    [account]="account"
+    [activeAccount]="activeAccount._id === account._id"
+    (click)="onClick(account)"
+  ></app-account-card>
+</div>
+<ng-template #spinnerBox>
+  <mat-spinner class="spinner" diameter="20"></mat-spinner>
+</ng-template>

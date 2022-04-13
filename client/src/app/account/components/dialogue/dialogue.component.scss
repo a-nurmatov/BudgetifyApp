@@ -1,0 +1,46 @@
+@use "src/sass/mixins.scss" as mixin;
+@use "src/sass/variables.scss" as var;
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.dialog-body {
+  flex: 1;
+
+  &__row {
+    display: block;
+    margin-bottom: 20px;
+    mat-error {
+      font-size: 12px;
+    }
+  }
+}
+
+.dialog-header {
+  @include mixin.flex-between;
+  margin-bottom: 10px;
+
+  &__close-button {
+    padding: 0;
+    width: fit-content;
+  }
+
+  h1 {
+    margin: 0;
+  }
+}
+
+::ng-deep .snackbar-success {
+  background-color: var.$successBg;
+  color: var.$textLight !important;
+  button {
+    color: var.$textLight !important;
+  }
+}
+
+::ng-deep .snackbar-error {
+  background-color: var.$warningBg;
+  color: var.$textDanger !important;
+}

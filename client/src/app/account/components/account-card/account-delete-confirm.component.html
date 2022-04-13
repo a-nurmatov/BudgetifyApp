@@ -1,0 +1,17 @@
+<div class="delete-confirm">
+  <div class="delete-confirm__header">
+    <p>Delete Account</p>
+    <button mat-button mat-dialog-close class="dialog_header__close-button">
+      <fa-icon [icon]="faTimes"></fa-icon>
+    </button>
+  </div>
+  <div mat-dialog-conten class="delete-confirm__body">
+    <p>Are you sure you want to delete this account?</p>
+  </div>
+  <mat-dialog-actions class="dialog-body__actions" align="end">
+    <button mat-button mat-dialog-close (click)="deleteAccount(accountId)">
+      Yes
+    </button>
+    <button mat-button cdkFocusInitial mat-dialog-close>No</button>
+  </mat-dialog-actions>
+</div>
