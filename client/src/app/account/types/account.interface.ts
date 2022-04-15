@@ -8,4 +8,5 @@ export interface AccountInterface {
   updatedAt?: string;
   createdAt?: string;
   _v?: number;
+  uniqueness?: string;
 }

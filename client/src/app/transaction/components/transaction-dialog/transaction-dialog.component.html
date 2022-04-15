@@ -1,1 +1,63 @@
-<p>transaction-dialog works!</p>
+<div class="dialog-header">
+  <h1 mat-dialog-title>Add new transaction</h1>
+  <button mat-button mat-dialog-close class="dialog_header__close-button">
+    <fa-icon [icon]="faTimes"></fa-icon>
+  </button>
+</div>
+<mat-dialog-content class="dialog-body">
+  <form
+    id="transactionForm"
+    [formGroup]="transactionForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Transaction type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option [value]="'income'"> Income </mat-option>
+        <mat-option [value]="'expense'"> Expense </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Title</mat-label>
+      <input formControlName="title" matInput cdkFocusInitial />
+      <!-- <mat-error *ngIf="addAccountForm.invalid">{{
+        getTitleError()
+      }}</mat-error> -->
+    </mat-form-field>
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option [value]="'home'"> Home </mat-option>
+        <mat-option [value]="'sport'"> Sport </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input type="number" formControlName="title" matInput />
+      <!-- <mat-error *ngIf="addAccountForm.invalid">{{
+        getTitleError()
+      }}</mat-error> -->
+    </mat-form-field>
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Payment date</mat-label>
+      <input type="date" formControlName="date" matInput />
+      <!-- <mat-error *ngIf="addAccountForm.invalid">{{
+        getTitleError()
+      }}</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        formControlName="description"
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="5"
+      ></textarea>
+      <!-- <mat-error *ngIf="addAccountForm.invalid">{{
+        getDescriptionError()
+      }}</mat-error> -->
+    </mat-form-field>
+  </form>
+</mat-dialog-content>

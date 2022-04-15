@@ -27,6 +27,10 @@ export class AppComponent {
     );
   }
 
+  get isCategory(): boolean {
+    return this.location.path() !== '/categories';
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/login');

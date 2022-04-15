@@ -18,17 +18,17 @@ const transactionSchema = new Schema(
         message: "{VALUE} is not valid",
       },
     },
-    name: {
+    title: {
       type: String,
       required: [true, "Name required"],
     },
     categoryId: {
       type: Schema.Types.ObjectId,
       ref: "Category",
+      required: [true, "Link to category required"],
     },
     amount: {
       type: Number,
-      min: 1,
       required: [true, "Amount is required"],
     },
     date: {

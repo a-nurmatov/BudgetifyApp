@@ -1,5 +1,6 @@
-@use "src/sass/mixins.scss" as mixin;
 @use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
 :host {
   display: flex;
   height: 100%;
@@ -7,7 +8,7 @@
 }
 
 .dialog-header {
-  @include mixin.flex-between;
+  @include mixin.flex-between(20px);
   margin-bottom: 10px;
 
   &__close-button {

@@ -1,0 +1,43 @@
+<div class="category">
+  <div class="category__main">
+    <div class="category__search">
+      <mat-icon>search</mat-icon>
+      <input type="text" placeholder="Search" />
+    </div>
+    <div class="category__list" *ngIf="userCategories; else spinnerBox">
+      <app-category-card
+        *ngFor="let category of userCategories"
+        [category]="category"
+        (deleteCategoryClicked)="deleteConfirmation($event)"
+        (editCategoryClicked)="editCategoryForm($event)"
+      ></app-category-card>
+    </div>
+  </div>
+  <ng-template #spinnerBox>
+    <mat-spinner class="spinner" diameter="50"></mat-spinner>
+  </ng-template>
+  <div class="category__aside">
+    <button
+      (click)="incomeFilterCategories()"
+      (dblclick)="resetCategories()"
+      mat-button
+      class="category__income-button"
+    >
+      <fa-icon [icon]="faCircleArrowDown"></fa-icon>
+      Incomes
+    </button>
+    <button
+      (click)="expenseFilterCategories()"
+      (dblclick)="resetCategories()"
+      mat-button
+      class="category__expense-button"
+    >
+      <fa-icon [icon]="faCircleArrowUp"></fa-icon>
+      Expenses
+    </button>
+    <button mat-button (click)="addCategory()" class="category__add-category">
+      <fa-icon size="lg" [icon]="faCirclePlus"></fa-icon>
+      Add category
+    </button>
+  </div>
+</div>

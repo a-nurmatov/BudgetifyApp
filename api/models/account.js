@@ -17,7 +17,6 @@ const accountSchema = new Schema(
       required: [true, "Title is required"],
       maxlength: [128, "Maximum number of characters 128"],
       trim: true,
-      unique: true,
     },
     balance: {
       type: Number,
@@ -31,6 +30,11 @@ const accountSchema = new Schema(
     description: {
       type: String,
       maxlength: [256, "Maximum number of characters 256"],
+    },
+    uniqueness: {
+      type: String,
+      required: [true, "Uniqueness is required"],
+      unique: true,
     },
   },
   {

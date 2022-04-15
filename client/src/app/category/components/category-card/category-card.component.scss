@@ -1,0 +1,31 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+.category-card-income,
+.category-card-expense {
+  @include mixin.flex-between(20px);
+  padding: 17px 15px;
+  width: fit-content;
+  border-radius: var.$borderRadius;
+
+  fa-icon {
+    margin: 0 0 0 15px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.category-card-income {
+  border: 2px solid var.$textSuccess;
+  fa-icon:hover {
+    color: var.$textSuccess;
+  }
+}
+
+.category-card-expense {
+  border: 2px solid var.$textDanger;
+  fa-icon:hover {
+    color: var.$textDanger;
+  }
+}

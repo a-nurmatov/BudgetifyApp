@@ -39,7 +39,7 @@ export const updateAccount = async (req, res, next) => {
       req.body,
       {
         new: true,
-        runValidators: false,
+        runValidators: true,
       }
     );
     res.json({
@@ -47,6 +47,7 @@ export const updateAccount = async (req, res, next) => {
       updatedAccount,
     });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

@@ -21,11 +21,20 @@
         </div>
       </div>
     </div>
-    <app-transaction-card-list></app-transaction-card-list>
+    <div class="transaction-list">
+      <app-transaction-card></app-transaction-card>
+      <app-transaction-card></app-transaction-card>
+      <app-transaction-card></app-transaction-card>
+      <app-transaction-card></app-transaction-card>
+      <app-transaction-card></app-transaction-card>
+      <app-transaction-card></app-transaction-card>
+      <app-transaction-card></app-transaction-card>
+    </div>
   </main>
   <aside>
-    <button mat-button class="home__add-transaction">
-      <fa-icon size="lg" [icon]="faCirclePlus"></fa-icon> Add transaction
+    <button mat-button (click)="openDialog()" class="home__add-transaction">
+      <fa-icon size="lg" [icon]="faCirclePlus"></fa-icon>
+      Add transaction
     </button>
   </aside>
 </div>

@@ -27,6 +27,7 @@ export class AccountService {
           title,
           currency,
           description,
+          uniqueness: userId + title,
         }
       )
       .pipe(
@@ -87,8 +88,10 @@ export class AccountService {
   }
 
   updateAccount(account: AccountInterface): Observable<any> {
+    let updatedAccount = { ...account };
+    delete updatedAccount._id;
     return this.http
-      .patch(`http://localhost:5000/accounts/${account._id}`, account)
+      .patch(`http://localhost:5000/accounts/${account._id}`, updatedAccount)
       .pipe(
         tap((data) => {
           this.accounts = this.accounts.map((acc) => {

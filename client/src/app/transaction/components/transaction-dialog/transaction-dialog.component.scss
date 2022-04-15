@@ -1,0 +1,28 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+.dialog-header {
+  @include mixin.flex-between();
+  margin-bottom: 10px;
+
+  &__close-button {
+    padding: 0;
+    width: fit-content;
+  }
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.dialog-body {
+  flex: 1;
+
+  &__row {
+    display: block;
+    margin-bottom: 0px;
+    mat-error {
+      font-size: 12px;
+    }
+  }
+}

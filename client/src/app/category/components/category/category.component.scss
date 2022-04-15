@@ -1,0 +1,129 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+.category {
+  display: flex;
+  gap: 20px;
+  height: 92vh;
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 0;
+    width: 100%;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+
+  &__list {
+    display: flex;
+    align-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    flex: 1;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+
+  &__aside {
+    min-width: 19.4%;
+    padding: 10px 20px 0 0;
+    height: 100%;
+    button {
+      display: block;
+      padding: 8px 0;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+
+  &__search {
+    @include mixin.flex-between();
+    background-color: var.$paperBg;
+    padding: 11.5px 20px;
+    border-radius: var.$borderRadius;
+    mat-icon {
+      min-width: fit-content;
+      color: gray;
+    }
+
+    input {
+      width: 100%;
+      outline: none;
+      border: none;
+      padding: 2px 10px;
+    }
+  }
+
+  &__add-category {
+    background-color: var.$infoBg;
+    width: 100%;
+
+    border-radius: var.$borderRadius;
+
+    fa-icon {
+      color: var.$textLight;
+    }
+  }
+
+  fa-icon {
+    margin-right: 6px;
+  }
+
+  &__income-button {
+    background-color: var.$paperBg;
+    border-radius: var.$borderRadius;
+    fa-icon {
+      color: var.$textSuccess;
+    }
+  }
+  &__expense-button {
+    background-color: var.$paperBg;
+    border-radius: var.$borderRadius;
+    fa-icon {
+      color: var.$textDanger;
+    }
+  }
+}
+
+.delete-confirm {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  &__header {
+    @include mixin.flex-between;
+
+    p {
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    margin-top: 20px;
+  }
+}
+
+:ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #d963d2;
+}
+
+::ng-deep .snackbar-success {
+  background-color: var.$successBg;
+  color: var.$textLight !important;
+  button {
+    color: var.$textLight !important;
+  }
+}
+
+::ng-deep .snackbar-error {
+  background-color: var.$warningBg;
+  color: var.$textDanger !important;
+}

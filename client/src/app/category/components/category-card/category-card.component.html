@@ -1,0 +1,13 @@
+<div
+  [ngClass]="
+    category.type === 'income'
+      ? 'category-card-income'
+      : 'category-card-expense'
+  "
+>
+  <span>{{ category.title | titlecase }}</span>
+  <div>
+    <fa-icon (click)="editClick(category)" [icon]="faPen"></fa-icon>
+    <fa-icon (click)="deleteClick(category)" [icon]="faTrash"></fa-icon>
+  </div>
+</div>
