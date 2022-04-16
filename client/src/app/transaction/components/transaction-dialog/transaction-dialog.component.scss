@@ -67,3 +67,35 @@
     color: var.$textLight;
   }
 }
+
+.cancel-confirm {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  &__header {
+    @include mixin.flex-between;
+
+    p {
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    margin-top: 20px;
+  }
+}
+
+::ng-deep .snackbar-success {
+  background-color: var.$successBg;
+  color: var.$textLight !important;
+  button {
+    color: var.$textLight !important;
+  }
+}
+
+::ng-deep .snackbar-error {
+  background-color: var.$warningBg;
+  color: var.$textDanger !important;
+}

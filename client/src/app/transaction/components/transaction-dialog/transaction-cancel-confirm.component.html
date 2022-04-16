@@ -1,0 +1,15 @@
+<div class="cancel-confirm">
+  <div class="cancel-confirm__header">
+    <p>Delete Category</p>
+    <button mat-button mat-dialog-close class="dialog_header__close-button">
+      <fa-icon [icon]="faTimes"></fa-icon>
+    </button>
+  </div>
+  <div mat-dialog-conten class="cancel-confirm__body">
+    <p>This transaction will not be saved. Are you sure to cancel?</p>
+  </div>
+  <mat-dialog-actions class="dialog-body__actions" align="end">
+    <button (click)="cancel()" mat-button mat-dialog-close>Yes</button>
+    <button mat-button cdkFocusInitial mat-dialog-close>No</button>
+  </mat-dialog-actions>
+</div>

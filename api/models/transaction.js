@@ -11,33 +11,29 @@ const transactionSchema = new Schema(
     },
     type: {
       type: String,
-      default: "income",
       required: [true, "Type is required"],
-      enum: {
-        values: ["income", "expense"],
-        message: "{VALUE} is not valid",
-      },
     },
     title: {
       type: String,
       required: [true, "Name required"],
     },
-    categoryId: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
-      required: [true, "Link to category required"],
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        refPath: "transactionCategory",
+      },
+    ],
+    transactionCategory: {
+      type: String,
+      enum: ["ExpenseCategory", "IncomeCategory"],
     },
     amount: {
       type: Number,
       required: [true, "Amount is required"],
     },
     date: {
-      type: Date,
+      type: String,
       required: [true, "Date is required"],
-    },
-    fileId: {
-      type: Schema.Types.ObjectId,
-      ref: "File",
     },
   },
   {

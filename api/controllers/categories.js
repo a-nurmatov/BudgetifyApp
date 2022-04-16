@@ -10,6 +10,28 @@ export const getAllCategories = async (req, res) => {
   res.json({ message: "List of all categories", categories });
 };
 
+export const addListOfNewCategories = async (req, res, next) => {
+  try {
+    let { newCategoriesToAdd, type } = req.body;
+    if (type === "income") {
+      let incomeCategories = await IncomeCategory.insertMany(
+        newCategoriesToAdd
+      );
+      let response = incomeCategories.map((category) => category._id);
+      res.json({ message: "List of income categories", response });
+    } else if (type === "expense") {
+      let expenseCategories = await ExpenseCategory.insertMany(
+        newCategoriesToAdd
+      );
+      let response = expenseCategories.map((category) => category._id);
+      res.json({ message: "List of expense categories", response });
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 export const addNewIncomeCategory = async (req, res, next) => {
   try {
     let newCategory = new IncomeCategory(req.body);

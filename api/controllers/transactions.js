@@ -9,6 +9,16 @@ export const getAccountTransactions = async (req, res) => {
   });
 };
 
+export const createTransaction = async (req, res, next) => {
+  try {
+    let newTransaction = new Transaction(req.body);
+    await newTransaction.save();
+    res.json({ message: "Transaction created", newTransaction });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getIncomeTransactions = async (req, res) => {
   let { accountId } = req.params;
   let transactions = await Transaction.find({ accountId: accountId }).where({

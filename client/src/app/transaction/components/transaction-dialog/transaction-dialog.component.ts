@@ -18,6 +18,11 @@ import {
   faCircleArrowDown,
   faCircleArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
+import { AccountInterface } from 'src/app/account/types/account.interface';
+import { AccountService } from 'src/app/account/services/account.service';
+import { TransactionService } from '../../service/transaction.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-transaction-dialog',
@@ -29,6 +34,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
   faCircleArrowDown = faCircleArrowDown;
   faCircleArrowUp = faCircleArrowUp;
 
+  submitStatus: boolean = false;
   filterState: string = 'income';
   separatorKeysCodes: number[] = [ENTER, COMMA];
   categoryCtrl = new FormControl('', [Validators.required]);
@@ -37,6 +43,10 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
   allCategories: string[] = [];
   categoriesData!: CategoryInterface[];
   categoriesDataSubscription!: Subscription;
+
+  activeAccount!: AccountInterface;
+  activeAccountSubscription!: Subscription;
+  currency!: string;
 
   transactionForm: FormGroup = new FormGroup({
     // type: new FormControl('', [Validators.required]),
@@ -50,7 +60,13 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     description: new FormControl('', [Validators.maxLength(256)]),
   });
 
-  constructor(private categoryService: CategoryService) {
+  constructor(
+    private categoryService: CategoryService,
+    private accountService: AccountService,
+    private transactionService: TransactionService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
     this.categoryCtrl.valueChanges.subscribe((value) => {
       if (value) {
         this.filteredCategories = this.allCategories.filter((category) => {
@@ -63,12 +79,25 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     this.setValues();
   }
 
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: this.submitStatus ? 'snackbar-success' : 'snackbar-error',
+    });
+  }
+
   ngOnInit(): void {
     this.isDateValid();
   }
 
   ngOnDestroy(): void {
     this.categoriesDataSubscription.unsubscribe();
+    this.activeAccountSubscription.unsubscribe();
+  }
+
+  cancelConfirm() {
+    this.dialog.open(TransactionCancelConfirmComponent);
   }
 
   setIncomeFilter() {
@@ -110,11 +139,67 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
         this.categoriesData = data;
         this.filterCategories(this.filterState);
       });
+
+    this.activeAccountSubscription = this.accountService
+      .getActiveAccount()
+      .subscribe((data) => {
+        this.activeAccount = data;
+        this.currency = this.activeAccount.currency;
+      });
   }
 
   onSubmit(): void {
-    console.log(this.transactionForm.value);
-    console.log(this.categories);
+    let userId = localStorage.getItem('userId');
+    let { title, amount, date, description } = this.transactionForm.value;
+    let accountId = this.activeAccount._id;
+    let categoryIds: string[] = [];
+    let notExistingCategories: string[] = [];
+
+    this.categories.forEach((category) => {
+      let check = this.categoriesData
+        .filter((category) => {
+          return category.type === this.filterState;
+        })
+        .find((data) => data.title === category)?._id;
+      if (check) {
+        categoryIds.push(check);
+      } else {
+        notExistingCategories.push(category);
+      }
+    });
+
+    this.categoryService
+      .addListOfNewCategories(notExistingCategories, userId, this.filterState)
+      .pipe(take(1))
+      .subscribe((data) => {
+        data.response.forEach((categoryId) => {
+          categoryIds.push(categoryId);
+        });
+        let newTransaction = {
+          type: this.filterState,
+          title,
+          amount,
+          date: new Date(date).toLocaleDateString(),
+          description,
+          accountId,
+          categories: categoryIds,
+        };
+
+        this.transactionService
+          .addNewTransaction(newTransaction)
+          .pipe(take(1))
+          .subscribe(
+            (data) => {
+              this.dialog.closeAll();
+              this.submitStatus = true;
+              this.openSnackBar('Transaction added successfully', 'Close');
+            },
+            (error) => {
+              this.submitStatus = false;
+              this.openSnackBar('Transaction failed', 'Close');
+            }
+          );
+      });
   }
 
   isDateValid() {
@@ -210,5 +295,19 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     return this.allCategories.filter((category) =>
       category.toLowerCase().includes(filterValue)
     );
+  }
+}
+
+@Component({
+  selector: 'app-transaction-cancel-confirm',
+  templateUrl: './transaction-cancel-confirm.component.html',
+  styleUrls: ['./transaction-dialog.component.scss'],
+})
+export class TransactionCancelConfirmComponent {
+  faTimes = faTimes;
+
+  constructor(private dialog: MatDialog) {}
+  cancel() {
+    this.dialog.closeAll();
   }
 }

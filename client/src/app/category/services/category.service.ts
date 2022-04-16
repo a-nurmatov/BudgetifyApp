@@ -12,6 +12,29 @@ export class CategoryService {
 
   constructor(private http: HttpClient) {}
 
+  addListOfNewCategories(
+    newCategories: string[],
+    userId: string | null,
+    type: string
+  ): Observable<{ message: string; response: string[] }> {
+    let newCategoriesToAdd = newCategories.map((category) => {
+      let uniqueness = userId + category;
+      return {
+        title: category,
+        type,
+        userId,
+        uniqueness,
+      };
+    });
+    return this.http.post<{ message: string; response: string[] }>(
+      'http://localhost:5000/categories/multiple',
+      {
+        newCategoriesToAdd,
+        type,
+      }
+    );
+  }
+
   addNewCateogry(
     title: string,
     type: string,

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { AccountInterface } from '../types/account.interface';
 
 @Injectable({
@@ -9,7 +9,9 @@ import { AccountInterface } from '../types/account.interface';
 export class AccountService {
   private accounts: AccountInterface[] = [];
   private accountsUpdated = new Subject<AccountInterface[]>();
-  private activeAccount = new Subject<AccountInterface>();
+  private activeAccount = new BehaviorSubject<AccountInterface>(
+    this.accounts[0]
+  );
 
   constructor(private http: HttpClient) {}
 

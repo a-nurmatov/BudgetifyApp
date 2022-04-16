@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addListOfNewCategories,
   addNewExpenseCategory,
   addNewIncomeCategory,
   deleteExpenseCategory,
@@ -12,6 +13,7 @@ import {
 const router = express.Router();
 
 router.get("/:userId", getAllCategories);
+router.post("/multiple", addListOfNewCategories);
 router.post("/income", addNewIncomeCategory);
 router.post("/expense", addNewExpenseCategory);
 router.patch("/income/:categoryId", updateIncomeCategory);
