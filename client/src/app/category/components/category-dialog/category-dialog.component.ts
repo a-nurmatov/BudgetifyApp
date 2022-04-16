@@ -94,7 +94,6 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
         width: '400px',
       });
       editConfirmRef.afterClosed().subscribe((result) => {
-        console.log(result);
         if (result) {
           this.categoryService
             .updateCategory(updatedCategory)

@@ -17,7 +17,6 @@ export const addListOfNewCategories = async (req, res, next) => {
     let response = newCategories.map((category) => category._id);
     res.json({ message: "List of new categories added", response });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -28,7 +27,6 @@ export const addNewCategory = async (req, res, next) => {
     await newCategory.save();
     res.json({ message: "New category created", newCategory });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -43,7 +41,6 @@ export const updatedCategory = async (req, res, next) => {
     );
     res.json({ message: "Category updated", updatedCategory });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -54,7 +51,6 @@ export const deleteCategory = async (req, res, next) => {
     let deletedCategory = await Category.findOneAndDelete({ _id: categoryId });
     res.json({ message: "Category deleted", deletedCategory });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

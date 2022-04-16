@@ -47,7 +47,6 @@ export const updateAccount = async (req, res, next) => {
       updatedAccount,
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

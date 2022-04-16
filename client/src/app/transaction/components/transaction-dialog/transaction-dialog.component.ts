@@ -202,7 +202,6 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
           .pipe(take(1))
           .subscribe(
             (data) => {
-              console.log(data.newTransaction);
               this.dialog.closeAll();
               this.accountService.setActiveAccount(this.activeAccount);
               this.submitStatus = true;

@@ -86,7 +86,6 @@ export class HomeComponent implements OnDestroy {
           this.accountTransactionsSubscription = this.transactionService
             .requestAccountTransactions(account._id)
             .subscribe((data) => {
-              console.log(data.transactions);
               this.accountTransactions = data.transactions;
               this.tempAccountTransactions = data.transactions;
               if (this.filterState === 'all') {
