@@ -101,25 +101,25 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     this.activeAccountSubscription.unsubscribe();
   }
 
-  cancelConfirm() {
+  cancelConfirm(): void {
     this.dialog.open(TransactionCancelConfirmComponent);
   }
 
-  setIncomeFilter() {
+  setIncomeFilter(): void {
     this.categories = [];
     this.filteredCategories = [];
     this.filterState = 'income';
     this.filterCategories(this.filterState);
   }
 
-  setExpenseFilter() {
+  setExpenseFilter(): void {
     this.categories = [];
     this.filteredCategories = [];
     this.filterState = 'expense';
     this.filterCategories(this.filterState);
   }
 
-  filterCategories(state: string) {
+  filterCategories(state: string): void {
     this.allCategories = this.categoriesData
       .filter((category) => category.type === state)
       .map((category) => {
@@ -129,7 +129,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       });
   }
 
-  setValues() {
+  setValues(): void {
     let userId = localStorage.getItem('userId');
     this.categoryService
       .requestUserCategories(userId)
@@ -216,7 +216,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       });
   }
 
-  isDateValid() {
+  isDateValid(): void {
     this.transactionForm.get('date')!.valueChanges.subscribe((value) => {
       let today: Date = new Date();
 
@@ -228,13 +228,13 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     });
   }
 
-  getTypeError() {
+  getTypeError(): string {
     return this.transactionForm.get('type')!.errors?.['required']
       ? 'You must enter a type'
       : '';
   }
 
-  getTitleError() {
+  getTitleError(): string {
     return this.transactionForm.get('title')!.errors?.['required']
       ? 'Title is required'
       : this.transactionForm.get('title')!.errors?.['maxlength']
@@ -244,13 +244,13 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       : '';
   }
 
-  getAmountError() {
+  getAmountError(): string {
     return this.transactionForm.get('amount')!.errors?.['required']
       ? 'Amount is required'
       : '';
   }
 
-  getDateError() {
+  getDateError(): string {
     return this.transactionForm.get('date')!.errors?.['required']
       ? 'Date is required'
       : this.transactionForm.get('date')!.errors?.['futureDate']
@@ -258,7 +258,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       : '';
   }
 
-  getPayeeError() {
+  getPayeeError(): string {
     return this.transactionForm.get('payee')!.errors?.['required']
       ? 'Payee is required'
       : this.transactionForm.get('payee')!.errors?.['maxlength']
@@ -268,7 +268,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       : '';
   }
 
-  getDescriptionError() {
+  getDescriptionError(): string {
     return this.transactionForm.get('description')!.errors?.['maxlength']
       ? 'Max length is 256'
       : '';
@@ -331,7 +331,8 @@ export class TransactionCancelConfirmComponent {
   faTimes = faTimes;
 
   constructor(private dialog: MatDialog) {}
-  cancel() {
+
+  cancel(): void {
     this.dialog.closeAll();
   }
 }

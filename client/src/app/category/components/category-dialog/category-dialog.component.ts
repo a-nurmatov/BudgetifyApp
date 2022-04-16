@@ -109,7 +109,7 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTitleError() {
+  getTitleError(): string {
     return this.addCategoryForm.get('title')!.errors?.['required']
       ? 'Title is required'
       : this.addCategoryForm.get('title')!.errors?.['maxlength']
@@ -121,7 +121,7 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
       : '';
   }
 
-  getTypeError() {
+  getTypeError(): string {
     return this.addCategoryForm.get('type')!.errors?.['required']
       ? 'Type is required'
       : '';
