@@ -20,6 +20,7 @@ export class TransactionCardComponent implements OnInit {
   @Input() transaction!: TransactionInterface;
   type!: string;
   activeAccount!: AccountInterface;
+  date!: string;
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
@@ -30,5 +31,18 @@ export class TransactionCardComponent implements OnInit {
         this.activeAccount = account;
       });
     this.type = this.transaction.type;
+    this.date = this.formatDate(new Date(this.transaction.date));
+  }
+
+  padTo2Digits(num: number): string {
+    return num.toString().padStart(2, '0');
+  }
+
+  formatDate(date: Date): string {
+    return [
+      this.padTo2Digits(date.getDate()),
+      this.padTo2Digits(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('/');
   }
 }
