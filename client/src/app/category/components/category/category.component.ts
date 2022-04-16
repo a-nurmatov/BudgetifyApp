@@ -34,8 +34,6 @@ export class CategoryComponent implements OnDestroy {
     this.getInitialData();
   }
 
-  ngOnInit(): void {}
-
   incomeFilterCategories(): void {
     this.filterState = 'income';
     this.userCategories = this.tempUserCategories.filter(

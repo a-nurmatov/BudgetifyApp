@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -29,6 +31,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatMenuModule,
@@ -43,6 +47,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
 })
 export class SharedModule {}

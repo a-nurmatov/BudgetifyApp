@@ -46,7 +46,7 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
       this.categories
         .filter((category) => category?.type === this.category?.type)
         .forEach((category) => {
-          if (category.title === this.category.title) {
+          if (category.title === this.category?.title) {
             return;
           } else if (category.title === title) {
             this.addCategoryForm.get('title')!.setErrors({

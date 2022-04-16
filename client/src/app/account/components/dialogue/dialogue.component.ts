@@ -39,13 +39,15 @@ export class DialogueComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
+    this.setUserDefaultCurrency();
     this.setValues();
   }
 
   isTitleAvailable(): void {
     this.addAccountForm.get('title')!.valueChanges.subscribe((title) => {
+      console.log(this.accounts);
       this.accounts.map((account) => {
-        if (account.title === this.account.title) {
+        if (account.title === this.account?.title) {
           return;
         } else if (account.title === title) {
           this.addAccountForm.get('title')!.setErrors({
@@ -57,7 +59,6 @@ export class DialogueComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.setUserDefaultCurrency();
     this.isTitleAvailable();
   }
 

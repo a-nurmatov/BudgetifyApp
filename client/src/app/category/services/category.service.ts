@@ -30,7 +30,6 @@ export class CategoryService {
       )
       .pipe(
         tap((data) => {
-          console.log(data);
           this.categories.unshift(data.newCategory);
           this.categoriesUpdated.next([...this.categories]);
         })

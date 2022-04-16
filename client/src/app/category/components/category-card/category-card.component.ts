@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 
 import { CategoryInterface } from '../../types/category.interface';
@@ -8,7 +8,7 @@ import { CategoryInterface } from '../../types/category.interface';
   templateUrl: './category-card.component.html',
   styleUrls: ['./category-card.component.scss'],
 })
-export class CategoryCardComponent implements OnInit {
+export class CategoryCardComponent {
   faTrash = faTrash;
   faPen = faPen;
 
@@ -16,8 +16,6 @@ export class CategoryCardComponent implements OnInit {
   @Output() deleteCategoryClicked: EventEmitter<any> = new EventEmitter();
   @Output() editCategoryClicked: EventEmitter<any> = new EventEmitter();
   constructor() {}
-
-  ngOnInit(): void {}
 
   deleteClick(category: CategoryInterface): void {
     this.deleteCategoryClicked.emit(category);

@@ -8,12 +8,7 @@ export const navItems: NavItem[] = [
   },
   {
     id: 'stats',
-    title: 'Stats',
-    route: '/stats',
-  },
-  {
-    id: 'admin',
-    title: 'Admin',
-    route: '/admin',
+    title: 'Statistic',
+    route: '/statistic',
   },
 ];
