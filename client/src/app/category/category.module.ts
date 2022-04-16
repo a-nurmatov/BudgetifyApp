@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
-import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
+import {
+  CategoryDialogComponent,
+  EditConfirmationComponent,
+} from './components/category-dialog/category-dialog.component';
 import {
   CategoryComponent,
   CategoryDeleteConfirmComponent,
@@ -24,6 +27,7 @@ const routes: Routes = [
     CategoryDialogComponent,
     CategoryComponent,
     CategoryDeleteConfirmComponent,
+    EditConfirmationComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
 })

@@ -6,7 +6,7 @@
 </div>
 <mat-dialog-content class="dialog-body">
   <form id="categoryForm" [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="dialog-body__row" appearance="outline">
+    <!-- <mat-form-field class="dialog-body__row" appearance="outline">
       <mat-label>Category type</mat-label>
       <mat-select formControlName="type" cdkFocusInitial>
         <mat-option [value]="'income'"> Income </mat-option>
@@ -15,7 +15,29 @@
       <mat-error *ngIf="addCategoryForm.invalid">{{
         getTypeError()
       }}</mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
+    <div class="dialog-body__actions">
+      <button
+        type="button"
+        (click)="setIncomeFilter()"
+        mat-button
+        [ngClass]="filterState === 'income' ? 'dialog-body__income-button' : ''"
+      >
+        <fa-icon [icon]="faCircleArrowDown"></fa-icon>
+        Incomes
+      </button>
+      <button
+        type="button"
+        mat-button
+        (click)="setExpenseFilter()"
+        [ngClass]="
+          filterState === 'expense' ? 'dialog-body__expense-button' : ''
+        "
+      >
+        <fa-icon [icon]="faCircleArrowUp"></fa-icon>
+        Expenses
+      </button>
+    </div>
     <mat-form-field class="dialog-body__row" appearance="outline">
       <mat-label>Title</mat-label>
       <input formControlName="title" matInput />

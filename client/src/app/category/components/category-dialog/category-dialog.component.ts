@@ -2,7 +2,11 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTimes,
+  faCircleArrowDown,
+  faCircleArrowUp,
+} from '@fortawesome/free-solid-svg-icons';
 import { Subscription, take } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
 import { CategoryInterface } from '../../types/category.interface';
@@ -14,7 +18,10 @@ import { CategoryInterface } from '../../types/category.interface';
 })
 export class CategoryDialogComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
+  faCircleArrowUp = faCircleArrowUp;
+  faCircleArrowDown = faCircleArrowDown;
   submitStatus: boolean = false;
+  filterState: string = 'income';
 
   categories!: CategoryInterface[];
   categoriesSubscription!: Subscription;
@@ -25,7 +32,6 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
       Validators.maxLength(128),
       Validators.pattern('[a-zA-Z0-9 ]*'),
     ]),
-    type: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -33,35 +39,47 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
     private categoryService: CategoryService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
-  ) {
-    this.setValues();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isTitleAvailable();
+    this.setValues();
   }
 
   isTitleAvailable(): void {
     this.addCategoryForm.get('title')!.valueChanges.subscribe((title) => {
-      console.log(title);
+      title = title.trim().toLowerCase();
       this.categories
-        .filter((category) => category?.type === this.category?.type)
+        ?.filter((category) => category.type === this.filterState)
         .forEach((category) => {
-          if (category.title === this.category?.title) {
+          if (this.category?.title === title) {
             return;
-          } else if (category.title === title) {
+          }
+          if (category.title === title) {
             this.addCategoryForm.get('title')!.setErrors({
               titleTaken: true,
             });
           }
         });
     });
-    console.log();
+  }
+
+  setIncomeFilter(): void {
+    this.filterState = 'income';
+    let val = this.addCategoryForm.get('title')?.value;
+    this.addCategoryForm.get('title')?.setValue(val);
+  }
+
+  setExpenseFilter(): void {
+    this.filterState = 'expense';
+    let val = this.addCategoryForm.get('title')?.value;
+    this.addCategoryForm.get('title')?.setValue(val);
   }
 
   onSubmit(): void {
     let userId = localStorage.getItem('userId');
-    let { title, type } = this.addCategoryForm.value;
+    let { title } = this.addCategoryForm.value;
+    let type = this.filterState;
     title = title.trim().toLowerCase();
     let uniqueness = userId + title + type;
     if (this.category) {
@@ -71,23 +89,32 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
         type,
         uniqueness,
       };
-      this.categoryService
-        .updateCategory(updatedCategory)
-        .pipe(take(1))
-        .subscribe(
-          (data) => {
-            this.dialog.closeAll();
-            this.submitStatus = true;
-            this.openSnackBar('Account successfully updated', 'close');
-          },
-          (error) => {
-            this.submitStatus = false;
-            this.openSnackBar(
-              'Account update failed, please check title and try again',
-              'close'
+      let editConfirmRef = this.dialog.open(EditConfirmationComponent, {
+        height: '350px',
+        width: '400px',
+      });
+      editConfirmRef.afterClosed().subscribe((result) => {
+        console.log(result);
+        if (result) {
+          this.categoryService
+            .updateCategory(updatedCategory)
+            .pipe(take(1))
+            .subscribe(
+              (data) => {
+                this.dialog.closeAll();
+                this.submitStatus = true;
+                this.openSnackBar('Account successfully updated', 'close');
+              },
+              (error) => {
+                this.submitStatus = false;
+                this.openSnackBar(
+                  'Account update failed, please check title and try again',
+                  'close'
+                );
+              }
             );
-          }
-        );
+        }
+      });
     } else {
       this.categoryService
         .addNewCateogry(title, type, userId, uniqueness)
@@ -121,12 +148,6 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
       : '';
   }
 
-  getTypeError(): string {
-    return this.addCategoryForm.get('type')!.errors?.['required']
-      ? 'Type is required'
-      : '';
-  }
-
   openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 5000,
@@ -139,8 +160,8 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
     if (this.category) {
       this.addCategoryForm.patchValue({
         title: this.category.title,
-        type: this.category.type,
       });
+      this.filterState = this.category.type;
     }
 
     let userId = localStorage.getItem('userId');
@@ -161,4 +182,13 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.categoriesSubscription.unsubscribe();
   }
+}
+
+@Component({
+  selector: 'app-edit-confirmation',
+  templateUrl: `./edit-confirmation.component.html`,
+  styleUrls: ['./category-dialog.component.scss'],
+})
+export class EditConfirmationComponent {
+  faTimes = faTimes;
 }

@@ -31,6 +31,32 @@
       font-size: 12px;
     }
   }
+
+  &__actions {
+    button {
+      padding: 8px 24px;
+      margin: 10px 0;
+      border-radius: var.$borderRadius;
+      fa-icon {
+        margin-right: 6px;
+      }
+      &:first-of-type {
+        margin-right: 10px;
+      }
+      transition: 0.3s;
+    }
+  }
+
+  &__income-button {
+    background-color: var.$successBg;
+    color: var.$textLight;
+    margin-right: 10px;
+  }
+
+  &__expense-button {
+    background-color: var.$textDanger;
+    color: var.$textLight;
+  }
 }
 
 ::ng-deep .snackbar-success {
@@ -44,4 +70,23 @@
 ::ng-deep .snackbar-error {
   background-color: var.$warningBg;
   color: var.$textDanger !important;
+}
+
+.edit-confirm {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  &__header {
+    @include mixin.flex-between;
+
+    p {
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    margin-top: 20px;
+  }
 }
