@@ -6,30 +6,47 @@
         <input type="text" placeholder="Search" />
       </div>
       <div class="home__filter">
-        <button mat-button>
+        <button
+          (dblclick)="decreaseDateSort()"
+          (click)="increaseDateSort()"
+          mat-button
+        >
           <fa-icon [icon]="faArrowDownWideShort"></fa-icon> Transaction date
         </button>
         <div>
-          <button mat-button class="home__income-button">
+          <button
+            (click)="incomeFilterTransactions()"
+            (dblclick)="reset()"
+            mat-button
+            class="home__income-button"
+          >
             <fa-icon [icon]="faCircleArrowDown"></fa-icon>
             Incomes
           </button>
-          <button mat-button class="home__expense-button">
+          <button
+            (click)="expenseFilterTransactions()"
+            (dblclick)="reset()"
+            mat-button
+            class="home__expense-button"
+          >
             <fa-icon [icon]="faCircleArrowUp"></fa-icon>
             Expenses
           </button>
         </div>
       </div>
     </div>
-    <div class="transaction-list">
-      <app-transaction-card></app-transaction-card>
-      <app-transaction-card></app-transaction-card>
-      <app-transaction-card></app-transaction-card>
-      <app-transaction-card></app-transaction-card>
-      <app-transaction-card></app-transaction-card>
-      <app-transaction-card></app-transaction-card>
-      <app-transaction-card></app-transaction-card>
+    <div class="transaction-list" *ngIf="accountTransactions; else spinnerBox">
+      <app-transaction-card
+        *ngFor="let transaction of accountTransactions"
+        [transaction]="transaction"
+      ></app-transaction-card>
     </div>
+    <p class="no-transaction" *ngIf="accountTransactions?.length === 0">
+      You have not made any transactions yet...
+    </p>
+    <ng-template #spinnerBox>
+      <mat-spinner class="spinner" diameter="50"></mat-spinner>
+    </ng-template>
   </main>
   <aside>
     <button mat-button (click)="openDialog()" class="home__add-transaction">

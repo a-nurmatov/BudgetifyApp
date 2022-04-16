@@ -1,15 +1,33 @@
 <div class="transaction">
-  <div class="transaction__category">Home</div>
+  <div class="transaction__type">
+    <fa-icon
+      size="2x"
+      [icon]="type === 'income' ? faCircleArrowUP : faCircleArrowDown"
+      [ngClass]="{
+        'transaction__type-income': type === 'income',
+        'transaction__type-expense': type === 'expense'
+      }"
+    ></fa-icon>
+  </div>
   <div class="transaction__content">
     <div class="transaction__header">
-      <p>Flat rent for March</p>
-      <p>-650.00$</p>
+      <p>{{ transaction.title }}</p>
     </div>
     <div class="transaction__footer">
       <p>
-        <fa-icon [icon]="faCircleArrowUP"></fa-icon> <span>Expense</span> ∙
-        <span>03/03/2019</span> ∙ <span>John Smith</span>
+        <span>{{ transaction.type }}</span> ∙
+        <span>{{ transaction.date }}</span> ∙
+        <span>{{ transaction.payee }}</span>
       </p>
     </div>
   </div>
+  <p
+    [ngClass]="{
+      'transaction__type-income': type === 'income',
+      'transaction__type-expense': type === 'expense'
+    }"
+  >
+    <span *ngIf="type === 'expense'">-</span>{{ transaction.amount
+    }}{{ activeAccount.currency }}
+  </p>
 </div>

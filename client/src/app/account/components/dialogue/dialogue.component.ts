@@ -45,7 +45,6 @@ export class DialogueComponent implements OnInit, OnDestroy {
 
   isTitleAvailable(): void {
     this.addAccountForm.get('title')!.valueChanges.subscribe((title) => {
-      console.log(this.accounts);
       this.accounts.map((account) => {
         if (account.title === this.account?.title) {
           return;
@@ -79,6 +78,7 @@ export class DialogueComponent implements OnInit, OnDestroy {
         .pipe(take(1))
         .subscribe(
           (data) => {
+            this.accountService.setActiveAccount(data.updatedAccount);
             this.dialog.closeAll();
             this.submitStatus = true;
             this.openSnackBar('Account successfully updated', 'close');

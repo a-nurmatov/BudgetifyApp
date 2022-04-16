@@ -1,67 +1,45 @@
-import IncomeCategory from "../models/incomeCategory.js";
-import ExpenseCategory from "../models/expenseCategory.js";
+import Category from "../models/category.js";
 
-export const getAllCategories = async (req, res) => {
-  let { userId } = req.params;
-  let incomeCategories = await IncomeCategory.find({ userId });
-  let expenseCategories = await ExpenseCategory.find({ userId });
-
-  let categories = [...incomeCategories, ...expenseCategories];
-  res.json({ message: "List of all categories", categories });
+export const getAllCategories = async (req, res, next) => {
+  try {
+    let { userId } = req.params;
+    let categories = await Category.find({ userId });
+    res.json({ message: "List of all categories", categories });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const addListOfNewCategories = async (req, res, next) => {
   try {
-    let { newCategoriesToAdd, type } = req.body;
-    if (type === "income") {
-      let incomeCategories = await IncomeCategory.insertMany(
-        newCategoriesToAdd
-      );
-      let response = incomeCategories.map((category) => category._id);
-      res.json({ message: "List of income categories", response });
-    } else if (type === "expense") {
-      let expenseCategories = await ExpenseCategory.insertMany(
-        newCategoriesToAdd
-      );
-      let response = expenseCategories.map((category) => category._id);
-      res.json({ message: "List of expense categories", response });
-    }
+    let { newCategoriesToAdd } = req.body;
+    let newCategories = await Category.insertMany(newCategoriesToAdd);
+    let response = newCategories.map((category) => category._id);
+    res.json({ message: "List of new categories added", response });
   } catch (error) {
     console.log(error);
     next(error);
   }
 };
 
-export const addNewIncomeCategory = async (req, res, next) => {
+export const addNewCategory = async (req, res, next) => {
   try {
-    let newCategory = new IncomeCategory(req.body);
+    let newCategory = new Category(req.body);
     await newCategory.save();
-    res.json({ message: "Added new category", newCategory });
+    res.json({ message: "New category created", newCategory });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
 
-export const addNewExpenseCategory = async (req, res, next) => {
-  try {
-    let newCategory = new ExpenseCategory(req.body);
-    await newCategory.save();
-    res.json({ message: "Added new category", newCategory });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const updateIncomeCategory = async (req, res, next) => {
+export const updatedCategory = async (req, res, next) => {
   try {
     let { categoryId } = req.params;
-    let updatedCategory = await IncomeCategory.findOneAndUpdate(
+    let updatedCategory = await Category.findOneAndUpdate(
       { _id: categoryId },
       req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
+      { new: true, runValidators: true }
     );
     res.json({ message: "Category updated", updatedCategory });
   } catch (error) {
@@ -70,36 +48,13 @@ export const updateIncomeCategory = async (req, res, next) => {
   }
 };
 
-export const updateExpenseCategory = async (req, res, next) => {
+export const deleteCategory = async (req, res, next) => {
   try {
     let { categoryId } = req.params;
-    let updatedCategory = await ExpenseCategory.findOneAndUpdate(
-      { _id: categoryId },
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    res.json({ message: "Category updated", updatedCategory });
+    let deletedCategory = await Category.findOneAndDelete({ _id: categoryId });
+    res.json({ message: "Category deleted", deletedCategory });
   } catch (error) {
     console.log(error);
     next(error);
   }
-};
-
-export const deleteIncomeCategory = async (req, res) => {
-  let { categoryId } = req.params;
-  let deletedCategory = await IncomeCategory.findOneAndRemove({
-    _id: categoryId,
-  });
-  res.json({ message: "Category deleted" });
-};
-
-export const deleteExpenseCategory = async (req, res) => {
-  let { categoryId } = req.params;
-  let deletedCategory = await ExpenseCategory.findOneAndRemove({
-    _id: categoryId,
-  });
-  res.json({ message: "Category deleted" });
 };

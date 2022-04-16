@@ -8,7 +8,9 @@ import { CategoryInterface } from '../types/category.interface';
 })
 export class CategoryService {
   private categories: CategoryInterface[] = [];
-  private categoriesUpdated = new Subject<CategoryInterface[]>();
+  private categoriesUpdated: Subject<CategoryInterface[]> = new Subject<
+    CategoryInterface[]
+  >();
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +20,7 @@ export class CategoryService {
     type: string
   ): Observable<{ message: string; response: string[] }> {
     let newCategoriesToAdd = newCategories.map((category) => {
-      let uniqueness = userId + category;
+      let uniqueness = userId + category + type;
       return {
         title: category,
         type,
@@ -30,7 +32,6 @@ export class CategoryService {
       'http://localhost:5000/categories/multiple',
       {
         newCategoriesToAdd,
-        type,
       }
     );
   }
@@ -43,7 +44,7 @@ export class CategoryService {
   ): Observable<{ message: string; newCategory: CategoryInterface }> {
     return this.http
       .post<{ message: string; newCategory: CategoryInterface }>(
-        `http://localhost:5000/categories/${type}`,
+        `http://localhost:5000/categories`,
         {
           title,
           type,
@@ -78,9 +79,7 @@ export class CategoryService {
 
   deleteCategory(category: CategoryInterface): Observable<any> {
     return this.http
-      .delete(
-        `http://localhost:5000/categories/${category.type}/${category._id}`
-      )
+      .delete(`http://localhost:5000/categories/${category._id}`)
       .pipe(
         tap(() => {
           this.categories = this.categories.filter(
@@ -96,7 +95,7 @@ export class CategoryService {
     delete updatedCategory._id;
     return this.http
       .patch(
-        `http://localhost:5000/categories/${category.type}/${category._id}`,
+        `http://localhost:5000/categories/${category._id}`,
         updatedCategory
       )
       .pipe(

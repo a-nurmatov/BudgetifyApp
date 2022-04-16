@@ -56,6 +56,11 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       Validators.pattern('[a-zA-Z0-9 ]*'),
     ]),
     amount: new FormControl('', [Validators.required]),
+    payee: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(128),
+      Validators.pattern('[a-zA-Z0-9 ]*'),
+    ]),
     date: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.maxLength(256)]),
   });
@@ -150,7 +155,13 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     let userId = localStorage.getItem('userId');
-    let { title, amount, date, description } = this.transactionForm.value;
+    let title: string = this.transactionForm.get('title')!.value;
+    let amount: number = this.transactionForm.get('amount')!.value;
+    let date: string = new Date(
+      this.transactionForm.get('date')!.value
+    ).toLocaleDateString();
+    let description: string = this.transactionForm.get('description')!.value;
+    let payee: string = this.transactionForm.get('payee')!.value;
     let accountId = this.activeAccount._id;
     let categoryIds: string[] = [];
     let notExistingCategories: string[] = [];
@@ -179,8 +190,9 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
           type: this.filterState,
           title,
           amount,
-          date: new Date(date).toLocaleDateString(),
+          date,
           description,
+          payee,
           accountId,
           categories: categoryIds,
         };
@@ -190,7 +202,9 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
           .pipe(take(1))
           .subscribe(
             (data) => {
+              console.log(data.newTransaction);
               this.dialog.closeAll();
+              this.accountService.setActiveAccount(this.activeAccount);
               this.submitStatus = true;
               this.openSnackBar('Transaction added successfully', 'Close');
             },
@@ -241,6 +255,16 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       ? 'Date is required'
       : this.transactionForm.get('date')!.errors?.['futureDate']
       ? 'Future date is not allowed'
+      : '';
+  }
+
+  getPayeeError() {
+    return this.transactionForm.get('payee')!.errors?.['required']
+      ? 'Payee is required'
+      : this.transactionForm.get('payee')!.errors?.['maxlength']
+      ? 'Max length is 128'
+      : this.transactionForm.get('payee')!.errors?.['pattern']
+      ? 'Only letters and numbers are allowed'
       : '';
   }
 

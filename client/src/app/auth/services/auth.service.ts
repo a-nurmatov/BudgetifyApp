@@ -74,14 +74,14 @@ export class AuthService {
     let userId = localStorage.getItem('userId');
     if (!localStorage.getItem('firstLogin')) {
       defaultExpenseCategories.map((title) => {
-        let uniqueness = userId + title;
+        let uniqueness = userId + title + 'expense';
         this.categoryService
           .addNewCateogry(title, 'expense', userId, uniqueness)
           .pipe(take(1))
           .subscribe();
       });
       defaultIncomeCategories.map((title) => {
-        let uniqueness = userId + title;
+        let uniqueness = userId + title + 'income';
         this.categoryService
           .addNewCateogry(title, 'income', userId, uniqueness)
           .pipe(take(1))

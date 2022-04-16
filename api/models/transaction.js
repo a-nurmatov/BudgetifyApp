@@ -20,13 +20,9 @@ const transactionSchema = new Schema(
     categories: [
       {
         type: Schema.Types.ObjectId,
-        refPath: "transactionCategory",
+        ref: "Category",
       },
     ],
-    transactionCategory: {
-      type: String,
-      enum: ["ExpenseCategory", "IncomeCategory"],
-    },
     amount: {
       type: Number,
       required: [true, "Amount is required"],
@@ -34,6 +30,13 @@ const transactionSchema = new Schema(
     date: {
       type: String,
       required: [true, "Date is required"],
+    },
+    payee: {
+      type: String,
+      required: [true, "Payee is required"],
+    },
+    description: {
+      type: String,
     },
   },
   {

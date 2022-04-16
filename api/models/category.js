@@ -3,7 +3,7 @@ import uniqueValidator from "mongoose-unique-validator";
 
 const { model, Schema } = mongoose;
 
-const expenseCategorySchema = new Schema({
+const categorySchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -24,8 +24,8 @@ const expenseCategorySchema = new Schema({
   },
 });
 
-expenseCategorySchema.plugin(uniqueValidator, {
+categorySchema.plugin(uniqueValidator, {
   message: "{PATH} already in use.",
 });
 
-export default model("ExpenseCategory", expenseCategorySchema);
+export default model("Category", categorySchema);

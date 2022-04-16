@@ -1,24 +1,18 @@
 import express from "express";
 import {
   addListOfNewCategories,
-  addNewExpenseCategory,
-  addNewIncomeCategory,
-  deleteExpenseCategory,
-  deleteIncomeCategory,
+  addNewCategory,
+  deleteCategory,
   getAllCategories,
-  updateExpenseCategory,
-  updateIncomeCategory,
+  updatedCategory,
 } from "../controllers/categories.js";
 
 const router = express.Router();
 
 router.get("/:userId", getAllCategories);
 router.post("/multiple", addListOfNewCategories);
-router.post("/income", addNewIncomeCategory);
-router.post("/expense", addNewExpenseCategory);
-router.patch("/income/:categoryId", updateIncomeCategory);
-router.patch("/expense/:categoryId", updateExpenseCategory);
-router.delete("/income/:categoryId", deleteIncomeCategory);
-router.delete("/expense/:categoryId", deleteExpenseCategory);
+router.post("", addNewCategory);
+router.patch("/:categoryId", updatedCategory);
+router.delete("/:categoryId", deleteCategory);
 
 export default router;

@@ -4,6 +4,7 @@
   @include mixin.paper(10px 20px);
   @include mixin.flex-between(20px);
   margin-bottom: 20px;
+  text-transform: capitalize;
   &:hover {
     cursor: pointer;
   }
@@ -12,19 +13,26 @@
     width: 100%;
   }
 
-  &__category {
+  &__type {
     @include mixin.flex-center();
     align-self: stretch;
-    min-width: 20%;
+    min-width: 12%;
     border-radius: var.$borderRadius;
-    background-color: var.$bgColor;
+  }
+
+  &__type-income {
+    color: var.$textSuccess;
+    font-size: 20px;
+    margin: 0;
+  }
+
+  &__type-expense {
+    color: var.$textDanger;
+    font-size: 20px;
+    margin: 0;
   }
 
   &__header {
     @include mixin.flex-between();
-  }
-
-  fa-icon {
-    margin-right: 6px;
   }
 }

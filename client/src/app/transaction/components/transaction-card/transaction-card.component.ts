@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  faCircleArrowUp,
+  faCircleArrowDown,
+} from '@fortawesome/free-solid-svg-icons';
+import { pipe, take } from 'rxjs';
+import { AccountService } from 'src/app/account/services/account.service';
+import { AccountInterface } from 'src/app/account/types/account.interface';
+import { CategoryInterface } from 'src/app/category/types/category.interface';
+import { TransactionInterface } from '../../types/transaction.interface';
 
 @Component({
   selector: 'app-transaction-card',
@@ -8,7 +16,19 @@ import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
 })
 export class TransactionCardComponent implements OnInit {
   faCircleArrowUP = faCircleArrowUp;
-  constructor() {}
+  faCircleArrowDown = faCircleArrowDown;
+  @Input() transaction!: TransactionInterface;
+  type!: string;
+  activeAccount!: AccountInterface;
+  constructor(private accountService: AccountService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.accountService
+      .getActiveAccount()
+      .pipe(take(1))
+      .subscribe((account) => {
+        this.activeAccount = account;
+      });
+    this.type = this.transaction.type;
+  }
 }

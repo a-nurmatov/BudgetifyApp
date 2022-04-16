@@ -1,12 +1,18 @@
 import Transaction from "../models/transaction.js";
 
-export const getAccountTransactions = async (req, res) => {
-  let { accountId } = req.params;
-  let transactions = await Transaction.find({ accountId: accountId });
-  res.json({
-    message: "All account transactions",
-    transactions,
-  });
+export const getAccountTransactions = async (req, res, next) => {
+  try {
+    let { accountId } = req.params;
+    let transactions = await Transaction.find({
+      accountId: accountId,
+    }).populate("categories");
+    res.json({
+      message: "All account transactions",
+      transactions,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const createTransaction = async (req, res, next) => {

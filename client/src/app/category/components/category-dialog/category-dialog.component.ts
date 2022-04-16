@@ -43,6 +43,7 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
 
   isTitleAvailable(): void {
     this.addCategoryForm.get('title')!.valueChanges.subscribe((title) => {
+      console.log(title);
       this.categories
         .filter((category) => category?.type === this.category?.type)
         .forEach((category) => {
@@ -55,13 +56,14 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
           }
         });
     });
+    console.log();
   }
 
   onSubmit(): void {
     let userId = localStorage.getItem('userId');
     let { title, type } = this.addCategoryForm.value;
     title = title.trim().toLowerCase();
-    let uniqueness = userId + title;
+    let uniqueness = userId + title + type;
     if (this.category) {
       let updatedCategory = {
         ...this.category,

@@ -112,6 +112,14 @@
     </mat-form-field>
 
     <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Payee</mat-label>
+      <input formControlName="payee" matInput />
+      <mat-error *ngIf="transactionForm.invalid">{{
+        getPayeeError()
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="dialog-body__row" appearance="outline">
       <mat-label>Description</mat-label>
       <textarea
         formControlName="description"
