@@ -11,6 +11,7 @@ import { AccountService } from 'src/app/account/services/account.service';
 import { TransactionDialogComponent } from 'src/app/transaction/components/transaction-dialog/transaction-dialog.component';
 import { TransactionService } from 'src/app/transaction/service/transaction.service';
 import { TransactionInterface } from 'src/app/transaction/types/transaction.interface';
+import { TransactionDetailComponent } from '../dialog/transaction-detail.component';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +30,7 @@ export class HomeComponent implements OnDestroy {
   activeAccountSubscription!: Subscription;
   filterState: string = 'all';
   dateSort: string = 'decrease';
+  currency!: string;
 
   constructor(
     private dialog: MatDialog,
@@ -83,6 +85,7 @@ export class HomeComponent implements OnDestroy {
       .getActiveAccount()
       .subscribe((account) => {
         if (account?._id) {
+          this.currency = account.currency;
           this.accountTransactionsSubscription = this.transactionService
             .requestAccountTransactions(account._id)
             .subscribe((data) => {
@@ -108,5 +111,13 @@ export class HomeComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.accountTransactionsSubscription?.unsubscribe();
     this.activeAccountSubscription?.unsubscribe();
+  }
+
+  transactionDetails(transaction: TransactionInterface): void {
+    this.dialog.open(TransactionDetailComponent, {
+      height: '520px',
+      width: '600px',
+      data: { transaction, currency: this.currency },
+    });
   }
 }

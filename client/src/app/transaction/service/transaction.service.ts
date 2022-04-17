@@ -47,4 +47,40 @@ export class TransactionService {
   getAccountTransactions(): Observable<TransactionInterface[]> {
     return this.transactionsUpdated.asObservable();
   }
+
+  updateTransaction(
+    transaction: TransactionInterface
+  ): Observable<{ message: string; updatedTransaction: TransactionInterface }> {
+    let updatedTransaction = { ...transaction };
+    delete updatedTransaction._id;
+    return this.http
+      .patch<{
+        message: string;
+        updatedTransaction: TransactionInterface;
+      }>(`http://localhost:5000/transactions/${transaction._id}`, transaction)
+      .pipe(
+        tap((data) => {
+          this.transactions = this.transactions.map((transaction) => {
+            if (transaction._id === data.updatedTransaction._id) {
+              return data.updatedTransaction;
+            }
+            return transaction;
+          });
+          this.transactionsUpdated.next([...this.transactions]);
+        })
+      );
+  }
+
+  deleteTransaction(transactionId: string | undefined): Observable<any> {
+    return this.http
+      .delete(`http://localhost:5000/transactions/${transactionId}`)
+      .pipe(
+        tap(() => {
+          this.transactions = this.transactions.filter(
+            (transaction) => transaction._id !== transactionId
+          );
+          this.transactionsUpdated.next([...this.transactions]);
+        })
+      );
+  }
 }

@@ -37,6 +37,7 @@
     </div>
     <div class="transaction-list" *ngIf="accountTransactions; else spinnerBox">
       <app-transaction-card
+        (click)="transactionDetails(transaction)"
         *ngFor="let transaction of accountTransactions"
         [transaction]="transaction"
       ></app-transaction-card>

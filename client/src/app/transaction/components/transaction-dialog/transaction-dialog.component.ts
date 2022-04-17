@@ -4,6 +4,7 @@ import {
   ElementRef,
   ViewChild,
   OnDestroy,
+  Inject,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -21,8 +22,9 @@ import {
 import { AccountInterface } from 'src/app/account/types/account.interface';
 import { AccountService } from 'src/app/account/services/account.service';
 import { TransactionService } from '../../service/transaction.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TransactionInterface } from '../../types/transaction.interface';
 
 @Component({
   selector: 'app-transaction-dialog',
@@ -55,7 +57,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       Validators.maxLength(128),
       Validators.pattern('[a-zA-Z0-9 ]*'),
     ]),
-    amount: new FormControl('', [Validators.required]),
+    amount: new FormControl('', [Validators.required, Validators.min(1)]),
     payee: new FormControl('', [
       Validators.required,
       Validators.maxLength(128),
@@ -70,7 +72,8 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private transactionService: TransactionService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public transaction: TransactionInterface
   ) {
     this.categoryCtrl.valueChanges.subscribe((value) => {
       if (value) {
@@ -129,7 +132,24 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       });
   }
 
+  setFormValues() {
+    this.transactionForm.get('title')!.setValue(this.transaction.title);
+    this.transactionForm.get('amount')!.setValue(this.transaction.amount);
+    this.transactionForm.get('payee')!.setValue(this.transaction.payee);
+    this.transactionForm.get('date')!.setValue(new Date(this.transaction.date));
+    this.transactionForm
+      .get('description')!
+      .setValue(this.transaction.description);
+    this.filterState = this.transaction.type;
+    this.transaction.categories.forEach((category) => {
+      this.categories.push(JSON.parse(JSON.stringify(category)).title);
+    });
+  }
+
   setValues(): void {
+    if (this.transaction) {
+      this.setFormValues();
+    }
     let userId = localStorage.getItem('userId');
     this.categoryService
       .requestUserCategories(userId)
@@ -179,51 +199,110 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.categoryService
-      .addListOfNewCategories(notExistingCategories, userId, this.filterState)
-      .pipe(take(1))
-      .subscribe((data) => {
-        data.response.forEach((categoryId) => {
-          categoryIds.push(categoryId);
-        });
-        let newTransaction = {
-          type: this.filterState,
-          title,
-          amount,
-          date,
-          description,
-          payee,
-          accountId,
-          categories: categoryIds,
-        };
+    if (this.transaction) {
+      let newTransaction = {
+        ...this.transaction,
+        type: this.filterState,
+        title,
+        amount,
+        date,
+        description,
+        payee,
+        accountId,
+        categories: categoryIds,
+      };
 
-        this.transactionService
-          .addNewTransaction(newTransaction)
-          .pipe(take(1))
-          .subscribe(
-            (data) => {
-              this.dialog.closeAll();
-              let newAccount = {
-                ...this.activeAccount,
-                balance:
-                  this.activeAccount.balance +
-                  amount * this.multiplier(this.filterState),
-              };
-              this.accountService
-                .updateAccount(newAccount)
-                .pipe(take(1))
-                .subscribe((data) => {
-                  this.accountService.setActiveAccount(data.updatedAccount);
-                  this.submitStatus = true;
-                  this.openSnackBar('Transaction added successfully', 'Close');
-                });
-            },
-            (error) => {
-              this.submitStatus = false;
-              this.openSnackBar('Transaction failed', 'Close');
-            }
-          );
-      });
+      this.categoryService
+        .addListOfNewCategories(notExistingCategories, userId, this.filterState)
+        .pipe(take(1))
+        .subscribe((data) => {
+          data.response.forEach((categoryId) => {
+            categoryIds.push(categoryId);
+          });
+          this.transactionService
+            .updateTransaction(newTransaction)
+            .pipe(take(1))
+            .subscribe(
+              (data) => {
+                this.dialog.closeAll();
+                let newAccount = {
+                  ...this.activeAccount,
+                  balance:
+                    this.activeAccount.balance +
+                    this.updateAmount(
+                      this.filterState,
+                      amount,
+                      this.transaction.amount
+                    ),
+                };
+                this.accountService
+                  .updateAccount(newAccount)
+                  .pipe(take(1))
+                  .subscribe((data) => {
+                    this.accountService.setActiveAccount(data.updatedAccount);
+                    this.submitStatus = true;
+                    this.openSnackBar(
+                      'Transaction updated successfully',
+                      'Close'
+                    );
+                  });
+              },
+              (error) => {
+                this.submitStatus = false;
+                this.openSnackBar('Transaction update failed', 'OK');
+              }
+            );
+        });
+    } else {
+      this.categoryService
+        .addListOfNewCategories(notExistingCategories, userId, this.filterState)
+        .pipe(take(1))
+        .subscribe((data) => {
+          data.response.forEach((categoryId) => {
+            categoryIds.push(categoryId);
+          });
+          let newTransaction = {
+            type: this.filterState,
+            title,
+            amount,
+            date,
+            description,
+            payee,
+            accountId,
+            categories: categoryIds,
+          };
+
+          this.transactionService
+            .addNewTransaction(newTransaction)
+            .pipe(take(1))
+            .subscribe(
+              (data) => {
+                this.dialog.closeAll();
+                let newAccount = {
+                  ...this.activeAccount,
+                  balance:
+                    this.activeAccount.balance +
+                    amount * this.multiplier(this.filterState),
+                };
+                this.accountService
+                  .updateAccount(newAccount)
+                  .pipe(take(1))
+                  .subscribe((data) => {
+                    this.accountService.setActiveAccount(data.updatedAccount);
+                    this.submitStatus = true;
+                    this.openSnackBar(
+                      'Transaction added successfully',
+                      'Close'
+                    );
+                  });
+              },
+              (error) => {
+                this.submitStatus = false;
+                this.openSnackBar('Transaction failed', 'Close');
+              }
+            );
+        });
+    }
   }
 
   isDateValid(): void {
@@ -257,6 +336,8 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
   getAmountError(): string {
     return this.transactionForm.get('amount')!.errors?.['required']
       ? 'Amount is required'
+      : this.transactionForm.get('amount')!.errors?.['min']
+      ? 'Min amount is 1'
       : '';
   }
 
@@ -336,6 +417,15 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       return -1;
     }
     return 1;
+  }
+
+  updateAmount(state: string, newAmount: number, oldAmount: number): number {
+    if (state === 'expense') {
+      return oldAmount - newAmount;
+    } else if (state === 'income') {
+      return newAmount - oldAmount;
+    }
+    return 0;
   }
 }
 

@@ -77,6 +77,8 @@ export class AccountService {
                 this.setActiveAccount({ ...this.accounts[index - 1] });
               } else if (this.accounts[index + 1]) {
                 this.setActiveAccount({ ...this.accounts[index + 1] });
+              } else {
+                this.setActiveAccount({ ...this.accounts[0] });
               }
             }
           });

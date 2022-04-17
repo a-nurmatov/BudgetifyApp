@@ -1,5 +1,7 @@
 <div class="dialog-header">
-  <h1 mat-dialog-title>Add new transaction</h1>
+  <h1 mat-dialog-title>
+    {{ transaction ? "Edit transaction" : "Add new transaction" }}
+  </h1>
   <button mat-button mat-dialog-close class="dialog_header__close-button">
     <fa-icon [icon]="faTimes"></fa-icon>
   </button>
@@ -112,7 +114,7 @@
     </mat-form-field>
 
     <mat-form-field class="dialog-body__row" appearance="outline">
-      <mat-label>Payee</mat-label>
+      <mat-label>Payee / Payor</mat-label>
       <input formControlName="payee" matInput />
       <mat-error *ngIf="transactionForm.invalid">{{
         getPayeeError()
@@ -143,6 +145,6 @@
     [disabled]="transactionForm.invalid || categories.length === 0"
     form="transactionForm"
   >
-    Add
+    {{ transaction ? "Save" : "Add" }}
   </button>
 </mat-dialog-actions>

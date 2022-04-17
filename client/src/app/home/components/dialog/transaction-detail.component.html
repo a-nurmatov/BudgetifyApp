@@ -1,0 +1,82 @@
+<div class="transaction-info">
+  <div class="transaction-info__header">
+    <p>Transaction details</p>
+    <div>
+      <button
+        (click)="editTransactionForm(data.transaction)"
+        mat-button
+        class="dialog_header__close-button"
+      >
+        <fa-icon
+          class="transaction-info__edit-button"
+          [icon]="faEdit"
+        ></fa-icon>
+      </button>
+      <button
+        (click)="deleteTransactionConfirm(data.transaction)"
+        mat-button
+        class="dialog_header__close-button"
+      >
+        <fa-icon
+          class="transaction-info__delete-button"
+          [icon]="faTrash"
+        ></fa-icon>
+      </button>
+      <button mat-button mat-dialog-close class="dialog_header__close-button">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <div mat-dialog-content class="transaction-info__body">
+    <h1 class="transaction-info__title">
+      {{ data.transaction.title | titlecase }}
+    </h1>
+
+    <div class="transaction-info__amount">
+      <button
+        [ngClass]="
+          data.transaction.type === 'expense'
+            ? 'expense-button'
+            : 'income-button'
+        "
+        mat-button
+      >
+        <fa-icon
+          [icon]="
+            data.transaction.type === 'income'
+              ? faCircleArrowDown
+              : faCircleArrowUp
+          "
+        ></fa-icon
+        >{{ data.transaction.type }}
+      </button>
+      <h1 [ngClass]="data.transaction.type === 'income' ? 'income' : 'expense'">
+        {{ data.transaction.type === "expense" ? "-" : ""
+        }}{{ data.transaction.amount }}{{ data.currency }}
+      </h1>
+    </div>
+    <div class="transaction-info__categories">
+      <p>Categories:</p>
+      <mat-chip-list aria-label="Fish selection">
+        <mat-chip *ngFor="let category of categories">{{
+          category.title
+        }}</mat-chip>
+      </mat-chip-list>
+    </div>
+    <div class="transaction-info__date">
+      <p>Date:</p>
+      <span>{{ data.transaction.date | date }}</span>
+    </div>
+    <div class="transaction-info__payee">
+      <p>Payee / Payor:</p>
+      <span>{{ data.transaction.payee }}</span>
+    </div>
+    <div class="transaction-info__description">
+      <p>Description:</p>
+      <span>{{ data.transaction.description }}</span>
+    </div>
+  </div>
+  <mat-dialog-actions class="dialog-body__actions" align="end">
+    <button mat-button cdkFocusInitial [mat-dialog-close]="false">Close</button>
+  </mat-dialog-actions>
+</div>

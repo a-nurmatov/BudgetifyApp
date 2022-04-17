@@ -1,12 +1,12 @@
-<div
-  [title]="account.title"
-  class="account-card"
-  [ngStyle]="activeAccount ? { opacity: '1' } : {}"
->
+<div class="account-card" [ngStyle]="activeAccount ? { opacity: '1' } : {}">
   <div class="account-card__body">
-    <p class="account-card__title">{{ account.title | titlecase }}</p>
-    <p class="account-card__balance">{{ account.balance | number: "1.2-2" }}</p>
+    <p [title]="account.title" class="account-card__title">
+      {{ account.title | titlecase }}
+    </p>
+    <div class="account-card__currency">{{ account.currency }}</div>
   </div>
-  <div class="account-card__currency">{{ account.currency }}</div>
+  <p class="account-card__balance" [title]="account.balance">
+    {{ account.balance | number: "1.2-2" }}
+  </p>
   <span (click)="viewDetails()" class="account-card__details">Details</span>
 </div>

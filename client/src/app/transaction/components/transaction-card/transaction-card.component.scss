@@ -4,7 +4,6 @@
   @include mixin.paper(10px 20px);
   @include mixin.flex-between(20px);
   margin-bottom: 20px;
-  text-transform: capitalize;
   &:hover {
     cursor: pointer;
   }

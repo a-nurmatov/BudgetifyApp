@@ -2,7 +2,6 @@
 @use "src/sass/mixins.scss" as mixin;
 
 .account-card {
-  @include mixin.flex-items-start;
   background: var.$cardGradient;
   max-width: 350px;
   min-width: 250px;
@@ -22,7 +21,7 @@
   }
 
   &__body {
-    padding: 5px;
+    @include mixin.flex-between();
   }
 
   &__title {
@@ -36,7 +35,11 @@
 
   &__balance {
     font-size: 32px;
-    margin-top: 40px;
+    margin: 20px 0 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 5px;
   }
 
   &__currency {
@@ -52,7 +55,7 @@
   &__details {
     position: absolute;
     right: 20px;
-    bottom: 20px;
+    bottom: 15px;
     font-size: 14px;
   }
 }
