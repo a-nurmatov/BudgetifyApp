@@ -106,7 +106,7 @@ export class HomeComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.accountTransactionsSubscription.unsubscribe();
-    this.activeAccountSubscription.unsubscribe();
+    this.accountTransactionsSubscription?.unsubscribe();
+    this.activeAccountSubscription?.unsubscribe();
   }
 }

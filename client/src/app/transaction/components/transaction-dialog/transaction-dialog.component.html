@@ -94,7 +94,7 @@
 
     <mat-form-field class="dialog-body__row" appearance="outline">
       <mat-label>Amount ({{ currency }})</mat-label>
-      <input type="number" formControlName="amount" matInput />
+      <input step="0.01" type="number" formControlName="amount" matInput />
       <mat-error *ngIf="transactionForm.invalid">{{
         getAmountError()
       }}</mat-error>

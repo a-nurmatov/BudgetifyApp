@@ -159,7 +159,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     let amount: number = this.transactionForm.get('amount')!.value;
     let date: string = new Date(
       this.transactionForm.get('date')!.value
-    ).toLocaleDateString();
+    ).toDateString();
     let description: string = this.transactionForm.get('description')!.value;
     let payee: string = this.transactionForm.get('payee')!.value;
     let accountId = this.activeAccount._id;
@@ -203,9 +203,20 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
           .subscribe(
             (data) => {
               this.dialog.closeAll();
-              this.accountService.setActiveAccount(this.activeAccount);
-              this.submitStatus = true;
-              this.openSnackBar('Transaction added successfully', 'Close');
+              let newAccount = {
+                ...this.activeAccount,
+                balance:
+                  this.activeAccount.balance +
+                  amount * this.multiplier(this.filterState),
+              };
+              this.accountService
+                .updateAccount(newAccount)
+                .pipe(take(1))
+                .subscribe((data) => {
+                  this.accountService.setActiveAccount(data.updatedAccount);
+                  this.submitStatus = true;
+                  this.openSnackBar('Transaction added successfully', 'Close');
+                });
             },
             (error) => {
               this.submitStatus = false;
@@ -318,6 +329,13 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     return this.allCategories.filter((category) =>
       category.toLowerCase().includes(filterValue)
     );
+  }
+
+  multiplier(state: string): number {
+    if (this.filterState === 'expense') {
+      return -1;
+    }
+    return 1;
   }
 }
 

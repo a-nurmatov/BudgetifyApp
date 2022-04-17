@@ -2,7 +2,7 @@
   <div class="transaction__type">
     <fa-icon
       size="2x"
-      [icon]="type === 'income' ? faCircleArrowUP : faCircleArrowDown"
+      [icon]="type === 'income' ? faCircleArrowDown : faCircleArrowUP"
       [ngClass]="{
         'transaction__type-income': type === 'income',
         'transaction__type-expense': type === 'expense'
