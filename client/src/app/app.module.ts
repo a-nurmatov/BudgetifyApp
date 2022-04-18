@@ -12,6 +12,7 @@ import { HomeModule } from './home/home.module';
 import { AccountModule } from './account/account.module';
 import { CategoryModule } from './category/category.module';
 import { MomentDateModule } from '@angular/material-moment-adapter';
+import { StatisticModule } from './statistic/statistic.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
     AccountModule,
     CategoryModule,
     MomentDateModule,
+    StatisticModule,
   ],
   providers: [
     {

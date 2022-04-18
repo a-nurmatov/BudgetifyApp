@@ -1,0 +1,33 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+.button-group {
+  margin-top: 12px;
+}
+
+.category,
+.monthly {
+  padding: 20px 20px 20px 0;
+}
+
+.category {
+  @include mixin.flex-between;
+  align-items: flex-start;
+  &__date {
+    width: 400px;
+  }
+
+  &__expense {
+    @include mixin.paper;
+    width: 400px;
+    margin: 20px 0;
+  }
+}
+
+.monthly {
+  @include mixin.flex-between;
+  align-items: flex-start;
+  &__date {
+    width: 400px;
+  }
+}

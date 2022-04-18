@@ -1,0 +1,15 @@
+.table-cover {
+  &__paginator {
+    width: 550px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  &__table-cover {
+    border-radius: 10px 10px 0 0;
+  }
+
+  table {
+    width: 550px;
+    border-radius: 10px;
+  }
+}
