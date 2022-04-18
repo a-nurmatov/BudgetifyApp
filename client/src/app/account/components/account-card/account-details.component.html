@@ -24,11 +24,11 @@
   <div mat-dialog-content class="account-info__body">
     <div class="account-info__body__title">
       <p>Title:</p>
-      <p>{{ account.title }}</p>
+      <p>{{ account.title | titlecase }}</p>
     </div>
     <div class="account-info__body__balance">
       <p>Balance:</p>
-      <p>{{ account.balance }}</p>
+      <p>{{ account.balance | number: "1.2-2" }}</p>
     </div>
     <div class="account-info__body__currency">
       <p>Currency:</p>

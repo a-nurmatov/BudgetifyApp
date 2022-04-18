@@ -62,13 +62,19 @@
     border-radius: var.$borderRadius;
   }
 
+  .home__filter-button-active {
+    background-color: var.$paperBg;
+  }
+
   &__income-button {
     background-color: var.$paperBg;
+    transition: 0.3s;
     fa-icon {
       color: var.$textSuccess;
     }
   }
   &__expense-button {
+    transition: 0.3s;
     background-color: var.$paperBg;
     margin-left: 10px;
     fa-icon {
@@ -77,17 +83,18 @@
   }
 
   &__add-transaction {
-    background-color: var.$infoBg;
+    background: var.$cardGradient;
     width: 100%;
     padding: 8px 0;
     border-radius: var.$borderRadius;
-
-    fa-icon {
-      color: var.$textLight;
-    }
+    color: var.$textLight;
   }
 
   fa-icon {
     margin-right: 6px;
   }
+}
+
+.ml-1 {
+  margin-left: 10px;
 }

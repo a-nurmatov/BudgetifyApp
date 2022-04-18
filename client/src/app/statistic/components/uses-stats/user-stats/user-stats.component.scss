@@ -1,33 +1,34 @@
 @use "src/sass/variables.scss" as var;
 @use "src/sass/mixins.scss" as mixin;
 
+:host {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  border: none;
+  height: 92vh;
+
+  & .mat-button-toggle-group {
+    border-radius: var.$borderRadius;
+  }
+}
+
 .button-group {
   margin-top: 12px;
+  margin-left: 15px;
+  width: fit-content;
 }
 
-.category,
-.monthly {
-  padding: 20px 20px 20px 0;
-}
-
-.category {
-  // @include mixin.flex-between;
-  align-items: flex-start;
-  &__date {
-    width: 400px;
-  }
-
-  &__expense {
-    @include mixin.paper;
-    width: 400px;
-    margin: 20px 0;
+main {
+  flex: 1;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
 }
 
-.monthly {
-  // @include mixin.flex-between;
-  align-items: flex-start;
-  &__date {
-    width: 400px;
-  }
+.category-cover,
+.monthly-cover {
+  padding: 15px 20px 15px 15px;
 }

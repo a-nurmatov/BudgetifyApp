@@ -39,4 +39,24 @@ const ELEMENT_DATA: CategoryData[] = [
     amount: 100,
     percent: 0.1,
   },
+  {
+    category: 'Entertainment',
+    amount: 100,
+    percent: 0.1,
+  },
+  {
+    category: 'Clothes',
+    amount: 100,
+    percent: 0.1,
+  },
+  {
+    category: 'Other',
+    amount: 100,
+    percent: 0.1,
+  },
+  {
+    category: 'Total',
+    amount: 100,
+    percent: 0.1,
+  },
 ];

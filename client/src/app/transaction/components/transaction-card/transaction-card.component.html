@@ -26,7 +26,7 @@
       'transaction__type-expense': type === 'expense'
     }"
   >
-    <span *ngIf="type === 'expense'">-</span>{{ transaction.amount
-    }}{{ activeAccount.currency }}
+    <span *ngIf="type === 'expense'">-</span
+    >{{ transaction.amount | number: "1.2-2" }}{{ activeAccount.currency }}
   </p>
 </div>

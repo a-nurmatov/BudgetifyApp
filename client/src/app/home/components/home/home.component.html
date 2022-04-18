@@ -10,6 +10,9 @@
           (dblclick)="decreaseDateSort()"
           (click)="increaseDateSort()"
           mat-button
+          [ngClass]="
+            dateSort === 'increase' ? 'home__filter-button-active' : ''
+          "
         >
           <fa-icon [icon]="faArrowDownWideShort"></fa-icon> Transaction date
         </button>
@@ -18,7 +21,7 @@
             (click)="incomeFilterTransactions()"
             (dblclick)="reset()"
             mat-button
-            class="home__income-button"
+            [ngClass]="filterState === 'income' ? 'home__income-button' : ''"
           >
             <fa-icon [icon]="faCircleArrowDown"></fa-icon>
             Incomes
@@ -27,7 +30,9 @@
             (click)="expenseFilterTransactions()"
             (dblclick)="reset()"
             mat-button
-            class="home__expense-button"
+            [ngClass]="
+              filterState === 'expense' ? 'home__expense-button' : 'ml-1'
+            "
           >
             <fa-icon [icon]="faCircleArrowUp"></fa-icon>
             Expenses

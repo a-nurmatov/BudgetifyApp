@@ -52,7 +52,7 @@
       </button>
       <h1 [ngClass]="data.transaction.type === 'income' ? 'income' : 'expense'">
         {{ data.transaction.type === "expense" ? "-" : ""
-        }}{{ data.transaction.amount }}{{ data.currency }}
+        }}{{ data.transaction.amount | number: "1.2-2" }}{{ data.currency }}
       </h1>
     </div>
     <div class="transaction-info__categories">

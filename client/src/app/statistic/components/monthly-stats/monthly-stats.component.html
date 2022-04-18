@@ -1,8 +1,20 @@
+<div class="monthly">
+  <mat-form-field class="monthly__date" appearance="outline">
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate placeholder="Start date" />
+      <input matEndDate placeholder="End date" />
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+</div>
 <div class="table-cover">
   <table mat-table [dataSource]="dataSource">
     <!-- Position Column -->
     <ng-container matColumnDef="month">
-      <th mat-header-cell *matHeaderCellDef>Month</th>
+      <th class="header-left" mat-header-cell *matHeaderCellDef>Month</th>
       <td mat-cell *matCellDef="let element">{{ element.month }}</td>
     </ng-container>
 
@@ -24,7 +36,9 @@
     </ng-container>
 
     <ng-container matColumnDef="% of savings">
-      <th mat-header-cell *matHeaderCellDef>% of savings</th>
+      <th class="header-right" mat-header-cell *matHeaderCellDef>
+        % of savings
+      </th>
       <td mat-cell *matCellDef="let element">{{ element.percent }}</td>
     </ng-container>
 
@@ -33,7 +47,7 @@
   </table>
 
   <mat-paginator
-    class="category__paginator"
+    class="monthly__paginator"
     [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons
     aria-label="Select page of periodic elements"

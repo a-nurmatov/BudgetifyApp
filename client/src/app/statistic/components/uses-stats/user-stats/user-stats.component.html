@@ -8,37 +8,11 @@
   <mat-button-toggle value="category">Categories Statistic</mat-button-toggle>
   <mat-button-toggle value="monthly">Monthly Statistic</mat-button-toggle>
 </mat-button-toggle-group>
-<div *ngIf="content === 'category'" class="category">
-  <div>
-    <mat-form-field class="category__date" appearance="outline">
-      <mat-label>Enter a date range</mat-label>
-      <mat-date-range-input [rangePicker]="picker">
-        <input matStartDate placeholder="Start date" />
-        <input matEndDate placeholder="End date" />
-      </mat-date-range-input>
-      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
-    <div class="category__expense">
-      <p>Total expense</p>
-      <p>100$</p>
-    </div>
+<main>
+  <div *ngIf="content === 'category'" class="category-cover">
+    <app-expense-table></app-expense-table>
   </div>
-  <app-expense-table></app-expense-table>
-</div>
-<div *ngIf="content === 'monthly'" class="monthly">
-  <div>
-    <mat-form-field class="monthly__date" appearance="outline">
-      <mat-label>Enter a date range</mat-label>
-      <mat-date-range-input [rangePicker]="picker">
-        <input matStartDate placeholder="Start date" />
-        <input matEndDate placeholder="End date" />
-      </mat-date-range-input>
-      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
+  <div *ngIf="content === 'monthly'" class="monthly-cover">
+    <app-monthly-stats></app-monthly-stats>
   </div>
-  <app-monthly-stats></app-monthly-stats>
-</div>
+</main>
