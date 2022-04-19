@@ -9,6 +9,11 @@
     min-width: fit-content;
   }
 
+  &__logout {
+    @include mixin.flex-between;
+    width: 150px;
+  }
+
   &__logo-link {
     font-weight: bold;
     font-size: 20px;

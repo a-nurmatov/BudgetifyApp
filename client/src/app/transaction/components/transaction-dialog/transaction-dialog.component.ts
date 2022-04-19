@@ -25,6 +25,7 @@ import { TransactionService } from '../../service/transaction.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TransactionInterface } from '../../types/transaction.interface';
+import { TransactionCancelConfirmComponent } from '../transaction-cancel-confirm/transaction-cancel-confirm.component';
 
 @Component({
   selector: 'app-transaction-dialog',
@@ -132,7 +133,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       });
   }
 
-  setFormValues() {
+  setFormValues(): void {
     this.transactionForm.get('title')!.setValue(this.transaction.title);
     this.transactionForm.get('amount')!.setValue(this.transaction.amount);
     this.transactionForm.get('payee')!.setValue(this.transaction.payee);
@@ -426,20 +427,5 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
       return newAmount - oldAmount;
     }
     return 0;
-  }
-}
-
-@Component({
-  selector: 'app-transaction-cancel-confirm',
-  templateUrl: './transaction-cancel-confirm.component.html',
-  styleUrls: ['./transaction-dialog.component.scss'],
-})
-export class TransactionCancelConfirmComponent {
-  faTimes = faTimes;
-
-  constructor(private dialog: MatDialog) {}
-
-  cancel(): void {
-    this.dialog.closeAll();
   }
 }

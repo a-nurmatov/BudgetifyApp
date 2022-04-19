@@ -146,7 +146,7 @@ export class DialogueComponent implements OnInit, OnDestroy {
     return getCurrencySymbol(currency, 'wide');
   }
 
-  setValues() {
+  setValues(): void {
     if (this.account) {
       this.addAccountForm.get('title')!.setValue(this.account.title);
       this.addAccountForm

@@ -61,14 +61,10 @@
   }
 
   &__add-category {
-    background-color: var.$infoBg;
+    background: var.$cardGradient;
     width: 100%;
-
+    color: var.$textLight;
     border-radius: var.$borderRadius;
-
-    fa-icon {
-      color: var.$textLight;
-    }
   }
 
   fa-icon {
@@ -91,39 +87,7 @@
   }
 }
 
-.delete-confirm {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  &__header {
-    @include mixin.flex-between;
-
-    p {
-      margin: 0;
-      font-weight: bold;
-    }
-  }
-
-  &__body {
-    flex: 1;
-    margin-top: 20px;
-  }
-}
-
 :ng-deep .mat-progress-spinner circle,
 .mat-spinner circle {
   stroke: #d963d2;
-}
-
-::ng-deep .snackbar-success {
-  background-color: var.$successBg;
-  color: var.$textLight !important;
-  button {
-    color: var.$textLight !important;
-  }
-}
-
-::ng-deep .snackbar-error {
-  background-color: var.$warningBg;
-  color: var.$textDanger !important;
 }

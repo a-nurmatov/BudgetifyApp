@@ -10,6 +10,7 @@ import {
 import { Subscription, take } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
 import { CategoryInterface } from '../../types/category.interface';
+import { EditConfirmationComponent } from '../edit-confirm/edit-confirm.component';
 
 @Component({
   selector: 'app-category-dialog',
@@ -181,13 +182,4 @@ export class CategoryDialogComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.categoriesSubscription.unsubscribe();
   }
-}
-
-@Component({
-  selector: 'app-edit-confirmation',
-  templateUrl: `./edit-confirmation.component.html`,
-  styleUrls: ['./category-dialog.component.scss'],
-})
-export class EditConfirmationComponent {
-  faTimes = faTimes;
 }

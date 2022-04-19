@@ -4,7 +4,7 @@ import { TransactionCardComponent } from './components/transaction-card/transact
 import { TransactionDialogComponent } from './components/transaction-dialog/transaction-dialog.component';
 import { SharedModule } from '../shared/shared.module';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { TransactionCancelConfirmComponent } from './components/transaction-dialog/transaction-dialog.component';
+import { TransactionCancelConfirmComponent } from './components/transaction-cancel-confirm/transaction-cancel-confirm.component';
 
 export const MY_DATE_FORMATS = {
   parse: {

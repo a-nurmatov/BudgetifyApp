@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { navItems } from './nav-item.config';
 import { NavItem } from './nav-item.model';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,7 @@ import { NavItem } from './nav-item.model';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  arrowRightFromBracket = faArrowRightFromBracket;
   navLinks: NavItem[] = navItems;
   @Input() isLoggedIn: boolean = false;
   @Output() logOutClicked: EventEmitter<void> = new EventEmitter<void>();

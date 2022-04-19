@@ -71,22 +71,3 @@
   background-color: var.$warningBg;
   color: var.$textDanger !important;
 }
-
-.edit-confirm {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  &__header {
-    @include mixin.flex-between;
-
-    p {
-      margin: 0;
-      font-weight: bold;
-    }
-  }
-
-  &__body {
-    flex: 1;
-    margin-top: 20px;
-  }
-}

@@ -12,16 +12,6 @@
     [formGroup]="transactionForm"
     (ngSubmit)="onSubmit()"
   >
-    <!-- <mat-form-field class="dialog-body__row" appearance="outline">
-      <mat-label>Category type</mat-label>
-      <mat-select formControlName="type" cdkFocusInitial>
-        <mat-option [value]="'income'"> Income </mat-option>
-        <mat-option [value]="'expense'"> Expense </mat-option>
-      </mat-select>
-      <mat-error *ngIf="transactionForm.invalid">{{
-        getTypeError()
-      }}</mat-error>
-    </mat-form-field> -->
     <div class="dialog-body__actions">
       <button
         type="button"

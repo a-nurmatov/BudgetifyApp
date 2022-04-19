@@ -52,7 +52,9 @@ export class AccountService {
   setInitialData(accounts: AccountInterface[]): void {
     this.accounts = accounts;
     this.accountsUpdated.next([...accounts]);
-    this.activeAccount.next({ ...accounts[0] });
+    if (!this.activeAccount.value) {
+      this.activeAccount.next({ ...accounts[0] });
+    }
   }
 
   getActiveAccount(): Observable<AccountInterface> {

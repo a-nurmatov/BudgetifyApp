@@ -1,15 +1,14 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import {
   faCirclePlus,
   faCircleArrowDown,
   faCircleArrowUp,
-  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, take } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
 import { CategoryInterface } from '../../types/category.interface';
+import { CategoryDeleteConfirmComponent } from '../category-delete-confirm/category-delete-confirm.component';
 import { CategoryDialogComponent } from '../category-dialog/category-dialog.component';
 
 @Component({
@@ -100,46 +99,5 @@ export class CategoryComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.userCategoriesSubscription.unsubscribe();
-  }
-}
-
-@Component({
-  selector: 'app-category-delete-confirm',
-  templateUrl: './category-delete-confirm.component.html',
-  styleUrls: ['./category.component.scss'],
-})
-export class CategoryDeleteConfirmComponent {
-  faTimes = faTimes;
-  submitStatus: boolean = false;
-  constructor(
-    private categoryService: CategoryService,
-    @Inject(MAT_DIALOG_DATA) public category: CategoryInterface,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
-  ) {}
-
-  deleteCategory(category: CategoryInterface): void {
-    this.categoryService
-      .deleteCategory(category)
-      .pipe(take(1))
-      .subscribe(
-        (data) => {
-          this.submitStatus = true;
-          this.openSnackBar('Category deleted successfully', 'Close');
-          this.dialog.closeAll();
-        },
-        (error) => {
-          this.submitStatus = false;
-          this.openSnackBar('Something went wrong, please try again', 'Close');
-        }
-      );
-  }
-
-  openSnackBar(message: string, action: string): void {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-      verticalPosition: 'top',
-      panelClass: this.submitStatus ? 'snackbar-success' : 'snackbar-error',
-    });
   }
 }

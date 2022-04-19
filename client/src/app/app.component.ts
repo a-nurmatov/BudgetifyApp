@@ -27,7 +27,7 @@ export class AppComponent {
     );
   }
 
-  get isCategory(): boolean {
+  get isCategoryPage(): boolean {
     return this.location.path() !== '/categories';
   }
 

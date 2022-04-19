@@ -13,7 +13,9 @@
       <span class="header_user-name">{{ userFullName }}</span>
     </button>
     <mat-menu #beforeMenu="matMenu" xPosition="before">
-      <button (click)="onClick()" mat-menu-item>Log out</button>
+      <button class="header__logout" (click)="onClick()" mat-menu-item>
+        <span>Log out</span> <fa-icon [icon]="arrowRightFromBracket"></fa-icon>
+      </button>
     </mat-menu>
   </div>
 </header>
