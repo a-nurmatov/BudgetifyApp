@@ -22,7 +22,17 @@
     <!-- Position Column -->
     <ng-container matColumnDef="month">
       <th class="header-left" mat-header-cell *matHeaderCellDef>Month</th>
-      <td mat-cell *matCellDef="let element">{{ element.month }}</td>
+      <td
+        mat-cell
+        [ngClass]="
+          element.month === 'Total' || element.month === 'Average'
+            ? 'fw-bold'
+            : ''
+        "
+        *matCellDef="let element"
+      >
+        {{ element.month }}
+      </td>
     </ng-container>
 
     <!-- Name Column -->

@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
   faCirclePlus,
@@ -25,12 +26,14 @@ export class CategoryComponent implements OnDestroy {
   tempUserCategories!: CategoryInterface[];
   userCategoriesSubscription!: Subscription;
   filterState: string = 'all';
+  search = new FormControl();
 
   constructor(
     private dialog: MatDialog,
     private categoryService: CategoryService
   ) {
     this.getInitialData();
+    this.watchSearch();
   }
 
   incomeFilterCategories(): void {
@@ -63,6 +66,18 @@ export class CategoryComponent implements OnDestroy {
   deleteConfirmation(category: CategoryInterface): void {
     this.dialog.open(CategoryDeleteConfirmComponent, {
       data: category,
+    });
+  }
+
+  watchSearch() {
+    this.search.valueChanges.subscribe((value) => {
+      if (value) {
+        this.userCategories = this.tempUserCategories.filter((category) =>
+          category.title.toLowerCase().includes(value.toLowerCase())
+        );
+      } else {
+        this.resetCategories();
+      }
     });
   }
 

@@ -4,7 +4,11 @@
   </div>
   <div class="header__nav">
     <ul class="header__nav-list">
-      <li *ngFor="let linkData of navLinks">
+      <li
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngFor="let linkData of navLinks"
+      >
         <a [routerLink]="linkData.route">{{ linkData.title }}</a>
       </li>
     </ul>

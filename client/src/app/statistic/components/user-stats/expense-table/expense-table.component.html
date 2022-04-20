@@ -20,7 +20,7 @@
     <div class="expense-category__expense">
       <p>Total expense</p>
       <div class="expense" *ngIf="totalExpense !== -1; else spinnerBox">
-        {{ totalExpense }}{{ currency }}
+        {{ totalExpense | number: "1.2-2" }}{{ currency }}
       </div>
       <ng-template #spinnerBox>
         <mat-spinner diameter="20"></mat-spinner>

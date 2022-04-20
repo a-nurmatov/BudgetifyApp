@@ -2,7 +2,7 @@
   <div class="category__main">
     <div class="category__search">
       <mat-icon>search</mat-icon>
-      <input type="text" placeholder="Search" />
+      <input [formControl]="search" type="text" placeholder="Search" />
     </div>
     <div class="category__list" *ngIf="userCategories; else spinnerBox">
       <app-category-card

@@ -3,7 +3,7 @@
     <div class="home__actions">
       <div class="home__search">
         <mat-icon>search</mat-icon>
-        <input type="text" placeholder="Search" />
+        <input [formControl]="search" type="text" placeholder="Search" />
       </div>
       <div class="home__filter">
         <button

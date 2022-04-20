@@ -8,6 +8,7 @@
   <form id="categoryForm" [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
     <div class="dialog-body__actions">
       <button
+        *ngIf="(category && category.type === 'income') || !category"
         type="button"
         (click)="setIncomeFilter()"
         mat-button
@@ -17,6 +18,7 @@
         Incomes
       </button>
       <button
+        *ngIf="(category && category.type === 'expense') || !category"
         type="button"
         mat-button
         (click)="setExpenseFilter()"

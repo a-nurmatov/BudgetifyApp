@@ -1,6 +1,11 @@
 @use "src/sass/variables.scss" as var;
 @use "src/sass/mixins.scss" as mixin;
 
+.active {
+  border-bottom: 1px solid var.$textColor;
+  transition: 0.3s;
+}
+
 .header {
   @include mixin.flex-between;
   padding: 5px 20px;
@@ -23,6 +28,10 @@
     @include mixin.flex-between;
 
     width: 75%;
+    a {
+      padding: 6px 16px;
+      display: block;
+    }
   }
 
   &__nav-list {

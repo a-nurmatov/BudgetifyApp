@@ -145,6 +145,41 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
         this.ELEMENT_DATA.push(monthStats);
       }
     });
+    this.ELEMENT_DATA.forEach((monthStat) => {
+      let totalData = this.ELEMENT_DATA.find((data) => data.month === 'Total');
+      if (totalData) {
+        totalData.incomes += monthStat.incomes;
+        totalData.expenses += monthStat.expenses;
+        totalData.savings += monthStat.savings;
+        totalData.percent = (totalData.savings / totalData.incomes) * 100;
+      } else {
+        totalData = {
+          month: 'Total',
+          year: new Date().getFullYear(),
+          incomes: monthStat.incomes,
+          expenses: monthStat.expenses,
+          savings: monthStat.savings,
+          percent: (monthStat.savings / monthStat.incomes) * 100,
+        };
+        this.ELEMENT_DATA.push(totalData);
+      }
+    });
+    let totalData = this.ELEMENT_DATA.find((data) => data.month === 'Total');
+    if (totalData) {
+      this.ELEMENT_DATA.push({
+        month: 'Average',
+        year: new Date().getFullYear(),
+        incomes: totalData.incomes / (this.ELEMENT_DATA.length - 1),
+        expenses: totalData.expenses / (this.ELEMENT_DATA.length - 1),
+        savings: totalData.savings / (this.ELEMENT_DATA.length - 1),
+        percent:
+          (totalData.incomes /
+            (this.ELEMENT_DATA.length - 1) /
+            totalData.expenses /
+            (this.ELEMENT_DATA.length - 1)) *
+          100,
+      });
+    }
     this.dataSource = new MatTableDataSource<MonthlyStats>(this.ELEMENT_DATA);
   }
 

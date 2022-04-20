@@ -2,12 +2,20 @@
 
 .table-cover {
   border-radius: var.$borderRadius;
-  width: 550px;
+  width: 600px;
   margin-top: 20px;
   table {
     width: 100%;
     border-radius: var.$borderRadius;
+    th,
+    td {
+      font-size: 16px;
+    }
   }
+}
+
+.fw-bold {
+  font-weight: bold;
 }
 
 .monthly {

@@ -1,4 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
   faArrowDownWideShort,
@@ -32,12 +33,15 @@ export class HomeComponent implements OnDestroy {
   dateSort: string = 'decrease';
   currency!: string;
 
+  search = new FormControl();
+
   constructor(
     private dialog: MatDialog,
     private transactionService: TransactionService,
     private accountService: AccountService
   ) {
     this.getInitialData();
+    this.watchSearch();
   }
 
   expenseFilterTransactions(): void {
@@ -63,6 +67,19 @@ export class HomeComponent implements OnDestroy {
     this.dateSort = 'increase';
     this.accountTransactions = this.accountTransactions.sort((a, b) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+  }
+
+  watchSearch() {
+    this.search.valueChanges.subscribe((value) => {
+      if (value) {
+        this.accountTransactions = this.tempAccountTransactions.filter(
+          (transaction) =>
+            transaction.title.toLowerCase().includes(value.toLowerCase())
+        );
+      } else {
+        this.reset();
+      }
     });
   }
 
