@@ -16,6 +16,7 @@ import { AccountService } from 'src/app/account/services/account.service';
 import { TransactionService } from 'src/app/transaction/service/transaction.service';
 import { Subscription } from 'rxjs';
 import { TransactionInterface } from 'src/app/transaction/types/transaction.interface';
+import { EChartsOption } from 'echarts';
 
 export const MY_FORMATS = {
   parse: {
@@ -50,6 +51,7 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
   currency!: string;
   startDate: Date = new Date(new Date().getFullYear());
   endDate: Date = new Date();
+  chartOption!: EChartsOption;
 
   range = new FormGroup({
     start: new FormControl(new Date(new Date().getFullYear(), 0, 1)),
@@ -74,6 +76,63 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
         this.filterByDate(this.startDate, this.endDate);
       }
     });
+  }
+
+  setOptions() {
+    this.chartOption = {
+      title: {
+        text: 'Income, Expense, Savings Statistics',
+      },
+      tooltip: {},
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: this.ELEMENT_DATA.filter(
+          (data) => data.month !== 'Total' && data.month !== 'Average'
+        ).map((data) => data.month),
+      },
+      yAxis: {
+        type: 'value',
+      },
+      legend: {
+        data: ['Income', 'Expense', 'Savings'],
+      },
+      series: [
+        {
+          name: 'Savings',
+          data: this.ELEMENT_DATA.map((data) => data.savings),
+          type: 'line',
+          lineStyle: {
+            color: '#63adeb',
+          },
+          areaStyle: {
+            color: 'transparent',
+          },
+        },
+        {
+          name: 'Income',
+          data: this.ELEMENT_DATA.map((data) => data.incomes),
+          type: 'line',
+          lineStyle: {
+            color: '#00a859',
+          },
+          areaStyle: {
+            color: 'transparent',
+          },
+        },
+        {
+          name: 'Expense',
+          data: this.ELEMENT_DATA.map((data) => data.expenses),
+          type: 'line',
+          lineStyle: {
+            color: '#ee3f19',
+          },
+          areaStyle: {
+            color: 'transparent',
+          },
+        },
+      ],
+    };
   }
 
   getInitialData() {
@@ -180,6 +239,7 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
           100,
       });
     }
+    this.setOptions();
     this.dataSource = new MatTableDataSource<MonthlyStats>(this.ELEMENT_DATA);
   }
 

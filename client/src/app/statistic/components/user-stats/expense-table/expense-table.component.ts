@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/services/account.service';
 import { AccountInterface } from 'src/app/account/types/account.interface';
@@ -23,6 +24,7 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
   accountTransactionsSubscription!: Subscription;
   currency!: string;
   totalExpense: number = -1;
+  options!: EChartsOption;
   startDate: Date = new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
@@ -36,6 +38,52 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
     ),
     end: new FormControl(new Date()),
   });
+
+  initOpts = {
+    renderer: 'svg',
+    width: 850,
+    height: 400,
+  };
+
+  setOptions() {
+    this.options = {
+      color: ['#f158ab'],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: this.ELEMENT_DATA.map((data) => data.category),
+          axisTick: {
+            alignWithLabel: true,
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+        },
+      ],
+      series: [
+        {
+          name: 'Counters',
+          type: 'bar',
+          barWidth: '30%',
+          data: this.ELEMENT_DATA.map((data) => data.amount),
+        },
+      ],
+    };
+  }
 
   constructor(
     private accountService: AccountService,
@@ -107,6 +155,7 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
     });
     this.ELEMENT_DATA.sort((a, b) => b.amount - a.amount);
     this.dataSource = new MatTableDataSource<CategoryData>(this.ELEMENT_DATA);
+    this.setOptions();
   }
 
   getInitialData() {

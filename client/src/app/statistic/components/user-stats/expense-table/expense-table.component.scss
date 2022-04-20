@@ -32,6 +32,7 @@
 .expense-category {
   @include mixin.flex-between;
   align-items: flex-start;
+
   &__date {
     width: 400px;
     margin-bottom: 20px;
