@@ -37,5 +37,9 @@
     @include mixin.paper;
     width: 400px;
     margin-bottom: 15px;
+    color: var.$textDanger;
+    .expense {
+      font-size: 22px;
+    }
   }
 }

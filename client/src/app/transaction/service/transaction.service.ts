@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
+import { AccountService } from 'src/app/account/services/account.service';
 import { TransactionInterface } from '../types/transaction.interface';
 
 @Injectable({
@@ -12,7 +13,10 @@ export class TransactionService {
     TransactionInterface[]
   >();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService
+  ) {}
 
   addNewTransaction(
     transaction: TransactionInterface

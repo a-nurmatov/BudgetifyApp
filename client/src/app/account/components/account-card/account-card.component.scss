@@ -15,6 +15,7 @@
   box-shadow: var.$paperBoxShadow;
   opacity: 0.5;
   position: relative;
+  transition: 0.3s;
 
   &:hover {
     cursor: pointer;
