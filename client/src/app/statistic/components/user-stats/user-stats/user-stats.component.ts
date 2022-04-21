@@ -13,7 +13,6 @@ export class UserStatsComponent implements OnInit {
   ngOnInit(): void {}
 
   onValueChange(value: any) {
-    console.log(value);
     this.content = value;
   }
 }

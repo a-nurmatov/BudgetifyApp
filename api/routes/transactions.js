@@ -3,6 +3,7 @@ import {
   createTransaction,
   deleteTransaction,
   getAccountTransactions,
+  getAllTransactions,
   getExpenseTransactions,
   getIncomeTransactions,
   updateTransaction,
@@ -11,6 +12,7 @@ import {
 const router = express.Router();
 
 router.post("", createTransaction);
+router.get("/all", getAllTransactions);
 router.get("/:accountId", getAccountTransactions);
 router.get("/:accountId/income", getIncomeTransactions);
 router.get("/:accountId/expense", getExpenseTransactions);

@@ -9,7 +9,11 @@
     <p>Are you sure you want to delete this Category?</p>
   </div>
   <mat-dialog-actions class="dialog-body__actions" align="end">
-    <button (click)="deleteCategory(category)" mat-button mat-dialog-close>
+    <button
+      (click)="deleteCategory(data.category, data.isRemovable)"
+      mat-button
+      mat-dialog-close
+    >
       Yes
     </button>
     <button mat-button cdkFocusInitial mat-dialog-close>No</button>

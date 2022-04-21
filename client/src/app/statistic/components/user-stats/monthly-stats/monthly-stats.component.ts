@@ -147,7 +147,6 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
               this.transactions = data.transactions;
               this.tempTransactions = data.transactions;
               this.filterByDate(this.startDate, this.endDate);
-              console.log(this.transactions);
             });
         }
       });

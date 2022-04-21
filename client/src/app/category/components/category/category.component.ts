@@ -7,6 +7,8 @@ import {
   faCircleArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, take } from 'rxjs';
+import { TransactionService } from 'src/app/transaction/service/transaction.service';
+import { TransactionInterface } from 'src/app/transaction/types/transaction.interface';
 import { CategoryService } from '../../services/category.service';
 import { CategoryInterface } from '../../types/category.interface';
 import { CategoryDeleteConfirmComponent } from '../category-delete-confirm/category-delete-confirm.component';
@@ -27,10 +29,12 @@ export class CategoryComponent implements OnDestroy {
   userCategoriesSubscription!: Subscription;
   filterState: string = 'all';
   search = new FormControl();
+  allTransactions!: TransactionInterface[];
 
   constructor(
     private dialog: MatDialog,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private transactionService: TransactionService
   ) {
     this.getInitialData();
     this.watchSearch();
@@ -64,8 +68,24 @@ export class CategoryComponent implements OnDestroy {
   }
 
   deleteConfirmation(category: CategoryInterface): void {
+    let isRemovable = true;
+    this.allTransactions.forEach((transaction) => {
+      let transactionCategories = JSON.parse(
+        JSON.stringify(transaction.categories)
+      );
+      transactionCategories.forEach(
+        (transactionCategory: TransactionInterface) => {
+          if (transactionCategory._id === category._id) {
+            isRemovable = false;
+          }
+        }
+      );
+    });
     this.dialog.open(CategoryDeleteConfirmComponent, {
-      data: category,
+      data: {
+        category,
+        isRemovable,
+      },
     });
   }
 
@@ -109,6 +129,13 @@ export class CategoryComponent implements OnDestroy {
         } else if (this.filterState === 'expense') {
           this.expenseFilterCategories();
         }
+      });
+
+    this.transactionService
+      .getAllTransactions()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.allTransactions = data.transactions;
       });
   }
 

@@ -172,7 +172,6 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
                 (transaction) => transaction.type === 'expense'
               );
               this.tempTransactions = [...this.transactions];
-              console.log(this.transactions);
               this.filterByDateAndCategories(this.startDate, this.endDate);
             });
         }

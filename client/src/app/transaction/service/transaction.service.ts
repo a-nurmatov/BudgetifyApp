@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { AccountService } from 'src/app/account/services/account.service';
 import { TransactionInterface } from '../types/transaction.interface';
 
@@ -17,6 +17,16 @@ export class TransactionService {
     private http: HttpClient,
     private accountService: AccountService
   ) {}
+
+  getAllTransactions(): Observable<{
+    message: string;
+    transactions: TransactionInterface[];
+  }> {
+    return this.http.get<{
+      message: string;
+      transactions: TransactionInterface[];
+    }>('http://localhost:5000/transactions/all');
+  }
 
   addNewTransaction(
     transaction: TransactionInterface
