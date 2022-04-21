@@ -1,6 +1,5 @@
-@use "src/sass/variables.scss" as var;
 @use "src/sass/mixins.scss" as mixin;
-.account-info {
+.edit-confirm {
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -16,11 +15,5 @@
   &__body {
     flex: 1;
     margin-top: 20px;
-    div {
-      margin-bottom: 20px;
-      p:first-child {
-        font-weight: bold;
-      }
-    }
   }
 }

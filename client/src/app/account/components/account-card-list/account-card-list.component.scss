@@ -12,24 +12,33 @@
 }
 
 .account-card-list {
-  &__add-button {
+  &__add-button,
+  &__add-button-bottom {
     color: var.$textColor;
     background: var.$cardGradient;
     border: none;
     border-radius: var.$borderRadius;
     color: var.$textLight;
     padding: 9px 10px;
+  }
+
+  &__add-button {
     display: block;
     margin: 0 auto 20px;
     width: 100%;
+    fa-icon {
+      margin-right: 6px;
+    }
   }
-}
 
-.spinner {
-  position: relative;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  &__add-button-bottom {
+    position: fixed;
+    border-radius: 0 var.$borderRadius var.$borderRadius 0;
+    padding: 6px 10px;
+    left: 0;
+    bottom: 40px;
+    z-index: 100;
+  }
 }
 
 :ng-deep .mat-progress-spinner circle,

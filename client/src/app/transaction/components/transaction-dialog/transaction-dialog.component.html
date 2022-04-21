@@ -1,0 +1,140 @@
+<div class="dialog-header">
+  <h1 mat-dialog-title>
+    {{ transaction ? "Edit transaction" : "Add new transaction" }}
+  </h1>
+  <button mat-button mat-dialog-close class="dialog_header__close-button">
+    <fa-icon [icon]="faTimes"></fa-icon>
+  </button>
+</div>
+<mat-dialog-content class="dialog-body">
+  <form
+    id="transactionForm"
+    [formGroup]="transactionForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="dialog-body__actions">
+      <button
+        type="button"
+        (click)="setIncomeFilter()"
+        mat-button
+        [ngClass]="filterState === 'income' ? 'dialog-body__income-button' : ''"
+      >
+        <fa-icon [icon]="faCircleArrowDown"></fa-icon>
+        Incomes
+      </button>
+      <button
+        type="button"
+        mat-button
+        (click)="setExpenseFilter()"
+        [ngClass]="
+          filterState === 'expense' ? 'dialog-body__expense-button' : ''
+        "
+      >
+        <fa-icon [icon]="faCircleArrowUp"></fa-icon>
+        Expenses
+      </button>
+    </div>
+
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Title</mat-label>
+      <input formControlName="title" matInput />
+      <mat-error *ngIf="transactionForm.invalid">{{
+        getTitleError()
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Categories</mat-label>
+      <mat-chip-list #chipList aria-label="Category selection">
+        <mat-chip
+          *ngFor="let category of categories"
+          (removed)="remove(category)"
+        >
+          {{ category }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="New category..."
+          #categoryInput
+          [formControl]="categoryCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)"
+        />
+      </mat-chip-list>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="selected($event)"
+      >
+        <mat-option
+          *ngFor="let category of filteredCategories"
+          [value]="category"
+        >
+          {{ category }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <span
+      class="dialog-body__chips-error"
+      *ngIf="categories.length === 0 && categoryCtrl.touched"
+    >
+      Categories required
+    </span>
+
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Amount ({{ currency }})</mat-label>
+      <input step="0.01" type="number" formControlName="amount" matInput />
+      <mat-error *ngIf="transactionForm.invalid">{{
+        getAmountError()
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Choose a date</mat-label>
+      <input formControlName="date" matInput [matDatepicker]="picker" />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="transactionForm.invalid">{{
+        getDateError()
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Payee / Payor</mat-label>
+      <input formControlName="payee" matInput />
+      <mat-error *ngIf="transactionForm.invalid">{{
+        getPayeeError()
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        formControlName="description"
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="5"
+      ></textarea>
+      <mat-error *ngIf="transactionForm.invalid">{{
+        getDescriptionError()
+      }}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-body__actions" align="end">
+  <button mat-button (click)="cancelConfirm()">Cancel</button>
+  <button
+    mat-button
+    type="submit"
+    [disabled]="transactionForm.invalid || categories.length === 0"
+    form="transactionForm"
+  >
+    {{ transaction ? "Save" : "Add" }}
+  </button>
+</mat-dialog-actions>

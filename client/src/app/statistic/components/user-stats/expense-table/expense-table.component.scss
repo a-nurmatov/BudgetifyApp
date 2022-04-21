@@ -1,0 +1,50 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+.table-cover {
+  border-radius: var.$borderRadius;
+  width: 550px;
+  &__paginator {
+    border-radius: 0 0 var.$borderRadius var.$borderRadius;
+  }
+
+  &__table-cover {
+    border-radius: var.$borderRadius var.$borderRadius 0 0;
+  }
+
+  table {
+    width: 100%;
+    border-radius: var.$borderRadius;
+    th,
+    td {
+      font-size: 16px;
+    }
+  }
+}
+
+.header-left {
+  border-top-left-radius: var.$borderRadius;
+}
+.header-right {
+  border-top-right-radius: var.$borderRadius;
+}
+
+.expense-category {
+  @include mixin.flex-between;
+  align-items: flex-start;
+
+  &__date {
+    width: 400px;
+    margin-bottom: 20px;
+  }
+
+  &__expense {
+    @include mixin.paper;
+    width: 400px;
+    margin-bottom: 15px;
+    color: var.$textDanger;
+    .expense {
+      font-size: 22px;
+    }
+  }
+}

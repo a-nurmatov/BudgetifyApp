@@ -1,0 +1,52 @@
+<div class="dialog-header">
+  <h1 mat-dialog-title>{{ category ? "Edit" : "Add" }} category</h1>
+  <button mat-button mat-dialog-close class="dialog_header__close-button">
+    <fa-icon [icon]="faTimes"></fa-icon>
+  </button>
+</div>
+<mat-dialog-content class="dialog-body">
+  <form id="categoryForm" [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
+    <div class="dialog-body__actions">
+      <button
+        *ngIf="(category && category.type === 'income') || !category"
+        type="button"
+        (click)="setIncomeFilter()"
+        mat-button
+        [ngClass]="filterState === 'income' ? 'dialog-body__income-button' : ''"
+      >
+        <fa-icon [icon]="faCircleArrowDown"></fa-icon>
+        Incomes
+      </button>
+      <button
+        *ngIf="(category && category.type === 'expense') || !category"
+        type="button"
+        mat-button
+        (click)="setExpenseFilter()"
+        [ngClass]="
+          filterState === 'expense' ? 'dialog-body__expense-button' : ''
+        "
+      >
+        <fa-icon [icon]="faCircleArrowUp"></fa-icon>
+        Expenses
+      </button>
+    </div>
+    <mat-form-field class="dialog-body__row" appearance="outline">
+      <mat-label>Title</mat-label>
+      <input formControlName="title" matInput />
+      <mat-error *ngIf="addCategoryForm.invalid">{{
+        getTitleError()
+      }}</mat-error>
+    </mat-form-field>
+  </form></mat-dialog-content
+>
+<mat-dialog-actions class="dialog-body__actions" align="end">
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button
+    mat-button
+    type="submit"
+    [disabled]="addCategoryForm.invalid"
+    form="categoryForm"
+  >
+    {{ category ? "Save" : "Add" }}
+  </button>
+</mat-dialog-actions>

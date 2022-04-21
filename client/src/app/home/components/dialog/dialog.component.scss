@@ -1,0 +1,102 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+.transaction-info {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  &__header {
+    @include mixin.flex-between;
+
+    p {
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    margin-top: 20px;
+
+    div {
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-weight: bold;
+    }
+  }
+
+  &__amount {
+    @include mixin.flex-between;
+  }
+
+  &__title {
+    font-size: 32px;
+  }
+}
+
+.expense {
+  color: var.$textDanger;
+  margin: 0;
+}
+
+.income {
+  color: var.$textSuccess;
+  margin: 0;
+}
+
+.income-button,
+.expense-button {
+  padding: 4px 16px;
+  margin: 10px 0;
+  border-radius: var.$borderRadius;
+  fa-icon {
+    margin-right: 6px;
+  }
+  &:first-of-type {
+    margin-right: 10px;
+  }
+  transition: 0.3s;
+}
+
+.income-button {
+  background-color: var.$successBg;
+  color: var.$textLight;
+}
+
+.expense-button {
+  background-color: var.$textDanger;
+  color: var.$textLight;
+}
+
+.delete-confirm {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  &__header {
+    @include mixin.flex-between;
+
+    p {
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    margin-top: 20px;
+  }
+}
+
+::ng-deep .snackbar-success {
+  background-color: var.$successBg;
+  color: var.$textLight !important;
+  button {
+    color: var.$textLight !important;
+  }
+}
+
+::ng-deep .snackbar-error {
+  background-color: var.$warningBg;
+  color: var.$textDanger !important;
+}

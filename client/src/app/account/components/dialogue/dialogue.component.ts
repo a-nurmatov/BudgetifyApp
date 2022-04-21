@@ -1,12 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import currencies from '@doubco/countries';
 import { getCurrencySymbol } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { take } from 'rxjs';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription, take } from 'rxjs';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AccountInterface } from '../../types/account.interface';
 
 @Component({
@@ -14,12 +14,14 @@ import { AccountInterface } from '../../types/account.interface';
   templateUrl: './dialogue.component.html',
   styleUrls: ['./dialogue.component.scss'],
 })
-export class DialogueComponent implements OnInit {
+export class DialogueComponent implements OnInit, OnDestroy {
   submitStatus: boolean = false;
   faTimes = faTimes;
   listOfCountries = Object.values(currencies.data);
   userCountry: string | null = localStorage.getItem('country');
   userDefaultCurrency!: string | undefined;
+  accounts!: AccountInterface[];
+  accountsSubscription!: Subscription;
 
   addAccountForm: FormGroup = new FormGroup({
     title: new FormControl('', [
@@ -34,33 +36,51 @@ export class DialogueComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public account: AccountInterface,
     private accountService: AccountService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
-    if (this.account) {
-      this.addAccountForm.get('title')!.setValue(this.account.title);
-      this.addAccountForm
-        .get('description')!
-        .setValue(this.account.description);
-      this.addAccountForm.get('currency')!.setValue(this.account.currency);
-    }
+    this.setUserDefaultCurrency();
+    this.setValues();
+  }
+
+  isTitleAvailable(): void {
+    this.addAccountForm.get('title')!.valueChanges.subscribe((title) => {
+      this.accounts.map((account) => {
+        if (account.title === this.account?.title) {
+          return;
+        } else if (account.title === title) {
+          this.addAccountForm.get('title')!.setErrors({
+            titleTaken: true,
+          });
+        }
+      });
+    });
   }
 
   ngOnInit(): void {
-    this.setUserDefaultCurrency();
+    this.isTitleAvailable();
   }
 
   onSubmit(): void {
-    const { title, currency, description } = this.addAccountForm.value;
+    let { title, currency, description } = this.addAccountForm.value;
+    title = title.trim().toLowerCase();
     if (this.account) {
-      console.log(title, currency, description);
-      this.account = { ...this.account, title, currency, description };
+      let uniqueness = this.account.userId + title;
+      this.account = {
+        ...this.account,
+        title,
+        currency,
+        description,
+        uniqueness,
+      };
       this.accountService
         .updateAccount(this.account)
         .pipe(take(1))
         .subscribe(
           (data) => {
+            this.accountService.setActiveAccount(data.updatedAccount);
+            this.dialog.closeAll();
             this.submitStatus = true;
-            console.log(data);
             this.openSnackBar('Account successfully updated', 'close');
           },
           (error) => {
@@ -75,12 +95,13 @@ export class DialogueComponent implements OnInit {
         .pipe(take(1))
         .subscribe(
           (data) => {
+            this.dialog.closeAll();
             this.submitStatus = true;
             this.openSnackBar('Account successfully created', 'close');
           },
           (error) => {
             this.submitStatus = false;
-            this.openSnackBar('Account with this name already exists', 'close');
+            this.openSnackBar('Account creation failed', 'close');
           }
         );
     }
@@ -110,6 +131,8 @@ export class DialogueComponent implements OnInit {
       ? 'Max length is 128'
       : this.addAccountForm.get('title')!.errors?.['pattern']
       ? 'Only letters and numbers are allowed'
+      : this.addAccountForm.get('title')!.errors?.['titleTaken']
+      ? 'Title already in use'
       : '';
   }
 
@@ -121,5 +144,33 @@ export class DialogueComponent implements OnInit {
 
   getSymbol(currency: string): string {
     return getCurrencySymbol(currency, 'wide');
+  }
+
+  setValues(): void {
+    if (this.account) {
+      this.addAccountForm.get('title')!.setValue(this.account.title);
+      this.addAccountForm
+        .get('description')!
+        .setValue(this.account.description);
+      this.addAccountForm.get('currency')!.setValue(this.account.currency);
+    }
+
+    let userId = localStorage.getItem('userId');
+    this.accountService
+      .requestUserAccounts(userId)
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.accountService.setInitialData(data.accounts);
+      });
+
+    this.accountsSubscription = this.accountService
+      .getUserAccounts()
+      .subscribe((data) => {
+        this.accounts = data;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.accountsSubscription.unsubscribe();
   }
 }

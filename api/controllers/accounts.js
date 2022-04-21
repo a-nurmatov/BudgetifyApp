@@ -1,4 +1,5 @@
 import Account from "../models/account.js";
+import Transaction from "../models/transaction.js";
 
 export const getUserAccounts = async (req, res) => {
   let { userId } = req.params;
@@ -39,7 +40,7 @@ export const updateAccount = async (req, res, next) => {
       req.body,
       {
         new: true,
-        runValidators: false,
+        runValidators: true,
       }
     );
     res.json({
@@ -55,6 +56,7 @@ export const deleteAccount = async (req, res, next) => {
   try {
     let { accountId } = req.params;
     let deletedAccount = await Account.findOneAndRemove({ _id: accountId });
+    await Transaction.deleteMany({ accountId: accountId });
     res.json({
       message: "Deleted account with ID " + accountId,
     });

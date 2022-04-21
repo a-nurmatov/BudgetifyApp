@@ -10,6 +10,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { LayoutModule } from './layout/layout.module';
 import { HomeModule } from './home/home.module';
 import { AccountModule } from './account/account.module';
+import { CategoryModule } from './category/category.module';
+import { MomentDateModule } from '@angular/material-moment-adapter';
+import { StatisticModule } from './statistic/statistic.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +25,9 @@ import { AccountModule } from './account/account.module';
     LayoutModule,
     HomeModule,
     AccountModule,
+    CategoryModule,
+    MomentDateModule,
+    StatisticModule,
   ],
   providers: [
     {

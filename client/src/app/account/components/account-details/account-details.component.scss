@@ -1,0 +1,27 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+.account-info {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  &__header {
+    @include mixin.flex-between;
+
+    p {
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    font-size: 24px !important;
+    margin-top: 20px;
+    div {
+      margin-bottom: 20px;
+      p:first-child {
+        font-weight: bold;
+      }
+    }
+  }
+}

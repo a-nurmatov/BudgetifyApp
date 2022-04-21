@@ -1,0 +1,18 @@
+<mat-button-toggle-group
+  (change)="onValueChange($event.value)"
+  class="button-group"
+  name="fontStyle"
+  aria-label="Font Style"
+  value="category"
+>
+  <mat-button-toggle value="category">Categories Statistic</mat-button-toggle>
+  <mat-button-toggle value="monthly">Monthly Statistic</mat-button-toggle>
+</mat-button-toggle-group>
+<main>
+  <div *ngIf="content === 'category'" class="category-cover">
+    <app-expense-table></app-expense-table>
+  </div>
+  <div *ngIf="content === 'monthly'" class="monthly-cover">
+    <app-monthly-stats></app-monthly-stats>
+  </div>
+</main>

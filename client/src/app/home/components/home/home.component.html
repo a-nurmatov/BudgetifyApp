@@ -1,1 +1,63 @@
-<p>home works!</p>
+<div class="home">
+  <main>
+    <div class="home__actions">
+      <div class="home__search">
+        <mat-icon>search</mat-icon>
+        <input [formControl]="search" type="text" placeholder="Search" />
+      </div>
+      <div class="home__filter">
+        <button
+          (dblclick)="decreaseDateSort()"
+          (click)="increaseDateSort()"
+          mat-button
+          [ngClass]="
+            dateSort === 'increase' ? 'home__filter-button-active' : ''
+          "
+        >
+          <fa-icon [icon]="faArrowDownWideShort"></fa-icon> Transaction date
+        </button>
+        <div>
+          <button
+            (click)="incomeFilterTransactions()"
+            (dblclick)="reset()"
+            mat-button
+            [ngClass]="filterState === 'income' ? 'home__income-button' : ''"
+          >
+            <fa-icon [icon]="faCircleArrowDown"></fa-icon>
+            Incomes
+          </button>
+          <button
+            (click)="expenseFilterTransactions()"
+            (dblclick)="reset()"
+            mat-button
+            [ngClass]="
+              filterState === 'expense' ? 'home__expense-button' : 'ml-1'
+            "
+          >
+            <fa-icon [icon]="faCircleArrowUp"></fa-icon>
+            Expenses
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="transaction-list" *ngIf="accountTransactions; else spinnerBox">
+      <app-transaction-card
+        (click)="transactionDetails(transaction)"
+        *ngFor="let transaction of accountTransactions"
+        [transaction]="transaction"
+      ></app-transaction-card>
+    </div>
+    <p class="no-transaction" *ngIf="accountTransactions?.length === 0">
+      You have not made any transactions yet...
+    </p>
+    <ng-template #spinnerBox>
+      <mat-spinner class="spinner" diameter="50"></mat-spinner>
+    </ng-template>
+  </main>
+  <aside>
+    <button mat-button (click)="openDialog()" class="home__add-transaction">
+      <fa-icon size="lg" [icon]="faCirclePlus"></fa-icon>
+      Add transaction
+    </button>
+  </aside>
+</div>

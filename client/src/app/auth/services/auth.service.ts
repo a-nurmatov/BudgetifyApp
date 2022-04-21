@@ -1,13 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
+import { CategoryService } from 'src/app/category/services/category.service';
 import { UserDataInterface } from '../types/userData.interface';
+
+const defaultExpenseCategories = [
+  'food',
+  'transportation',
+  'housing',
+  'shopping',
+  'education',
+  'kids',
+  'entertainment',
+  'health and beauty',
+  'pet',
+  'internet',
+  'mobile',
+];
+
+const defaultIncomeCategories = [
+  'salary',
+  'gifts',
+  'other',
+  'rental income',
+  'premium/bonuses',
+];
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private categoryService: CategoryService
+  ) {}
 
   login(email: string, password: string): Observable<UserDataInterface> {
     return this.http
@@ -26,6 +52,9 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('expiresIn');
+    localStorage.removeItem('country');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('fullName');
   }
 
   healthCheck(): Observable<any> {
@@ -40,5 +69,25 @@ export class AuthService {
     localStorage.setItem('expiresIn', expiresIn.toString());
     localStorage.setItem('country', res.user.country);
     localStorage.setItem('userId', res.user.id);
+    localStorage.setItem('fullName', res.user.fullName);
+
+    let userId = localStorage.getItem('userId');
+    if (!localStorage.getItem('firstLogin')) {
+      defaultExpenseCategories.map((title) => {
+        let uniqueness = userId + title + 'expense';
+        this.categoryService
+          .addNewCateogry(title, 'expense', userId, uniqueness)
+          .pipe(take(1))
+          .subscribe();
+      });
+      defaultIncomeCategories.map((title) => {
+        let uniqueness = userId + title + 'income';
+        this.categoryService
+          .addNewCateogry(title, 'income', userId, uniqueness)
+          .pipe(take(1))
+          .subscribe();
+      });
+      localStorage.setItem('firstLogin', 'false');
+    }
   }
 }

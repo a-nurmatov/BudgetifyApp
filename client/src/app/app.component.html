@@ -1,7 +1,7 @@
 <app-header [isLoggedIn]="isLoggedIn" (logOutClicked)="logout()"></app-header>
 <div class="container">
   <app-account-card-list
-    *ngIf="isLoggedIn"
+    *ngIf="isLoggedIn && isCategoryPage"
     class="container__card-list"
   ></app-account-card-list>
   <div class="container__outlet"><router-outlet></router-outlet></div>

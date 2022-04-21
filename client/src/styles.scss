@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap");
 
 html,
@@ -46,4 +47,13 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var.$infoBg;
+}
+
+.spinner {
+  @include mixin.flex-center();
+  position: relative;
+  height: 70%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

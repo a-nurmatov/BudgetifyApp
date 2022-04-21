@@ -11,6 +11,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [],
@@ -27,6 +33,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatButtonToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   exports: [
     MatMenuModule,
@@ -40,6 +52,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatButtonToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
 })
 export class SharedModule {}

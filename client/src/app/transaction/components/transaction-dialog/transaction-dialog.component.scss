@@ -1,0 +1,82 @@
+@use "src/sass/variables.scss" as var;
+@use "src/sass/mixins.scss" as mixin;
+
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.dialog-header {
+  @include mixin.flex-between();
+  margin-bottom: 10px;
+
+  &__close-button {
+    padding: 0;
+    width: fit-content;
+  }
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.dialog-body {
+  flex: 1;
+
+  &__row {
+    display: block;
+    margin-bottom: 15px;
+    mat-error {
+      font-size: 12px;
+    }
+  }
+
+  &__chips-error {
+    font-size: 12px;
+    color: var.$textDanger;
+    display: block;
+    margin-top: -30px;
+    margin-left: 10px;
+    margin-bottom: 15px;
+  }
+
+  &__actions {
+    button {
+      padding: 8px 24px;
+      margin: 10px 0;
+      border-radius: var.$borderRadius;
+      fa-icon {
+        margin-right: 6px;
+      }
+      &:first-of-type {
+        margin-right: 10px;
+      }
+      transition: 0.3s;
+    }
+  }
+
+  &__income-button {
+    background-color: var.$successBg;
+    color: var.$textLight;
+    margin-right: 10px;
+  }
+
+  &__expense-button {
+    background-color: var.$textDanger;
+    color: var.$textLight;
+  }
+}
+
+::ng-deep .snackbar-success {
+  background-color: var.$successBg;
+  color: var.$textLight !important;
+  button {
+    color: var.$textLight !important;
+  }
+}
+
+::ng-deep .snackbar-error {
+  background-color: var.$warningBg;
+  color: var.$textDanger !important;
+}

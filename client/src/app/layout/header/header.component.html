@@ -4,16 +4,22 @@
   </div>
   <div class="header__nav">
     <ul class="header__nav-list">
-      <li *ngFor="let linkData of navLinks">
+      <li
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngFor="let linkData of navLinks"
+      >
         <a [routerLink]="linkData.route">{{ linkData.title }}</a>
       </li>
     </ul>
     <button class="header__button" mat-button [matMenuTriggerFor]="beforeMenu">
       <mat-icon>person</mat-icon>
-      <span class="header_user-name">Abdurahim Nurmatov</span>
+      <span class="header_user-name">{{ userFullName }}</span>
     </button>
     <mat-menu #beforeMenu="matMenu" xPosition="before">
-      <button (click)="onClick()" mat-menu-item>Log out</button>
+      <button class="header__logout" (click)="onClick()" mat-menu-item>
+        <span>Log out</span> <fa-icon [icon]="arrowRightFromBracket"></fa-icon>
+      </button>
     </mat-menu>
   </div>
 </header>

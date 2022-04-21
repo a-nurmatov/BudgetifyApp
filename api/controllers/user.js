@@ -46,6 +46,7 @@ export const loginUser = async (req, res) => {
         token: `Bearer ${token}`,
         country: user.country,
         expiresIn: 1000 * 60 * 60,
+        fullName: `${user.firstName} ${user.lastName}`,
       },
     });
   } else {

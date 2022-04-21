@@ -2,7 +2,7 @@
 $bgColor: #efefef;
 $paperBg: #fff;
 $infoBg: #b9e2e6;
-$warningBg: #f5c6cb;
+$warningBg: rgba(223, 114, 255, 0.65);
 $successBg: #00a859;
 
 $textColor: #373737;
@@ -27,5 +27,5 @@ $cardGradient: linear-gradient(
 );
 
 $paperPadding: 20px;
-$paperBoxShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+$paperBoxShadow: none;
 $borderRadius: 10px;

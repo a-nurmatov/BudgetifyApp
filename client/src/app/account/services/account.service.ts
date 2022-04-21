@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { AccountInterface } from '../types/account.interface';
 
 @Injectable({
@@ -9,7 +9,9 @@ import { AccountInterface } from '../types/account.interface';
 export class AccountService {
   private accounts: AccountInterface[] = [];
   private accountsUpdated = new Subject<AccountInterface[]>();
-  private activeAccount = new Subject<AccountInterface>();
+  private activeAccount = new BehaviorSubject<AccountInterface>(
+    this.accounts[0]
+  );
 
   constructor(private http: HttpClient) {}
 
@@ -27,6 +29,7 @@ export class AccountService {
           title,
           currency,
           description,
+          uniqueness: userId + title,
         }
       )
       .pipe(
@@ -49,7 +52,9 @@ export class AccountService {
   setInitialData(accounts: AccountInterface[]): void {
     this.accounts = accounts;
     this.accountsUpdated.next([...accounts]);
-    this.activeAccount.next({ ...accounts[0] });
+    if (!this.activeAccount.value) {
+      this.activeAccount.next({ ...accounts[0] });
+    }
   }
 
   getActiveAccount(): Observable<AccountInterface> {
@@ -74,6 +79,8 @@ export class AccountService {
                 this.setActiveAccount({ ...this.accounts[index - 1] });
               } else if (this.accounts[index + 1]) {
                 this.setActiveAccount({ ...this.accounts[index + 1] });
+              } else {
+                this.setActiveAccount({ ...this.accounts[0] });
               }
             }
           });
@@ -87,8 +94,10 @@ export class AccountService {
   }
 
   updateAccount(account: AccountInterface): Observable<any> {
+    let updatedAccount = { ...account };
+    delete updatedAccount._id;
     return this.http
-      .patch(`http://localhost:5000/accounts/${account._id}`, account)
+      .patch(`http://localhost:5000/accounts/${account._id}`, updatedAccount)
       .pipe(
         tap((data) => {
           this.accounts = this.accounts.map((acc) => {
