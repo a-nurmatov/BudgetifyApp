@@ -1,5 +1,14 @@
 import Transaction from "../models/transaction.js";
 
+export const getAllTransactions = async (req, res, next) => {
+  try {
+    let transactions = await Transaction.find().populate("categories");
+    res.json({ message: "List of all transactions", transactions });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getAccountTransactions = async (req, res, next) => {
   try {
     let { accountId } = req.params;

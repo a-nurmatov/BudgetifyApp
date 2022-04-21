@@ -16,26 +16,38 @@ export class CategoryDeleteConfirmComponent {
   submitStatus: boolean = false;
   constructor(
     private categoryService: CategoryService,
-    @Inject(MAT_DIALOG_DATA) public category: CategoryInterface,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { isRemovable: boolean; category: CategoryInterface },
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {}
 
-  deleteCategory(category: CategoryInterface): void {
-    this.categoryService
-      .deleteCategory(category)
-      .pipe(take(1))
-      .subscribe(
-        (data) => {
-          this.submitStatus = true;
-          this.openSnackBar('Category deleted successfully', 'Close');
-          this.dialog.closeAll();
-        },
-        (error) => {
-          this.submitStatus = false;
-          this.openSnackBar('Something went wrong, please try again', 'Close');
-        }
+  deleteCategory(category: CategoryInterface, isRemovable: boolean): void {
+    if (isRemovable) {
+      this.categoryService
+        .deleteCategory(category)
+        .pipe(take(1))
+        .subscribe(
+          (data) => {
+            this.submitStatus = true;
+            this.openSnackBar('Category deleted successfully', 'Close');
+            this.dialog.closeAll();
+          },
+          (error) => {
+            this.submitStatus = false;
+            this.openSnackBar(
+              'Something went wrong, please try again',
+              'Close'
+            );
+          }
+        );
+    } else {
+      this.submitStatus = false;
+      this.openSnackBar(
+        'Category cannot be deleted. Category used in transaction!',
+        'Close'
       );
+    }
   }
 
   openSnackBar(message: string, action: string): void {

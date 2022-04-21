@@ -30,5 +30,8 @@
 
 ::ng-deep .snackbar-error {
   background-color: var.$warningBg;
-  color: var.$textDanger !important;
+  color: var.$textLight !important;
+  button {
+    color: var.$textLight !important;
+  }
 }

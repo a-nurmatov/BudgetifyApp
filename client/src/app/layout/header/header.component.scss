@@ -28,14 +28,16 @@
     @include mixin.flex-between;
 
     width: 75%;
-    a {
-      padding: 6px 16px;
-      display: block;
-    }
   }
 
   &__nav-list {
     @include mixin.flex-between(35px);
+    a {
+      padding: 6px;
+      display: block;
+      transition: 0.3s;
+      border-bottom: 1px solid transparent;
+    }
   }
 
   &__button {
