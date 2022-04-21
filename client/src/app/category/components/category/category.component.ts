@@ -81,7 +81,6 @@ export class CategoryComponent implements OnDestroy {
         }
       );
     });
-    console.log('ISREMOVEABLE', isRemovable);
     this.dialog.open(CategoryDeleteConfirmComponent, {
       data: {
         category,
@@ -137,7 +136,6 @@ export class CategoryComponent implements OnDestroy {
       .pipe(take(1))
       .subscribe((data) => {
         this.allTransactions = data.transactions;
-        console.log(this.allTransactions);
       });
   }
 
