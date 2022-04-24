@@ -71,19 +71,34 @@
     margin-right: 6px;
   }
 
-  &__income-button {
+  &__income-button,
+  &__income-button-active {
     background-color: var.$paperBg;
     border-radius: var.$borderRadius;
+    border: 1px solid transparent;
+    transition: 0.3s;
     fa-icon {
       color: var.$textSuccess;
     }
   }
-  &__expense-button {
+  &__expense-button,
+  &__expense-button-active {
     background-color: var.$paperBg;
     border-radius: var.$borderRadius;
+    border: 1px solid transparent;
+    transition: 0.3s;
+
     fa-icon {
       color: var.$textDanger;
     }
+  }
+
+  &__income-button-active {
+    border: 1px solid var.$successBg;
+  }
+
+  &__expense-button-active {
+    border: 1px solid var.$textDanger;
   }
 }
 

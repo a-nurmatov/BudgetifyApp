@@ -160,7 +160,7 @@ export class DialogueComponent implements OnInit, OnDestroy {
       .requestUserAccounts(userId)
       .pipe(take(1))
       .subscribe((data) => {
-        this.accountService.setInitialData(data.accounts);
+        this.accountService.setInitialData(data.accounts.reverse());
       });
 
     this.accountsSubscription = this.accountService

@@ -37,7 +37,7 @@ export class AuthFormComponent {
       },
       (error) => {
         if (error.status === 401) {
-          this.openSnackBar('Wrong email or password', '&#10761;');
+          this.openSnackBar('Wrong email or password', 'Close');
         }
       }
     );

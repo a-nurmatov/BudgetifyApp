@@ -45,7 +45,7 @@ export class AccountCardListComponent implements OnDestroy {
       .requestUserAccounts(userId)
       .pipe(take(1))
       .subscribe((data) => {
-        this.accountService.setInitialData(data.accounts);
+        this.accountService.setInitialData(data.accounts.reverse());
       });
     this.userAccounts$ = this.accountService.getUserAccounts();
     this.activeAccountSubscription = this.accountService

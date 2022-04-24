@@ -27,8 +27,8 @@ export class AppComponent {
     );
   }
 
-  get isCategoryPage(): boolean {
-    return this.location.path() !== '/categories';
+  get isAccountsVisible() {
+    return this.location.path() === '' || this.location.path() === '/statistic';
   }
 
   logout(): void {
