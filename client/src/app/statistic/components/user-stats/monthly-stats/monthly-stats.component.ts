@@ -232,11 +232,8 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
         expenses: totalData.expenses / (this.ELEMENT_DATA.length - 1),
         savings: totalData.savings / (this.ELEMENT_DATA.length - 1),
         percent:
-          (totalData.incomes /
-            (this.ELEMENT_DATA.length - 1) /
-            totalData.expenses /
-            (this.ELEMENT_DATA.length - 1)) *
-          100,
+          ((totalData.savings / (this.ELEMENT_DATA.length - 1)) * 100) /
+          (totalData.incomes / (this.ELEMENT_DATA.length - 1)),
       });
     }
     this.setOptions();

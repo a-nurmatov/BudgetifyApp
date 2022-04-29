@@ -5,7 +5,12 @@
   </button>
 </div>
 <mat-dialog-content class="dialog-body">
-  <form id="categoryForm" [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
+  <form
+    autocomplete="off"
+    id="categoryForm"
+    [formGroup]="addCategoryForm"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="dialog-body__actions">
       <button
         *ngIf="(category && category.type === 'income') || !category"

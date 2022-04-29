@@ -60,3 +60,9 @@
     font-size: 14px;
   }
 }
+
+::ng-deep .mat-tooltip {
+  color: var.$textColor !important;
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
