@@ -32,6 +32,7 @@ export class HomeComponent implements OnDestroy {
   filterState: string = 'all';
   dateSort: string = 'decrease';
   currency!: string;
+  noActiveAccount: boolean = false;
 
   search = new FormControl();
 
@@ -112,6 +113,7 @@ export class HomeComponent implements OnDestroy {
       .getActiveAccount()
       .subscribe((account) => {
         if (account?._id) {
+          this.noActiveAccount = false;
           this.currency = account.currency;
           this.accountTransactionsSubscription = this.transactionService
             .requestAccountTransactions(account._id)
@@ -131,6 +133,8 @@ export class HomeComponent implements OnDestroy {
                 this.decreaseDateSort();
               }
             });
+        } else {
+          this.noActiveAccount = true;
         }
       });
   }

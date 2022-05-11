@@ -40,7 +40,10 @@
         </div>
       </div>
     </div>
-    <div class="transaction-list" *ngIf="accountTransactions; else spinnerBox">
+    <div
+      class="transaction-list"
+      *ngIf="accountTransactions || noActiveAccount; else spinnerBox"
+    >
       <app-transaction-card
         (click)="transactionDetails(transaction)"
         *ngFor="let transaction of accountTransactions"
@@ -55,7 +58,12 @@
     </ng-template>
   </main>
   <aside>
-    <button mat-button (click)="openDialog()" class="home__add-transaction">
+    <button
+      mat-button
+      (click)="openDialog()"
+      [disabled]="noActiveAccount"
+      class="home__add-transaction"
+    >
       <fa-icon size="lg" [icon]="faCirclePlus"></fa-icon>
       Add transaction
     </button>

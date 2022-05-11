@@ -29,7 +29,6 @@
       >
         <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
-      <mat-error *ngIf="loginForm.invalid">{{ getPasswordError() }}</mat-error>
     </mat-form-field>
     <button
       class="auth-form__button"
@@ -40,4 +39,8 @@
       Login
     </button>
   </form>
+  <div class="auth-form__links">
+    Don't have an account?
+    <a routerLink="/sign-up" class="auth-form__link"> Sign up </a>
+  </div>
 </div>

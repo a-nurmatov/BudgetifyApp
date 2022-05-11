@@ -201,6 +201,7 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     });
 
     if (this.transaction) {
+      let typeChange = this.transaction.type !== this.filterState ? -1 : 1;
       let newTransaction = {
         ...this.transaction,
         type: this.filterState,
@@ -233,7 +234,8 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
                     this.updateAmount(
                       this.filterState,
                       amount,
-                      this.transaction.amount
+                      this.transaction.amount,
+                      typeChange
                     ),
                 };
                 this.accountService
@@ -420,10 +422,21 @@ export class TransactionDialogComponent implements OnInit, OnDestroy {
     return 1;
   }
 
-  updateAmount(state: string, newAmount: number, oldAmount: number): number {
+  updateAmount(
+    state: string,
+    newAmount: number,
+    oldAmount: number,
+    typeChange: number
+  ): number {
     if (state === 'expense') {
+      if (typeChange === -1) {
+        return -oldAmount - newAmount;
+      }
       return oldAmount - newAmount;
     } else if (state === 'income') {
+      if (typeChange === -1) {
+        return oldAmount + newAmount;
+      }
       return newAmount - oldAmount;
     }
     return 0;

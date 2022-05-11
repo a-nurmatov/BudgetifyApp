@@ -23,7 +23,8 @@ export class AppComponent {
     return (
       this.authService.isLoggedIn() &&
       this.location.path() !== '/login' &&
-      this.location.path() !== '/login-redirect'
+      this.location.path() !== '/login-redirect' &&
+      this.location.path() !== '/sign-up'
     );
   }
 
