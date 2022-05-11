@@ -41,6 +41,24 @@ export class AuthService {
       .pipe(tap((res: any) => this.setSession(res)));
   }
 
+  registerUser(
+    email: string,
+    password: string,
+    country: string,
+    firstName: string,
+    lastName: string,
+    birthDate: string
+  ): Observable<any> {
+    return this.http.post('http://localhost:5000/users/signup', {
+      email,
+      password,
+      country,
+      firstName,
+      lastName,
+      birthDate,
+    });
+  }
+
   isLoggedIn(): boolean {
     const expiresIn = localStorage.getItem('expiresIn');
     if (expiresIn) {
@@ -54,7 +72,6 @@ export class AuthService {
     localStorage.removeItem('expiresIn');
     localStorage.removeItem('country');
     localStorage.removeItem('userId');
-    localStorage.removeItem('fullName');
   }
 
   healthCheck(): Observable<any> {

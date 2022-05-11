@@ -22,9 +22,9 @@
 
 ::ng-deep .snackbar-success {
   background-color: var.$successBg;
-  color: var.$textLight !important;
+  color: var.$textLight;
   button {
-    color: var.$textLight !important;
+    color: var.$textLight;
   }
 }
 
@@ -32,6 +32,6 @@
   background-color: var.$warningBg;
   color: var.$textLight !important;
   button {
-    color: var.$textLight !important;
+    color: var.$textLight;
   }
 }

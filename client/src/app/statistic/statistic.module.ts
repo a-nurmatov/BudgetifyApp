@@ -7,12 +7,17 @@ import { SharedModule } from '../shared/shared.module';
 import { ExpenseTableComponent } from './components/user-stats/expense-table/expense-table.component';
 import { MonthlyStatsComponent } from './components/user-stats/monthly-stats/monthly-stats.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { NotFoundComponent } from '../layout/not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: 'statistic',
     component: UserStatsComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 

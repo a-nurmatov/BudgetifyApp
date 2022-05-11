@@ -46,9 +46,9 @@ export class DialogueComponent implements OnInit, OnDestroy {
   isTitleAvailable(): void {
     this.addAccountForm.get('title')!.valueChanges.subscribe((title) => {
       this.accounts.map((account) => {
-        if (account.title === this.account?.title) {
+        if (account.title.toLowerCase() === this.account?.title.toLowerCase()) {
           return;
-        } else if (account.title === title) {
+        } else if (account.title.toLowerCase() === title.toLowerCase()) {
           this.addAccountForm.get('title')!.setErrors({
             titleTaken: true,
           });
@@ -160,7 +160,7 @@ export class DialogueComponent implements OnInit, OnDestroy {
       .requestUserAccounts(userId)
       .pipe(take(1))
       .subscribe((data) => {
-        this.accountService.setInitialData(data.accounts);
+        this.accountService.setInitialData(data.accounts.reverse());
       });
 
     this.accountsSubscription = this.accountService

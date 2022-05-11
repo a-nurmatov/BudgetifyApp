@@ -17,6 +17,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -39,6 +40,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatButtonToggleModule,
     MatTableModule,
     MatPaginatorModule,
+    MatTooltipModule,
   ],
   exports: [
     MatMenuModule,
@@ -58,6 +60,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatButtonToggleModule,
     MatTableModule,
     MatPaginatorModule,
+    MatTooltipModule,
   ],
 })
 export class SharedModule {}

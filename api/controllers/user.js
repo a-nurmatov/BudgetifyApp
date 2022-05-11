@@ -14,13 +14,17 @@ export const getAllUsers = async (req, res) => {
   });
 };
 
-export const registerUser = async (req, res) => {
-  let newUser = new User(req.body);
-  await newUser.save();
-  res.json({
-    message: "New user added",
-    newUser,
-  });
+export const registerUser = async (req, res, next) => {
+  try {
+    let newUser = new User(req.body);
+    await newUser.save();
+    res.json({
+      message: "New user added",
+      newUser,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const loginUser = async (req, res) => {

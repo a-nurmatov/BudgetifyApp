@@ -23,12 +23,13 @@ export class AppComponent {
     return (
       this.authService.isLoggedIn() &&
       this.location.path() !== '/login' &&
-      this.location.path() !== '/login-redirect'
+      this.location.path() !== '/login-redirect' &&
+      this.location.path() !== '/sign-up'
     );
   }
 
-  get isCategoryPage(): boolean {
-    return this.location.path() !== '/categories';
+  get isAccountsVisible() {
+    return this.location.path() === '' || this.location.path() === '/statistic';
   }
 
   logout(): void {

@@ -1,11 +1,11 @@
 <div class="account-card" [ngStyle]="activeAccount ? { opacity: '1' } : {}">
   <div class="account-card__body">
-    <p [title]="account.title" class="account-card__title">
+    <p [title]="account.title | titlecase" class="account-card__title">
       {{ account.title | titlecase }}
     </p>
     <div class="account-card__currency">{{ account.currency }}</div>
   </div>
-  <p class="account-card__balance" [title]="account.balance">
+  <p class="account-card__balance" [title]="account.balance | number: '1.2-2'">
     {{ account.balance | number: "1.2-2" }}
   </p>
   <span (click)="viewDetails()" class="account-card__details">Details</span>

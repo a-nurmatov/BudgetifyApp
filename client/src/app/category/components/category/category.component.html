@@ -17,11 +17,19 @@
     <mat-spinner class="spinner" diameter="50"></mat-spinner>
   </ng-template>
   <div class="category__aside">
+    <button mat-button (click)="addCategory()" class="category__add-category">
+      <fa-icon size="lg" [icon]="faCirclePlus"></fa-icon>
+      Add category
+    </button>
     <button
       (click)="incomeFilterCategories()"
       (dblclick)="resetCategories()"
       mat-button
-      class="category__income-button"
+      [ngClass]="
+        filterState === 'income'
+          ? 'category__income-button-active'
+          : 'category__income-button'
+      "
     >
       <fa-icon size="lg" [icon]="faCircleArrowDown"></fa-icon>
       Incomes
@@ -30,14 +38,14 @@
       (click)="expenseFilterCategories()"
       (dblclick)="resetCategories()"
       mat-button
-      class="category__expense-button"
+      [ngClass]="
+        filterState === 'expense'
+          ? 'category__expense-button-active'
+          : 'category__expense-button'
+      "
     >
       <fa-icon size="lg" [icon]="faCircleArrowUp"></fa-icon>
       Expenses
-    </button>
-    <button mat-button (click)="addCategory()" class="category__add-category">
-      <fa-icon size="lg" [icon]="faCirclePlus"></fa-icon>
-      Add category
     </button>
   </div>
 </div>

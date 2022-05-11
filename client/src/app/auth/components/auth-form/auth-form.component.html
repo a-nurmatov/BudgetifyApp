@@ -1,6 +1,11 @@
 <div class="auth-form">
   <h2 class="auth-form__title">Budgetify</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form__form">
+  <form
+    autocomplete="off"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+    class="auth-form__form"
+  >
     <mat-form-field class="auth-form__row" appearance="outline">
       <mat-label>Enter your email</mat-label>
       <input formControlName="email" class="auth-form__input" matInput />
@@ -24,7 +29,6 @@
       >
         <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
-      <mat-error *ngIf="loginForm.invalid">{{ getPasswordError() }}</mat-error>
     </mat-form-field>
     <button
       class="auth-form__button"
@@ -35,4 +39,8 @@
       Login
     </button>
   </form>
+  <div class="auth-form__links">
+    Don't have an account?
+    <a routerLink="/sign-up" class="auth-form__link"> Sign up </a>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./auth-form.component.scss'],
 })
 export class AuthFormComponent {
-  hide: boolean = false;
+  hide: boolean = true;
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [
@@ -37,7 +37,7 @@ export class AuthFormComponent {
       },
       (error) => {
         if (error.status === 401) {
-          this.openSnackBar('Wrong email or password', '&#10761;');
+          this.openSnackBar('Wrong email or password', 'Close');
         }
       }
     );
@@ -56,14 +56,6 @@ export class AuthFormComponent {
       ? 'Required field is empty'
       : this.loginForm.get('email')!.errors?.['pattern']
       ? 'Please enter a valid email'
-      : '';
-  }
-
-  getPasswordError(): string {
-    return this.loginForm.get('password')!.errors?.['required']
-      ? 'Required field is empty'
-      : this.loginForm.get('password')!.errors?.['minlength']
-      ? 'Password must be at least 6 characters long'
       : '';
   }
 }

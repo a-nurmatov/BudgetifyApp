@@ -1,0 +1,75 @@
+<div class="auth-form">
+  <h2 class="auth-form__title">Budgetify</h2>
+  <form
+    autocomplete="off"
+    [formGroup]="signUpForm"
+    (ngSubmit)="onSubmit()"
+    class="auth-form__form"
+  >
+    <mat-form-field class="auth-form__row" appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" />
+      <mat-error *ngIf="signUpForm.invalid">{{
+        getFirstNameError()
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="auth-form__row" appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" />
+      <mat-error *ngIf="signUpForm.invalid">{{ getLastNameError() }}</mat-error>
+    </mat-form-field>
+    <!-- <mat-form-field class="auth-form__row" appearance="outline">
+      <mat-label>Birth Date</mat-label>
+      <input formControlName="date" matInput [matDatepicker]="picker" />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="signUpForm.invalid">{{ getDateError() }}</mat-error>
+    </mat-form-field> -->
+    <mat-form-field class="auth-form__row" appearance="outline">
+      <mat-label>Country</mat-label>
+      <mat-select formControlName="country">
+        <mat-option
+          *ngFor="let country of listOfCountries"
+          [value]="country.name"
+        >
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="signUpForm.invalid">{{ getCountryError() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="auth-form__row" appearance="outline">
+      <mat-label>Enter your email</mat-label>
+      <input formControlName="email" class="auth-form__input" matInput />
+      <mat-error *ngIf="signUpForm.invalid">{{ getEmailError() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="auth-form__row" appearance="outline">
+      <mat-label>Enter your password</mat-label>
+      <input
+        matInput
+        class="auth-form__input"
+        [type]="hide ? 'password' : 'text'"
+        formControlName="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+        type="button"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <mat-error *ngIf="signUpForm.invalid">{{ getPasswordError() }}</mat-error>
+    </mat-form-field>
+    <button
+      class="auth-form__button"
+      type="submit"
+      [disabled]="signUpForm.invalid"
+      mat-stroked-button
+    >
+      Sign Up
+    </button>
+  </form>
+</div>

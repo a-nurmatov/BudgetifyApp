@@ -49,7 +49,7 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
   transactions!: TransactionInterface[];
   tempTransactions!: TransactionInterface[];
   currency!: string;
-  startDate: Date = new Date(new Date().getFullYear());
+  startDate: Date = new Date(new Date().getFullYear(), 0, 1);
   endDate: Date = new Date();
   chartOption!: EChartsOption;
 
@@ -79,6 +79,7 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
   }
 
   setOptions() {
+    let graphData = [...this.ELEMENT_DATA].reverse();
     this.chartOption = {
       title: {
         text: 'Income, Expense, Savings Statistics',
@@ -87,9 +88,9 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: this.ELEMENT_DATA.filter(
-          (data) => data.month !== 'Total' && data.month !== 'Average'
-        ).map((data) => data.month),
+        data: graphData
+          .filter((data) => data.month !== 'Total' && data.month !== 'Average')
+          .map((data) => data.month),
       },
       yAxis: {
         type: 'value',
@@ -100,7 +101,7 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
       series: [
         {
           name: 'Savings',
-          data: this.ELEMENT_DATA.map((data) => data.savings),
+          data: graphData.map((data) => data.savings),
           type: 'line',
           lineStyle: {
             color: '#63adeb',
@@ -111,7 +112,7 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
         },
         {
           name: 'Income',
-          data: this.ELEMENT_DATA.map((data) => data.incomes),
+          data: graphData.map((data) => data.incomes),
           type: 'line',
           lineStyle: {
             color: '#00a859',
@@ -122,7 +123,7 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
         },
         {
           name: 'Expense',
-          data: this.ELEMENT_DATA.map((data) => data.expenses),
+          data: graphData.map((data) => data.expenses),
           type: 'line',
           lineStyle: {
             color: '#ee3f19',
@@ -231,11 +232,8 @@ export class MonthlyStatsComponent implements OnInit, OnDestroy {
         expenses: totalData.expenses / (this.ELEMENT_DATA.length - 1),
         savings: totalData.savings / (this.ELEMENT_DATA.length - 1),
         percent:
-          (totalData.incomes /
-            (this.ELEMENT_DATA.length - 1) /
-            totalData.expenses /
-            (this.ELEMENT_DATA.length - 1)) *
-          100,
+          ((totalData.savings / (this.ELEMENT_DATA.length - 1)) * 100) /
+          (totalData.incomes / (this.ELEMENT_DATA.length - 1)),
       });
     }
     this.setOptions();

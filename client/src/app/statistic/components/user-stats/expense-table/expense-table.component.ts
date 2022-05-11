@@ -48,12 +48,7 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
   setOptions() {
     this.options = {
       color: ['#f158ab'],
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow',
-        },
-      },
+      tooltip: {},
       grid: {
         left: '3%',
         right: '4%',

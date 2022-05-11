@@ -32,6 +32,7 @@ export class HomeComponent implements OnDestroy {
   filterState: string = 'all';
   dateSort: string = 'decrease';
   currency!: string;
+  noActiveAccount: boolean = false;
 
   search = new FormControl();
 
@@ -49,6 +50,11 @@ export class HomeComponent implements OnDestroy {
     this.accountTransactions = this.tempAccountTransactions.filter(
       (transaction) => transaction.type === 'expense'
     );
+    if (this.dateSort === 'increase') {
+      this.increaseDateSort();
+    } else if (this.dateSort === 'decrease') {
+      this.decreaseDateSort();
+    }
   }
 
   incomeFilterTransactions(): void {
@@ -56,6 +62,11 @@ export class HomeComponent implements OnDestroy {
     this.accountTransactions = this.tempAccountTransactions.filter(
       (transaction) => transaction.type === 'income'
     );
+    if (this.dateSort === 'increase') {
+      this.increaseDateSort();
+    } else if (this.dateSort === 'decrease') {
+      this.decreaseDateSort();
+    }
   }
 
   reset(): void {
@@ -102,6 +113,7 @@ export class HomeComponent implements OnDestroy {
       .getActiveAccount()
       .subscribe((account) => {
         if (account?._id) {
+          this.noActiveAccount = false;
           this.currency = account.currency;
           this.accountTransactionsSubscription = this.transactionService
             .requestAccountTransactions(account._id)
@@ -121,6 +133,8 @@ export class HomeComponent implements OnDestroy {
                 this.decreaseDateSort();
               }
             });
+        } else {
+          this.noActiveAccount = true;
         }
       });
   }

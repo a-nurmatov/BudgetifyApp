@@ -7,7 +7,12 @@
   </button>
 </div>
 <mat-dialog-content class="dialog-body">
-  <form id="accountForm" [formGroup]="addAccountForm" (ngSubmit)="onSubmit()">
+  <form
+    autocomplete="off"
+    id="accountForm"
+    [formGroup]="addAccountForm"
+    (ngSubmit)="onSubmit()"
+  >
     <mat-form-field class="dialog-body__row" appearance="outline">
       <mat-label>Enter account title</mat-label>
       <input formControlName="title" matInput cdkFocusInitial />
