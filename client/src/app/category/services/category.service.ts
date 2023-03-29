@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, take, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { CategoryInterface } from '../types/category.interface';
+import { environment } from '../../../environments/environment';
+
+const BASE_API = `${environment.apiURL}/categories`;
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +32,7 @@ export class CategoryService {
       };
     });
     return this.http.post<{ message: string; response: string[] }>(
-      'http://localhost:5000/categories/multiple',
+      `${BASE_API}/multiple`,
       {
         newCategoriesToAdd,
       }
@@ -43,15 +46,12 @@ export class CategoryService {
     uniqueness: string
   ): Observable<{ message: string; newCategory: CategoryInterface }> {
     return this.http
-      .post<{ message: string; newCategory: CategoryInterface }>(
-        `http://localhost:5000/categories`,
-        {
-          title,
-          type,
-          userId,
-          uniqueness,
-        }
-      )
+      .post<{ message: string; newCategory: CategoryInterface }>(BASE_API, {
+        title,
+        type,
+        userId,
+        uniqueness,
+      })
       .pipe(
         tap((data) => {
           this.categories.unshift(data.newCategory);
@@ -64,7 +64,7 @@ export class CategoryService {
     userId: string | null
   ): Observable<{ message: string; categories: CategoryInterface[] }> {
     return this.http.get<{ message: string; categories: CategoryInterface[] }>(
-      `http://localhost:5000/categories/${userId}`
+      `${BASE_API}/${userId}`
     );
   }
 
@@ -78,36 +78,29 @@ export class CategoryService {
   }
 
   deleteCategory(category: CategoryInterface): Observable<any> {
-    return this.http
-      .delete(`http://localhost:5000/categories/${category._id}`)
-      .pipe(
-        tap(() => {
-          this.categories = this.categories.filter(
-            (item) => item._id !== category._id
-          );
-          this.categoriesUpdated.next([...this.categories]);
-        })
-      );
+    return this.http.delete(`${BASE_API}/${category._id}`).pipe(
+      tap(() => {
+        this.categories = this.categories.filter(
+          (item) => item._id !== category._id
+        );
+        this.categoriesUpdated.next([...this.categories]);
+      })
+    );
   }
 
   updateCategory(category: CategoryInterface): Observable<any> {
     let updatedCategory = { ...category };
     delete updatedCategory._id;
-    return this.http
-      .patch(
-        `http://localhost:5000/categories/${category._id}`,
-        updatedCategory
-      )
-      .pipe(
-        tap(() => {
-          this.categories = this.categories.map((item) => {
-            if (item._id === category._id) {
-              return category;
-            }
-            return item;
-          });
-          this.categoriesUpdated.next([...this.categories]);
-        })
-      );
+    return this.http.patch(`${BASE_API}/${category._id}`, updatedCategory).pipe(
+      tap(() => {
+        this.categories = this.categories.map((item) => {
+          if (item._id === category._id) {
+            return category;
+          }
+          return item;
+        });
+        this.categoriesUpdated.next([...this.categories]);
+      })
+    );
   }
 }

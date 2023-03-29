@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { AccountInterface } from '../types/account.interface';
+import { environment } from '../../../environments/environment';
+
+const BASE_API = `${environment.apiURL}/accounts`;
 
 @Injectable({
   providedIn: 'root',
@@ -22,16 +25,13 @@ export class AccountService {
     description: string
   ): Observable<{ message: string; newAccount: AccountInterface }> {
     return this.http
-      .post<{ message: string; newAccount: AccountInterface }>(
-        'http://localhost:5000/accounts',
-        {
-          userId,
-          title,
-          currency,
-          description,
-          uniqueness: userId + title,
-        }
-      )
+      .post<{ message: string; newAccount: AccountInterface }>(BASE_API, {
+        userId,
+        title,
+        currency,
+        description,
+        uniqueness: userId + title,
+      })
       .pipe(
         tap((data) => {
           this.accounts.unshift(data.newAccount);
@@ -45,7 +45,7 @@ export class AccountService {
     userId: string | null
   ): Observable<{ message: string; accounts: AccountInterface[] }> {
     return this.http.get<{ message: string; accounts: AccountInterface[] }>(
-      `http://localhost:5000/accounts/${userId}`
+      `${BASE_API}/${userId}`
     );
   }
 
@@ -70,7 +70,7 @@ export class AccountService {
   }
 
   deleteAccount(accountId: string | undefined): Observable<any> {
-    return this.http.delete(`http://localhost:5000/accounts/${accountId}`).pipe(
+    return this.http.delete(`${BASE_API}/${accountId}`).pipe(
       tap(() => {
         if (this.accounts.length > 0) {
           this.accounts.find((item, index) => {
@@ -96,18 +96,16 @@ export class AccountService {
   updateAccount(account: AccountInterface): Observable<any> {
     let updatedAccount = { ...account };
     delete updatedAccount._id;
-    return this.http
-      .patch(`http://localhost:5000/accounts/${account._id}`, updatedAccount)
-      .pipe(
-        tap((data) => {
-          this.accounts = this.accounts.map((acc) => {
-            if (acc._id === account._id) {
-              return { ...account };
-            }
-            return acc;
-          });
-          this.accountsUpdated.next([...this.accounts]);
-        })
-      );
+    return this.http.patch(`${BASE_API}/${account._id}`, updatedAccount).pipe(
+      tap(() => {
+        this.accounts = this.accounts.map((acc) => {
+          if (acc._id === account._id) {
+            return { ...account };
+          }
+          return acc;
+        });
+        this.accountsUpdated.next([...this.accounts]);
+      })
+    );
   }
 }

@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable, take, tap } from 'rxjs';
 import { CategoryService } from 'src/app/category/services/category.service';
 import { UserDataInterface } from '../types/userData.interface';
+import { environment } from '../../../environments/environment';
+
+const BASE_API = `${environment.apiURL}`;
 
 const defaultExpenseCategories = [
   'food',
@@ -37,7 +40,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<UserDataInterface> {
     return this.http
-      .post('http://localhost:5000/users/login', { email, password })
+      .post(`${BASE_API}/users/login`, { email, password })
       .pipe(tap((res: any) => this.setSession(res)));
   }
 
@@ -49,7 +52,7 @@ export class AuthService {
     lastName: string,
     birthDate: string
   ): Observable<any> {
-    return this.http.post('http://localhost:5000/users/signup', {
+    return this.http.post(`${BASE_API}/users/signup`, {
       email,
       password,
       country,
@@ -75,7 +78,7 @@ export class AuthService {
   }
 
   healthCheck(): Observable<any> {
-    return this.http.post('http://localhost:5000/api/health-check', {
+    return this.http.post(`${BASE_API}/api/health-check`, {
       test: 'test',
     });
   }

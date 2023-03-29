@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
-import { AccountService } from 'src/app/account/services/account.service';
+import { Observable, Subject, tap } from 'rxjs';
 import { TransactionInterface } from '../types/transaction.interface';
+import { environment } from '../../../environments/environment';
+
+const BASE_API = `${environment.apiURL}/transactions`;
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,6 @@ export class TransactionService {
 
   constructor(
     private http: HttpClient,
-    private accountService: AccountService
   ) {}
 
   getAllTransactions(): Observable<{
@@ -25,7 +26,7 @@ export class TransactionService {
     return this.http.get<{
       message: string;
       transactions: TransactionInterface[];
-    }>('http://localhost:5000/transactions/all');
+    }>(`${BASE_API}/all`);
   }
 
   addNewTransaction(
@@ -35,7 +36,7 @@ export class TransactionService {
       .post<{
         message: string;
         newTransaction: TransactionInterface;
-      }>('http://localhost:5000/transactions', transaction)
+      }>(BASE_API, transaction)
       .pipe(
         tap((data) => {
           this.transactions.unshift(data.newTransaction);
@@ -50,7 +51,7 @@ export class TransactionService {
     return this.http.get<{
       message: string;
       transactions: TransactionInterface[];
-    }>(`http://localhost:5000/transactions/${accountId}`);
+    }>(`${BASE_API}/${accountId}`);
   }
 
   setInitialData(transactions: TransactionInterface[]) {
@@ -71,7 +72,7 @@ export class TransactionService {
       .patch<{
         message: string;
         updatedTransaction: TransactionInterface;
-      }>(`http://localhost:5000/transactions/${transaction._id}`, transaction)
+      }>(`${BASE_API}/${transaction._id}`, transaction)
       .pipe(
         tap((data) => {
           this.transactions = this.transactions.map((transaction) => {
@@ -86,15 +87,13 @@ export class TransactionService {
   }
 
   deleteTransaction(transactionId: string | undefined): Observable<any> {
-    return this.http
-      .delete(`http://localhost:5000/transactions/${transactionId}`)
-      .pipe(
-        tap(() => {
-          this.transactions = this.transactions.filter(
-            (transaction) => transaction._id !== transactionId
-          );
-          this.transactionsUpdated.next([...this.transactions]);
-        })
-      );
+    return this.http.delete(`${BASE_API}/${transactionId}`).pipe(
+      tap(() => {
+        this.transactions = this.transactions.filter(
+          (transaction) => transaction._id !== transactionId
+        );
+        this.transactionsUpdated.next([...this.transactions]);
+      })
+    );
   }
 }
