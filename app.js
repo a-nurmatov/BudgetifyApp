@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
-app.post("/api/health-check", (req, res) => {
+app.get("/api/health-check", (req, res) => {
   return res.send({ message: "Health-check is ok" });
 });
 
