@@ -1,2 +1,2 @@
 # BudgetifyApp
-Demo application link - https://budgetify-app-demo.netlify.app/login-redirect
+Demo application link - https://budgetify-app-osaq-463nd3g4l-na-webdev.vercel.app/
